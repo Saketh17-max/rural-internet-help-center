@@ -134,7 +134,7 @@ export default function WorkerDashboard() {
                   <BarChart data={EARNINGS_DATA}>
                     <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                     <YAxis tick={{ fontSize: 12 }} tickFormatter={v => `₹${(v/1000).toFixed(0)}k`} />
-                    <Tooltip formatter={(v: number) => [`₹${v.toLocaleString('en-IN')}`, 'Earnings']} />
+                    <Tooltip formatter={(v) => [`₹${v !== undefined ? Number(v).toLocaleString('en-IN') : 0}`, 'Earnings']} />
                     <Bar dataKey="amount" fill="#1a6b3a" radius={[6, 6, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>

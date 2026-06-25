@@ -146,7 +146,7 @@ export default function AnalyticsPage() {
                   <Pie data={ageData} cx="50%" cy="50%" innerRadius={60} outerRadius={90} dataKey="value" paddingAngle={3}>
                     {ageData.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
                   </Pie>
-                  <Tooltip formatter={(v: number) => [v, 'Responses']} />
+                  <Tooltip formatter={(v) => [v !== undefined ? Number(v) : 0, 'Responses']} />
                   <Legend iconType="circle" />
                 </PieChart>
               </ResponsiveContainer>
@@ -184,7 +184,7 @@ export default function AnalyticsPage() {
                   <Pie data={devicesData} cx="50%" cy="50%" outerRadius={90} dataKey="value">
                     {devicesData.map((_, i) => <Cell key={i} fill={PIE_COLORS[(i+2) % PIE_COLORS.length]} />)}
                   </Pie>
-                  <Tooltip formatter={(v: number) => [v, 'Users']} />
+                  <Tooltip formatter={(v) => [v !== undefined ? Number(v) : 0, 'Users']} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>

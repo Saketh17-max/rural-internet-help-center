@@ -79,7 +79,7 @@ export default function Navbar() {
           {/* More Dropdown */}
           <div style={{ position: 'relative' }}>
             <button
-              onClick={() => setUserOpen(false) || setLangOpen(false)}
+              onClick={() => { setUserOpen(false); setLangOpen(false); }}
               style={{
                 display: 'flex', alignItems: 'center', gap: '4px',
                 padding: '7px 12px', borderRadius: '8px', border: 'none',
