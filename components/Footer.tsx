@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Phone, Mail, MapPin, ExternalLink, Heart } from 'lucide-react';
+import { Phone, Mail, MapPin, ExternalLink, Heart, Building, ShieldCheck, FileText, ChevronRight } from 'lucide-react';
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -22,105 +22,113 @@ export default function Footer() {
       { href: '/awareness', label: t('awarenessTitle') },
       { href: '/survey', label: t('surveyTitle') },
       { href: '/analytics', label: 'Analytics' },
-      { href: '/maps', label: 'Find Nearby' },
+      { href: '/maps', label: 'Find Nearby Centers' },
     ],
   };
 
   return (
-    <footer className="mt-auto bg-gradient-to-br from-[#0f4023] to-[#0a2744] text-[rgba(255,255,255,0.85)] pt-16 pb-8 px-6">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10 text-center sm:text-left">
-          {/* Brand */}
-          <div className="flex flex-col items-center sm:items-start">
-            <div className="flex items-center justify-center sm:justify-start gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#4ade80] to-[#60a5fa] flex items-center justify-center text-2xl shrink-0">🌿</div>
-              <div className="text-left">
-                <div className="font-extrabold text-lg text-[#4ade80]">RIHC</div>
-                <div className="text-[11px] opacity-70">Rural Internet Help Center</div>
+    <footer className="mt-auto bg-[#093358] text-white pt-16 pb-8 px-6 border-t-[4px] border-[var(--primary)]">
+      <div className="max-w-[1280px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-12">
+          
+          {/* Brand & About (Col Span 4) */}
+          <div className="lg:col-span-4 flex flex-col">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shrink-0">
+                <Building size={24} className="text-[#093358]" />
+              </div>
+              <div>
+                <div className="font-black text-xl tracking-tight leading-none mb-1">RIHC</div>
+                <div className="text-[12px] font-medium text-blue-200">Rural Internet Help Center</div>
               </div>
             </div>
-            <p className="text-[13px] leading-relaxed opacity-80 mb-4 max-w-xs mx-auto sm:mx-0">
-              {t('footerDesc')}
+            <p className="text-[14px] leading-relaxed text-blue-100 mb-6 max-w-sm">
+              Empowering rural Andhra Pradesh through accessible digital services, verified employment opportunities, and essential government resources.
             </p>
-            <div className="flex justify-center sm:justify-start gap-2">
-              {['🌐', '📘', '🐦', '📱'].map((icon, i) => (
-                <div key={i} className="w-9 h-9 rounded-lg bg-[rgba(255,255,255,0.1)] flex items-center justify-center cursor-pointer text-base transition-colors hover:bg-[rgba(255,255,255,0.2)]">
-                  {icon}
-                </div>
-              ))}
+            <div className="flex items-center gap-3">
+              <div className="p-3 rounded-lg bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.1)] transition-colors cursor-pointer"><ShieldCheck size={20} className="text-blue-300" /></div>
+              <div className="p-3 rounded-lg bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.1)] transition-colors cursor-pointer"><FileText size={20} className="text-blue-300" /></div>
             </div>
           </div>
 
-          {/* Services */}
-          <div>
-            <h3 className="font-bold mb-4 text-[#4ade80] text-[15px]">{t('services')}</h3>
-            <ul className="list-none flex flex-col gap-2">
+          {/* Quick Links (Col Span 2) */}
+          <div className="lg:col-span-2">
+            <h3 className="font-bold text-[15px] mb-5 text-white tracking-wide uppercase">Services</h3>
+            <ul className="list-none flex flex-col gap-3">
               {links.services.map(link => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-[rgba(255,255,255,0.75)] no-underline text-[13px] transition-colors hover:text-[#4ade80] flex items-center justify-center sm:justify-start gap-1.5">
-                    <span>→</span> {link.label}
+                  <Link href={link.href} className="group flex items-center gap-2 text-blue-200 no-underline text-[14px] transition-colors hover:text-white">
+                    <ChevronRight size={14} className="text-blue-400 group-hover:translate-x-1 transition-transform" /> 
+                    {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Tools */}
-          <div>
-            <h3 className="font-bold mb-4 text-[#60a5fa] text-[15px]">Tools & Resources</h3>
-            <ul className="list-none flex flex-col gap-2">
+          {/* Tools & Resources (Col Span 3) */}
+          <div className="lg:col-span-3">
+            <h3 className="font-bold text-[15px] mb-5 text-white tracking-wide uppercase">Resources</h3>
+            <ul className="list-none flex flex-col gap-3">
               {links.tools.map(link => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-[rgba(255,255,255,0.75)] no-underline text-[13px] transition-colors hover:text-[#60a5fa] flex items-center justify-center sm:justify-start gap-1.5">
-                    <span>→</span> {link.label}
+                  <Link href={link.href} className="group flex items-center gap-2 text-blue-200 no-underline text-[14px] transition-colors hover:text-white">
+                    <ChevronRight size={14} className="text-blue-400 group-hover:translate-x-1 transition-transform" /> 
+                    {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
-          <div className="flex flex-col items-center sm:items-start">
-            <h3 className="font-bold mb-4 text-[#fbbf24] text-[15px]">{t('contactUs')}</h3>
-            <div className="flex flex-col gap-3 w-full max-w-[250px] mx-auto sm:mx-0">
+          {/* Contact & Emergency (Col Span 3) */}
+          <div className="lg:col-span-3">
+            <h3 className="font-bold text-[15px] mb-5 text-white tracking-wide uppercase">Contact & Support</h3>
+            <div className="flex flex-col gap-4 mb-6">
               {[
-                { icon: <Phone size={14} />, text: '1800-XXX-XXXX (Toll Free)' },
-                { icon: <Phone size={14} />, text: 'Cybercrime: 1930' },
-                { icon: <Mail size={14} />, text: 'help@rihc.gov.in' },
-                { icon: <MapPin size={14} />, text: 'MeeSeva / CSC Centers' },
+                { icon: <Phone size={16} />, text: '1800-425-4440 (AP Toll Free)' },
+                { icon: <ShieldCheck size={16} />, text: 'Cybercrime: 1930' },
+                { icon: <Mail size={16} />, text: 'support@rihc.ap.gov.in' },
+                { icon: <MapPin size={16} />, text: 'Find nearest MeeSeva Center' },
               ].map((item, i) => (
-                <div key={i} className="flex items-center justify-center sm:justify-start gap-2.5 text-[13px] opacity-80">
-                  <span className="text-[#fbbf24] shrink-0">{item.icon}</span>
-                  <span className="truncate">{item.text}</span>
+                <div key={i} className="flex items-start gap-3 text-[14px] text-blue-100">
+                  <span className="text-blue-400 shrink-0 mt-0.5">{item.icon}</span>
+                  <span className="leading-snug">{item.text}</span>
                 </div>
               ))}
             </div>
 
-            <div className="mt-5 p-4 rounded-xl bg-[rgba(255,255,255,0.08)] w-full max-w-[250px] mx-auto sm:mx-0 text-center sm:text-left">
-              <div className="text-[12px] font-bold mb-2 text-[#4ade80]">🚨 Emergency</div>
-              <div className="text-[12px] opacity-90">Police: 100 | Ambulance: 108 | Fire: 101</div>
-              <div className="text-[12px] opacity-90 mt-1">Women Helpline: 181 | Child: 1098</div>
+            <div className="p-4 rounded-xl bg-[rgba(239,68,68,0.1)] border border-[rgba(239,68,68,0.2)]">
+              <div className="text-[13px] font-bold mb-2 text-red-400 flex items-center gap-2">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+                </span>
+                Emergency Numbers
+              </div>
+              <div className="text-[12px] text-blue-100 mb-1">Police: <strong className="text-white">100</strong> | Ambulance: <strong className="text-white">108</strong></div>
+              <div className="text-[12px] text-blue-100">Women Helpline: <strong className="text-white">181</strong></div>
             </div>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="h-[1px] bg-[rgba(255,255,255,0.1)] my-6" />
+        <div className="h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.1)] to-transparent my-8" />
 
         {/* Bottom */}
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-4 text-center">
-          <div className="text-[12px] opacity-60">
-            © {year} RIHC — Rural Internet Help Center. {t('allRightsReserved')}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+          <div className="text-[13px] text-blue-200">
+            &copy; {year} Rural Internet Help Center. Govt of Andhra Pradesh.
           </div>
-          <div className="flex flex-wrap justify-center gap-4 md:gap-5">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
             {['Privacy Policy', 'Terms of Use', 'Accessibility', 'Grievance'].map(item => (
-              <span key={item} className="text-[12px] opacity-60 cursor-pointer hover:opacity-100 transition-opacity">
+              <span key={item} className="text-[13px] text-blue-200 cursor-pointer hover:text-white transition-colors">
                 {item}
               </span>
             ))}
           </div>
-          <div className="text-[12px] opacity-60 flex items-center justify-center gap-1.5 mt-2 lg:mt-0">
-            Made with <Heart size={12} className="text-[#e74c3c]" /> for Rural India
+          <div className="text-[13px] text-blue-200 flex items-center justify-center gap-1.5">
+            Designed with <Heart size={14} className="text-red-500 fill-red-500 mx-0.5" /> for Rural India
           </div>
         </div>
       </div>

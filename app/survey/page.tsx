@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useDatabase } from '@/contexts/DatabaseContext';
-import { CheckCircle, ChevronRight, BarChart2, Save } from 'lucide-react';
+import { CheckCircle2, ChevronRight, BarChart2, Save, FileText, CheckCircle, HelpCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const SECTIONS = [
   {
@@ -23,13 +24,13 @@ const SECTIONS = [
     ]
   },
   {
-    id: 'C', title: 'Section C: Awareness About Government & Educational Services', questions: [
+    id: 'C', title: 'Section C: Awareness About Govt Services', questions: [
       { id: 'knowledgeGovt', label: 'Are you aware of platforms like DigiLocker, UMANG, or MeeSeva?', type: 'radio', options: ['Yes, I use them', 'I know them but don’t use them', 'Never heard of them'] },
-      { id: 'servicesUsed', label: 'Which online services have you used? (Select all that apply)', type: 'checkbox', options: ['Applying for Certificates (Income/Caste)', 'Scholarship Registration', 'PM Kisan/Agri Schemes', 'Job Portals (NCS)', 'Paying Bills Online', 'None'] },
+      { id: 'servicesUsed', label: 'Which online services have you used? (Select all that apply)', type: 'checkbox', options: ['Applying for Certificates', 'Scholarship Registration', 'PM Kisan/Agri Schemes', 'Job Portals', 'Paying Bills Online', 'None'] },
       { id: 'whoHelps', label: 'Who helps you fill online applications?', type: 'radio', options: ['I do it myself', 'Family/Friends', 'MeeSeva/CSC Agent', 'Internet Cafe'] },
       { id: 'cscAwareness', label: 'Do you know where the nearest Common Service Center (CSC) is?', type: 'radio', options: ['Yes', 'No'] },
       { id: 'preferredLanguage', label: 'What is your preferred language for using online services?', type: 'radio', options: ['Telugu', 'English', 'Hindi', 'Other'] },
-      { id: 'missedDeadlines', label: 'Have you ever missed a government scheme or scholarship because you didn’t know the deadline?', type: 'radio', options: ['Yes, often', 'Sometimes', 'No, never'] },
+      { id: 'missedDeadlines', label: 'Have you ever missed a scheme because you didn’t know the deadline?', type: 'radio', options: ['Yes, often', 'Sometimes', 'No, never'] },
     ]
   },
   {
@@ -38,10 +39,10 @@ const SECTIONS = [
       { id: 'digitalKnowledge', label: 'Lack of Digital Knowledge (Don’t know how to navigate)', type: 'radio', options: ['Major Challenge', 'Minor Challenge', 'Not a Challenge'] },
       { id: 'smartphoneAvail', label: 'Smartphone / Internet Availability', type: 'radio', options: ['Major Challenge', 'Minor Challenge', 'Not a Challenge'] },
       { id: 'fearMistakes', label: 'Fear of Making Mistakes (Entering wrong details)', type: 'radio', options: ['Major Challenge', 'Minor Challenge', 'Not a Challenge'] },
-      { id: 'privacyConcerns', label: 'Privacy Concerns (Fear of sharing Aadhaar/Bank details)', type: 'radio', options: ['Major Challenge', 'Minor Challenge', 'Not a Challenge'] },
-      { id: 'dependenceAgents', label: 'Dependence on Agents (MeeSeva charging extra fees)', type: 'radio', options: ['Major Challenge', 'Minor Challenge', 'Not a Challenge'] },
-      { id: 'uploadComfort', label: 'How comfortable are you scanning and uploading documents (e.g., under 200kb)?', type: 'radio', options: ['Very Comfortable', 'Need Help', 'Cannot do it'] },
-      { id: 'onlineSafety', label: 'Do you feel safe doing financial transactions or sharing details online?', type: 'radio', options: ['Yes, always', 'Sometimes', 'No, I am afraid of scams'] },
+      { id: 'privacyConcerns', label: 'Privacy Concerns (Fear of sharing Aadhaar details)', type: 'radio', options: ['Major Challenge', 'Minor Challenge', 'Not a Challenge'] },
+      { id: 'dependenceAgents', label: 'Dependence on Agents (Extra fees)', type: 'radio', options: ['Major Challenge', 'Minor Challenge', 'Not a Challenge'] },
+      { id: 'uploadComfort', label: 'How comfortable are you scanning/uploading documents?', type: 'radio', options: ['Very Comfortable', 'Need Help', 'Cannot do it'] },
+      { id: 'onlineSafety', label: 'Do you feel safe sharing details online?', type: 'radio', options: ['Yes, always', 'Sometimes', 'No, I am afraid of scams'] },
     ]
   },
   {
@@ -84,7 +85,6 @@ export default function SurveyPage() {
   };
 
   const isSectionComplete = () => {
-    // Optional fields
     const optionalFields = ['name', 'remarks'];
     
     for (const q of section.questions) {
@@ -108,72 +108,91 @@ export default function SurveyPage() {
     toast.success('Survey submitted successfully! Thank you! 🙏');
   };
 
+  const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } };
+
   if (submitted) {
     return (
-      <div className="min-h-[90vh] flex items-center justify-center bg-[var(--bg)] p-4 md:p-6">
-        <div className="glass-card p-8 md:p-12 text-center w-full max-w-[520px]">
-          <div className="text-[64px] md:text-[72px] mb-4 md:mb-5">🙏</div>
-          <h2 className="text-[24px] md:text-[28px] font-black mb-3">Thank You!</h2>
-          <p className="text-[var(--text-muted)] mb-7 leading-relaxed text-sm md:text-base">
+      <div className="min-h-[90vh] flex items-center justify-center bg-[var(--bg)] p-4 md:p-6 relative">
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-white border border-[var(--card-border)] rounded-3xl p-8 md:p-12 text-center w-full max-w-[520px] shadow-2xl relative z-10 overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--primary)] opacity-5 rounded-bl-full" />
+          <div className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle2 size={48} className="text-[#27AE60]" />
+          </div>
+          <h2 className="text-3xl font-black mb-4 text-[var(--text)] tracking-tight">Thank You!</h2>
+          <p className="text-[var(--text-muted)] mb-8 leading-relaxed text-[15px] font-medium">
             Your responses to the Community Service Project Survey have been securely recorded. Your data is used anonymously to understand community needs and improve rural digital services.
           </p>
 
           <a href="/analytics" className="no-underline block w-full">
-            <button className="btn-primary w-full justify-center min-h-[48px] md:min-h-[52px]">
-              <BarChart2 size={18} /> View Live Analytics Dashboard
+            <button className="bg-[var(--primary)] hover:bg-[var(--primary-light)] text-white border-none py-4 px-6 rounded-xl font-bold text-[15px] flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20 transition-all w-full">
+              <BarChart2 size={20} /> View Live Analytics Dashboard
             </button>
           </a>
-        </div>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-[90vh] bg-[var(--bg)] flex flex-col pb-12">
+    <div className="min-h-[90vh] bg-[var(--bg)] flex flex-col pb-12 relative">
       {/* Header */}
-      <div className="bg-gradient-to-br from-[#1b4f72] to-[#0a2744] pt-24 pb-8 md:pb-10 px-4 md:px-6 text-white text-center">
-        <div className="text-4xl md:text-5xl mb-3 md:mb-4">📋</div>
-        <h1 className="text-xl md:text-[clamp(1.4rem,4vw,1.8rem)] font-black mb-2.5">Official Community Service Project Survey</h1>
-        <p className="opacity-80 max-w-[600px] mx-auto text-[13px] md:text-sm leading-relaxed">
-          This survey helps us understand the digital needs, challenges, and awareness levels of citizens in rural areas to improve the Rural Internet Help Center platform.
-        </p>
+      <div className="bg-[var(--primary)] pt-28 pb-20 px-4 md:px-6 text-white text-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--secondary)] opacity-10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3" />
+        
+        <div className="relative z-10 max-w-[800px] mx-auto">
+          <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-5 border border-white/20 backdrop-blur-md">
+            <FileText size={32} className="text-white" />
+          </div>
+          <h1 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">Community Needs Survey</h1>
+          <p className="opacity-80 max-w-[600px] mx-auto text-[15px] md:text-[17px] leading-relaxed font-medium">
+            Help us understand the digital challenges and awareness levels in rural Andhra Pradesh to improve the RIHC platform.
+          </p>
+        </div>
       </div>
 
-      {/* Progress */}
-      <div className="bg-[var(--card)] border-b border-[var(--card-border)] px-4 md:px-6 py-3 md:py-4 sticky top-[60px] md:top-[72px] z-10 shadow-sm">
-        <div className="max-w-[800px] mx-auto">
-          <div className="flex justify-between mb-2 text-[11px] md:text-[13px]">
-            <span className="text-[var(--text-muted)] font-semibold">Section {currentSectionIdx + 1} of {SECTIONS.length}</span>
-            <span className="font-bold text-[var(--primary)]">{Math.round(progress)}% complete</span>
+      {/* Progress Tracker */}
+      <div className="max-w-[800px] mx-auto w-full px-4 md:px-6 -mt-8 relative z-20 mb-8">
+        <div className="bg-white rounded-2xl shadow-lg border border-[var(--card-border)] p-5">
+          <div className="flex justify-between mb-3 text-[13px]">
+            <span className="text-[var(--text-muted)] font-bold uppercase tracking-wider">Section {currentSectionIdx + 1} of {SECTIONS.length}</span>
+            <span className="font-black text-[var(--primary)]">{Math.round(progress)}% Complete</span>
           </div>
-          <div className="progress-bar h-1.5 md:h-2">
-            <div className="progress-fill" style={{ width: `${progress}%` }} />
+          <div className="w-full h-3 bg-[var(--bg2)] rounded-full overflow-hidden border border-[var(--card-border)]">
+            <div className="h-full bg-[var(--primary)] rounded-full transition-all duration-500 ease-out relative" style={{ width: `${progress}%` }}>
+              <div className="absolute inset-0 bg-white/20 w-full animate-[shimmer_2s_infinite]" />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Form Area */}
-      <div className="flex-1 px-4 md:px-6 py-6 md:py-10">
-        <div className="max-w-[800px] mx-auto">
-          <div className="glass-card p-5 md:p-9">
-            <h2 className="text-lg md:text-[22px] font-extrabold mb-6 md:mb-8 text-[var(--primary)] border-b-2 border-[var(--card-border)] pb-3 md:pb-4 leading-tight">
-              {section.title}
+      <div className="flex-1 px-4 md:px-6 max-w-[800px] mx-auto w-full">
+        <AnimatePresence mode="wait">
+          <motion.div key={currentSectionIdx} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }} className="bg-white rounded-3xl shadow-sm border border-[var(--card-border)] p-6 md:p-10 mb-8">
+            <h2 className="text-xl md:text-2xl font-black mb-8 text-[var(--text)] pb-4 border-b-2 border-[var(--card-border)] flex items-center gap-3">
+              <span className="w-8 h-8 rounded-lg bg-[var(--primary)] text-white flex items-center justify-center text-[15px]">{section.id}</span>
+              {section.title.split(': ')[1]}
             </h2>
 
-            <div className="flex flex-col gap-6 md:gap-8 mb-8 md:mb-10">
+            <div className="flex flex-col gap-8 mb-10">
               {section.questions.map(q => {
                 const isOptional = q.id === 'name' || q.id === 'remarks';
                 
                 return (
                   <div key={q.id}>
-                    <label className="text-[14px] md:text-[16px] font-bold mb-2 md:mb-3 block text-[var(--text)] leading-snug">
-                      {q.label} {!isOptional && <span className="text-[#e74c3c]">*</span>}
+                    <label className="text-[15px] md:text-[16px] font-extrabold mb-3 flex items-start gap-2 text-[var(--text)] leading-snug">
+                      <HelpCircle size={18} className="text-[var(--primary)] shrink-0 mt-0.5" />
+                      <div>
+                        {q.label} {!isOptional && <span className="text-[#E74C3C]">*</span>}
+                        {isOptional && <span className="text-[12px] text-[var(--text-muted)] font-medium ml-2">(Optional)</span>}
+                      </div>
                     </label>
 
                     {q.type === 'text' && (
                       <input 
                         type="text" 
-                        className="input-field w-full py-3 md:py-3.5 px-4 text-sm md:text-[15px]" 
+                        className="w-full py-3.5 px-4 rounded-xl border-2 border-[var(--card-border)] bg-[var(--bg)] text-[15px] focus:outline-none focus:border-[var(--primary)] transition-all font-medium" 
                         value={answers[q.id] || ''} 
                         onChange={(e) => handleAnswer(q.id, e.target.value)}
                         placeholder="Type your answer here..."
@@ -182,7 +201,7 @@ export default function SurveyPage() {
 
                     {q.type === 'textarea' && (
                       <textarea 
-                        className="input-field w-full py-3 md:py-3.5 px-4 text-sm md:text-[15px] resize-y min-h-[100px]" 
+                        className="w-full py-3.5 px-4 rounded-xl border-2 border-[var(--card-border)] bg-[var(--bg)] text-[15px] focus:outline-none focus:border-[var(--primary)] transition-all font-medium resize-y min-h-[120px]" 
                         rows={4}
                         value={answers[q.id] || ''} 
                         onChange={(e) => handleAnswer(q.id, e.target.value)}
@@ -191,7 +210,7 @@ export default function SurveyPage() {
                     )}
 
                     {(q.type === 'radio' || q.type === 'checkbox') && (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 md:gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {q.options?.map(opt => {
                           const isSelected = q.type === 'checkbox'
                             ? ((answers[q.id] as string[]) || []).includes(opt)
@@ -199,11 +218,11 @@ export default function SurveyPage() {
 
                           return (
                             <button key={opt} onClick={() => handleAnswer(q.id, opt, q.type === 'checkbox')}
-                              className={`p-3 md:p-4 rounded-xl cursor-pointer text-left flex items-start gap-3 transition-all min-h-[44px] border-2 ${isSelected ? 'border-[var(--primary)] bg-[rgba(26,107,58,0.08)] text-[var(--primary)] font-bold' : 'border-[var(--card-border)] bg-transparent text-[var(--text)] font-medium hover:border-[rgba(0,0,0,0.1)] dark:hover:border-[rgba(255,255,255,0.1)]'}`}>
-                              <div className={`w-5 h-5 md:w-[22px] md:h-[22px] shrink-0 border-2 flex items-center justify-center mt-0.5 ${q.type === 'checkbox' ? 'rounded-md' : 'rounded-full'} ${isSelected ? 'border-[var(--primary)] bg-[var(--primary)]' : 'border-[var(--card-border)] bg-[var(--bg2)]'}`}>
-                                {isSelected && <CheckCircle size={14} className="text-white" />}
+                              className={`p-4 rounded-xl cursor-pointer text-left flex items-start gap-3 transition-all min-h-[56px] border-2 ${isSelected ? 'border-[var(--primary)] bg-blue-50 shadow-sm' : 'border-[var(--card-border)] bg-white hover:border-[var(--text-muted)] hover:bg-[var(--bg2)]'}`}>
+                              <div className={`w-5 h-5 shrink-0 border-2 flex items-center justify-center mt-0.5 transition-colors ${q.type === 'checkbox' ? 'rounded-md' : 'rounded-full'} ${isSelected ? 'border-[var(--primary)] bg-[var(--primary)]' : 'border-[var(--card-border)] bg-white'}`}>
+                                {isSelected && <CheckCircle size={14} className="text-white" strokeWidth={3} />}
                               </div>
-                              <span className="text-[13px] md:text-[14px] leading-snug pt-0.5">{opt}</span>
+                              <span className={`text-[14px] leading-snug pt-0.5 ${isSelected ? 'font-bold text-[var(--primary)]' : 'font-medium text-[var(--text)]'}`}>{opt}</span>
                             </button>
                           );
                         })}
@@ -215,15 +234,15 @@ export default function SurveyPage() {
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 border-t-2 border-[var(--card-border)] pt-5 md:pt-6">
+            <div className="flex flex-col sm:flex-row gap-4 border-t-2 border-[var(--card-border)] pt-8">
               {currentSectionIdx > 0 && (
-                <button className="btn-outline flex-1 justify-center min-h-[48px] text-[14px] md:text-[15px]" onClick={() => setCurrentSectionIdx(s => s - 1)}>
-                  ← Previous Section
+                <button className="bg-white hover:bg-[var(--bg2)] text-[var(--text)] border-2 border-[var(--card-border)] py-4 px-6 rounded-xl text-[15px] font-bold flex-1 transition-colors" onClick={() => setCurrentSectionIdx(s => s - 1)}>
+                  ← Previous
                 </button>
               )}
               
               {currentSectionIdx < SECTIONS.length - 1 ? (
-                <button className="btn-primary sm:flex-[2] justify-center min-h-[48px] text-[14px] md:text-[15px] transition-opacity" 
+                <button className="bg-[var(--primary)] hover:bg-[var(--primary-light)] text-white border-none py-4 px-6 rounded-xl text-[15px] font-bold flex-[2] flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed" 
                   onClick={() => {
                     if (isSectionComplete()) {
                       setCurrentSectionIdx(s => s + 1);
@@ -232,29 +251,24 @@ export default function SurveyPage() {
                       toast.error('Please complete all required fields in this section.');
                     }
                   }}
-                  style={{ opacity: isSectionComplete() ? 1 : 0.5 }}>
-                  Next Section <ChevronRight size={18} />
+                  disabled={!isSectionComplete()}>
+                  Next Section <ChevronRight size={20} />
                 </button>
               ) : (
-                <button className="btn-primary sm:flex-[2] justify-center min-h-[48px] text-[14px] md:text-[15px] transition-opacity" onClick={() => {
+                <button className="bg-[#27AE60] hover:bg-[#219653] text-white border-none py-4 px-6 rounded-xl text-[15px] font-bold flex-[2] flex items-center justify-center gap-2 shadow-lg shadow-green-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed" onClick={() => {
                   if (isSectionComplete()) {
                     handleSubmit();
                   } else {
                     toast.error('Please complete all required fields before submitting.');
                   }
                 }}
-                  style={{ opacity: isSectionComplete() && !isSubmitting ? 1 : 0.5 }}
-                  disabled={isSubmitting}>
+                  disabled={!isSectionComplete() || isSubmitting}>
                   {isSubmitting ? 'Submitting securely...' : 'Submit Official Survey ✓'}
                 </button>
               )}
             </div>
-
-            <p className="text-center text-[11px] md:text-xs text-[var(--text-muted)] mt-4 md:mt-5 font-semibold">
-              Section {currentSectionIdx + 1} of {SECTIONS.length}
-            </p>
-          </div>
-        </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

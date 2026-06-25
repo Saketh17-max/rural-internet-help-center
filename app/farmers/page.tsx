@@ -1,6 +1,7 @@
 'use client';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { ExternalLink, TrendingUp, Cloud, Sun, CloudRain } from 'lucide-react';
+import { ExternalLink, TrendingUp, TrendingDown, Sun, CloudRain, CloudSun, Wind, Droplets, MapPin, FileText, ShieldCheck, CreditCard, HeartPulse, Store, Leaf, Sprout } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const CROP_PRICES = [
   { crop: 'Rice (Fine)', price: '₹2,183/quintal', change: '+2.3%', positive: true },
@@ -14,108 +15,126 @@ const CROP_PRICES = [
 ];
 
 const SCHEMES = [
-  { name: 'PM-KISAN', amount: '₹6,000/year', desc: '₹2,000 every 4 months to small/marginal farmers', link: 'https://pmkisan.gov.in', icon: '🌾' },
-  { name: 'PM Fasal Bima Yojana', amount: 'Up to full crop value', desc: 'Crop insurance against natural disasters, pests, and diseases', link: 'https://pmfby.gov.in', icon: '🛡️' },
-  { name: 'Kisan Credit Card', amount: 'Up to ₹3 lakh', desc: 'Low-interest credit for crop expenses and other needs', link: 'https://www.rbi.org.in', icon: '💳' },
-  { name: 'PM Kisan Maandhan', amount: '₹3,000/month pension', desc: 'Pension scheme for farmers above 60 years', link: 'https://maandhan.in', icon: '👴' },
-  { name: 'e-NAM', amount: 'Market access', desc: 'Sell crops directly to buyers across India at best prices', link: 'https://enam.gov.in', icon: '🏪' },
-  { name: 'Soil Health Card', amount: 'Free', desc: 'Get detailed soil analysis and fertilizer recommendations', link: 'https://soilhealth.dac.gov.in', icon: '🌱' },
+  { name: 'PM-KISAN', amount: '₹6,000/year', desc: '₹2,000 every 4 months to small/marginal farmers', link: 'https://pmkisan.gov.in', icon: <Sprout size={28}/> },
+  { name: 'PM Fasal Bima Yojana', amount: 'Up to full crop value', desc: 'Crop insurance against natural disasters, pests, and diseases', link: 'https://pmfby.gov.in', icon: <ShieldCheck size={28}/> },
+  { name: 'Kisan Credit Card', amount: 'Up to ₹3 lakh', desc: 'Low-interest credit for crop expenses and other needs', link: 'https://www.rbi.org.in', icon: <CreditCard size={28}/> },
+  { name: 'PM Kisan Maandhan', amount: '₹3,000/month pension', desc: 'Pension scheme for farmers above 60 years', link: 'https://maandhan.in', icon: <HeartPulse size={28}/> },
+  { name: 'e-NAM', amount: 'Market access', desc: 'Sell crops directly to buyers across India at best prices', link: 'https://enam.gov.in', icon: <Store size={28}/> },
+  { name: 'Soil Health Card', amount: 'Free', desc: 'Get detailed soil analysis and fertilizer recommendations', link: 'https://soilhealth.dac.gov.in', icon: <Leaf size={28}/> },
 ];
 
 const WEATHER = [
-  { day: 'Today', icon: '⛅', temp: '32°C', rain: '20%', desc: 'Partly cloudy' },
-  { day: 'Tomorrow', icon: '🌧️', temp: '28°C', rain: '70%', desc: 'Heavy rain' },
-  { day: 'Wed', icon: '🌤️', temp: '31°C', rain: '10%', desc: 'Mostly sunny' },
-  { day: 'Thu', icon: '☀️', temp: '34°C', rain: '5%', desc: 'Clear sky' },
-  { day: 'Fri', icon: '🌧️', temp: '27°C', rain: '80%', desc: 'Thunderstorm' },
+  { day: 'Today', icon: <CloudSun size={32} className="text-yellow-500" />, temp: '32°C', rain: '20%', desc: 'Partly cloudy' },
+  { day: 'Tomorrow', icon: <CloudRain size={32} className="text-blue-500" />, temp: '28°C', rain: '70%', desc: 'Heavy rain' },
+  { day: 'Wed', icon: <Sun size={32} className="text-yellow-500" />, temp: '31°C', rain: '10%', desc: 'Mostly sunny' },
+  { day: 'Thu', icon: <Sun size={32} className="text-yellow-500" />, temp: '34°C', rain: '5%', desc: 'Clear sky' },
+  { day: 'Fri', icon: <CloudRain size={32} className="text-gray-500" />, temp: '27°C', rain: '80%', desc: 'Thunderstorm' },
 ];
 
 export default function FarmersPage() {
   const { t } = useLanguage();
+  const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } };
 
   return (
-    <div className="bg-[var(--bg)] min-h-[90vh] pb-12">
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12 relative">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-[#1a4001] to-[#2d6a4f] pt-24 pb-10 md:pb-12 px-4 md:px-6 text-white text-center">
-        <div className="text-4xl md:text-5xl mb-3 md:mb-4">🌾</div>
-        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.4rem)] font-black mb-2.5">{t('farmersTitle')}</h1>
-        <p className="opacity-80 max-w-[520px] mx-auto text-[13px] md:text-[15px] leading-relaxed">Crop prices, weather forecasts, government schemes and agricultural support for farmers</p>
+      <div className="bg-[#1A6B3A] pt-28 pb-20 px-4 md:px-6 text-white text-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-green-400 opacity-20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-400 opacity-20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3" />
+        
+        <div className="relative z-10 max-w-[800px] mx-auto">
+          <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-white/20 backdrop-blur-md">
+            <Sprout size={40} className="text-white" />
+          </div>
+          <h1 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">{t('farmersTitle')}</h1>
+          <p className="opacity-90 max-w-[600px] mx-auto mb-8 text-[15px] md:text-[17px] leading-relaxed font-medium">Crop prices, weather forecasts, government schemes and comprehensive agricultural support for farmers.</p>
+        </div>
       </div>
 
-      <div className="page-container px-4 md:px-6 py-6 md:py-10">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 -mt-12 relative z-20">
         {/* Quick Links */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {[
-            { icon: '💹', label: t('cropPrices'), href: '#prices', color: '#27ae60' },
-            { icon: '🌤️', label: t('weather'), href: '#weather', color: '#2980b9' },
-            { icon: '📋', label: t('govSchemes'), href: '#schemes', color: '#e67e22' },
-            { icon: '🛡️', label: t('cropInsurance'), href: '#schemes', color: '#8e44ad' },
+            { icon: <TrendingUp size={24}/>, label: t('cropPrices'), href: '#prices', color: '#0F4C81' },
+            { icon: <CloudSun size={24}/>, label: t('weather'), href: '#weather', color: '#2F80ED' },
+            { icon: <FileText size={24}/>, label: t('govSchemes'), href: '#schemes', color: '#E67E22' },
+            { icon: <ShieldCheck size={24}/>, label: t('cropInsurance'), href: '#schemes', color: '#8E44AD' },
           ].map(item => (
             <a key={item.label} href={item.href} className="no-underline block h-full">
-              <div className="service-card flex flex-col items-center justify-center p-4 md:p-5 h-full transition-transform active:scale-95">
-                <div className="w-12 h-12 md:w-[52px] md:h-[52px] rounded-xl flex items-center justify-center text-2xl md:text-[26px] mb-3" style={{ background: `${item.color}15` }}>{item.icon}</div>
-                <div className="font-bold text-[13px] md:text-[14px] text-center text-[var(--text)]">{item.label}</div>
+              <div className="bg-white rounded-3xl p-6 border-2 border-[var(--card-border)] hover:border-current flex flex-col items-center justify-center h-full transition-all shadow-sm hover:shadow-md hover:-translate-y-1 group" style={{ color: item.color }}>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform" style={{ background: `${item.color}15` }}>{item.icon}</div>
+                <div className="font-extrabold text-[14px] md:text-[15px] text-center text-[var(--text)] group-hover:text-current transition-colors">{item.label}</div>
               </div>
             </a>
           ))}
         </div>
 
         {/* Weather & Prices Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-6 md:gap-8 mb-10 md:mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1.8fr] gap-6 md:gap-8 mb-12">
           {/* Weather */}
           <section id="weather" className="flex flex-col">
-            <h2 className="text-[18px] md:text-[20px] font-extrabold mb-4 flex items-center gap-2">
-              🌡️ {t('weather')} - Guntur
-            </h2>
-            <div className="bg-gradient-to-br from-[#1b4f72] to-[#2980b9] rounded-2xl p-5 md:p-6 text-white mb-3 md:mb-4 shadow-md">
-              <div className="flex items-center gap-4 md:gap-5 mb-5 md:mb-6">
-                <div className="text-[48px] md:text-[56px] leading-none">⛅</div>
+            <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white rounded-3xl shadow-sm border border-[var(--card-border)] p-6 mb-6">
+              <h2 className="text-[20px] font-extrabold flex items-center gap-2 text-[var(--text)]">
+                <CloudSun size={24} className="text-[#2F80ED]" /> {t('weather')}
+              </h2>
+            </motion.div>
+            
+            <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-gradient-to-br from-[#0F4C81] to-[#2F80ED] rounded-3xl p-6 md:p-8 text-white mb-6 shadow-lg relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl" />
+              <div className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider mb-6 bg-white/20 w-fit px-3 py-1.5 rounded-lg backdrop-blur-sm"><MapPin size={16}/> Guntur District</div>
+              
+              <div className="flex items-center gap-6 mb-8">
+                <CloudSun size={64} className="text-yellow-300 shrink-0" />
                 <div>
-                  <div className="text-[32px] md:text-[36px] font-black leading-tight">32°C</div>
-                  <div className="opacity-90 text-[13px] md:text-[14px] font-medium">Partly Cloudy • 65% Humidity</div>
-                  <div className="opacity-80 text-[12px] md:text-[13px] mt-1 flex items-center gap-1">🌬️ Wind: 12 km/h NE</div>
+                  <div className="text-[48px] md:text-[56px] font-black leading-tight">32°C</div>
+                  <div className="opacity-90 text-[14px] md:text-[15px] font-bold">Partly Cloudy • 65% Humidity</div>
+                  <div className="opacity-90 text-[13px] md:text-[14px] mt-2 flex items-center gap-2 font-medium bg-black/10 px-3 py-1 rounded-lg w-fit"><Wind size={16}/> Wind: 12 km/h NE</div>
                 </div>
               </div>
-              <div className="p-3 md:p-3.5 rounded-xl bg-[rgba(255,255,255,0.15)] text-[12px] md:text-[13px] leading-relaxed border border-[rgba(255,255,255,0.1)]">
-                🌾 <strong className="font-bold">Farming Advisory:</strong> Good day for irrigation. Rain expected tomorrow — harvest if possible.
+              <div className="p-4 rounded-2xl bg-white/10 text-[13px] md:text-[14px] font-medium leading-relaxed border border-white/20 backdrop-blur-sm flex items-start gap-3">
+                <Sprout size={20} className="shrink-0 text-green-300 mt-0.5" />
+                <div><strong className="font-extrabold text-white">Farming Advisory:</strong> Good day for irrigation. Heavy rain expected tomorrow — accelerate harvest if possible.</div>
               </div>
-            </div>
+            </motion.div>
             
-            <div className="flex gap-2.5 md:gap-3 overflow-x-auto hide-scrollbar pb-2 pt-1 px-1 -mx-1">
+            <motion.div initial="hidden" animate="visible" variants={fadeUp} className="flex gap-4 overflow-x-auto hide-scrollbar pb-2 pt-1 px-1 -mx-1 snap-x">
               {WEATHER.map(w => (
-                <div key={w.day} className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-2.5 md:p-3 text-center min-w-[72px] md:min-w-[80px] shrink-0 shadow-sm">
-                  <div className="text-[10px] md:text-[11px] text-[var(--text-muted)] mb-1 font-semibold">{w.day}</div>
-                  <div className="text-2xl md:text-[26px] mb-1">{w.icon}</div>
-                  <div className="font-extrabold text-[13px] md:text-[15px]">{w.temp}</div>
-                  <div className="text-[10px] text-[#2980b9] font-bold mt-0.5">💧 {w.rain}</div>
+                <div key={w.day} className="bg-white border border-[var(--card-border)] rounded-2xl p-4 text-center min-w-[100px] shrink-0 shadow-sm snap-start">
+                  <div className="text-[12px] text-[var(--text-muted)] mb-3 font-bold uppercase tracking-wider">{w.day}</div>
+                  <div className="flex justify-center mb-3">{w.icon}</div>
+                  <div className="font-black text-[18px] text-[var(--text)]">{w.temp}</div>
+                  <div className="text-[12px] text-[#2F80ED] font-bold mt-1 flex items-center justify-center gap-1"><Droplets size={12}/> {w.rain}</div>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </section>
 
           {/* Crop Prices */}
           <section id="prices">
-            <h2 className="text-[18px] md:text-[20px] font-extrabold mb-4 flex items-center gap-2">
-              💹 {t('cropPrices')} — MSP Rates
-            </h2>
-            <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-2xl overflow-hidden shadow-sm flex flex-col h-full">
-              <div className="overflow-x-auto w-full">
-                <table className="data-table w-full text-left border-collapse min-w-[400px]">
+            <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white rounded-3xl shadow-sm border border-[var(--card-border)] p-6 mb-6">
+              <h2 className="text-[20px] font-extrabold flex items-center gap-2 text-[var(--text)]">
+                <TrendingUp size={24} className="text-[#1A6B3A]" /> {t('cropPrices')} — MSP Rates
+              </h2>
+            </motion.div>
+            
+            <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white border border-[var(--card-border)] rounded-3xl overflow-hidden shadow-sm flex flex-col h-[calc(100%-90px)]">
+              <div className="overflow-x-auto w-full flex-1">
+                <table className="w-full text-left border-collapse min-w-[500px]">
                   <thead>
                     <tr>
-                      <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">Crop</th>
-                      <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">MSP / Market Price</th>
-                      <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">Change</th>
+                      <th className="text-[12px] text-[var(--text-muted)] font-extrabold uppercase tracking-wider p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">Crop Item</th>
+                      <th className="text-[12px] text-[var(--text-muted)] font-extrabold uppercase tracking-wider p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">MSP / Market Price</th>
+                      <th className="text-[12px] text-[var(--text-muted)] font-extrabold uppercase tracking-wider p-4 bg-[var(--bg2)] border-b border-[var(--card-border)] text-right">Daily Change</th>
                     </tr>
                   </thead>
                   <tbody>
                     {CROP_PRICES.map((c, i) => (
-                      <tr key={c.crop} className={i !== CROP_PRICES.length - 1 ? 'border-b border-[var(--card-border)]' : ''}>
-                        <td className="font-bold text-[13px] md:text-[14px] p-3 md:p-4">🌾 {c.crop}</td>
-                        <td className="font-extrabold text-[13px] md:text-[14px] p-3 md:p-4">{c.price}</td>
-                        <td className="p-3 md:p-4">
-                          <span className={`font-bold text-[12px] md:text-[13px] px-2 py-1 rounded-md ${c.positive ? 'text-[#27ae60] bg-[rgba(39,174,96,0.1)]' : 'text-[#e74c3c] bg-[rgba(231,76,60,0.1)]'}`}>
-                            {c.positive ? '▲' : '▼'} {c.change}
+                      <tr key={c.crop} className={`hover:bg-gray-50 transition-colors ${i !== CROP_PRICES.length - 1 ? 'border-b border-[var(--card-border)]' : ''}`}>
+                        <td className="font-bold text-[14px] p-4 text-[var(--text)] flex items-center gap-3"><Sprout size={18} className="text-green-600 opacity-50"/> {c.crop}</td>
+                        <td className="font-black text-[15px] p-4 text-[var(--text)]">{c.price}</td>
+                        <td className="p-4 text-right">
+                          <span className={`inline-flex items-center gap-1 font-bold text-[13px] px-2.5 py-1 rounded-lg ${c.positive ? 'text-green-700 bg-green-50 border border-green-100' : 'text-red-700 bg-red-50 border border-red-100'}`}>
+                            {c.positive ? <TrendingUp size={14}/> : <TrendingDown size={14}/>} {c.change}
                           </span>
                         </td>
                       </tr>
@@ -123,66 +142,78 @@ export default function FarmersPage() {
                   </tbody>
                 </table>
               </div>
-              <div className="p-3 md:p-4 border-t border-[var(--card-border)] text-[10px] md:text-[11px] text-[var(--text-muted)] font-medium mt-auto bg-[var(--bg2)]">
-                Source: APMC Market Prices • Updated daily • Last updated: 25 Jun 2024
+              <div className="p-4 border-t border-[var(--card-border)] text-[12px] text-[var(--text-muted)] font-bold bg-[var(--bg2)] flex items-center gap-2">
+                <ShieldCheck size={16} /> Source: APMC Market Prices • Updated daily
               </div>
-            </div>
+            </motion.div>
           </section>
         </div>
 
         {/* Government Schemes */}
-        <section id="schemes" className="mb-10 md:mb-12">
-          <h2 className="text-[18px] md:text-[22px] font-extrabold mb-5 md:mb-6 flex items-center gap-2">
-            📋 {t('govSchemes')}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 md:gap-4">
-            {SCHEMES.map(scheme => (
-              <div key={scheme.name} className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-2xl p-4 md:p-5 flex flex-col gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all">
-                <div className="flex gap-3 items-center">
-                  <div className="text-[28px] md:text-[32px] shrink-0">{scheme.icon}</div>
+        <section id="schemes" className="mb-12">
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white rounded-3xl shadow-sm border border-[var(--card-border)] p-6 mb-6">
+            <h2 className="text-[20px] md:text-[24px] font-extrabold flex items-center gap-3 text-[var(--text)]">
+              <FileText size={24} className="text-[#E67E22]" /> {t('govSchemes')}
+            </h2>
+          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {SCHEMES.map((scheme, i) => (
+              <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={i} key={scheme.name} className="bg-white border-2 border-[var(--card-border)] hover:border-[#E67E22] rounded-3xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all group">
+                <div className="flex gap-4 items-center">
+                  <div className="w-14 h-14 rounded-2xl bg-orange-50 text-[#E67E22] flex items-center justify-center shrink-0 border border-orange-100 group-hover:scale-110 transition-transform">
+                    {scheme.icon}
+                  </div>
                   <div className="min-w-0">
-                    <div className="font-extrabold text-[14px] md:text-[15px] leading-tight truncate">{scheme.name}</div>
-                    <div className="text-[12px] md:text-[13px] text-[var(--primary)] font-bold mt-0.5">{scheme.amount}</div>
+                    <div className="font-black text-[16px] md:text-[18px] leading-tight truncate text-[var(--text)] group-hover:text-[#E67E22] transition-colors">{scheme.name}</div>
+                    <div className="text-[13px] font-extrabold text-[#27AE60] mt-1 bg-green-50 px-2.5 py-1 rounded-md w-fit border border-green-100">{scheme.amount}</div>
                   </div>
                 </div>
-                <p className="text-[12px] md:text-[13px] text-[var(--text-muted)] leading-relaxed flex-1">{scheme.desc}</p>
+                <p className="text-[13px] md:text-[14px] font-medium text-[var(--text-muted)] leading-relaxed flex-1">{scheme.desc}</p>
                 <a href={scheme.link} target="_blank" rel="noopener noreferrer" className="no-underline w-full mt-2">
-                  <button className="btn-outline w-full justify-center text-[12px] md:text-[13px] min-h-[40px] md:min-h-[44px]">
-                    <ExternalLink size={14} className="mr-1.5" /> Learn More
+                  <button className="bg-white hover:bg-orange-50 text-[#E67E22] border-2 border-[#E67E22] w-full py-3 rounded-xl text-[13px] font-bold flex items-center justify-center gap-2 transition-colors">
+                    Learn More <ExternalLink size={16} />
                   </button>
                 </a>
-              </div>
+              </motion.div>
             ))}
           </div>
         </section>
 
         {/* Soil & Fertilizer Advisor */}
-        <section className="bg-gradient-to-br from-[#1a6b3a] to-[#27ae60] rounded-2xl md:rounded-[20px] p-5 md:p-8 text-white shadow-lg overflow-hidden relative">
-          <div className="absolute right-0 top-0 opacity-10 text-[150px] md:text-[250px] pointer-events-none translate-x-1/4 -translate-y-1/4">🌱</div>
+        <section className="bg-gradient-to-br from-[#1A6B3A] to-[#27AE60] rounded-3xl p-8 md:p-12 text-white shadow-xl overflow-hidden relative">
+          <div className="absolute right-0 top-0 opacity-10 text-[200px] pointer-events-none translate-x-1/4 -translate-y-1/4">
+            <Leaf size={300} />
+          </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
             <div>
-              <div className="text-[40px] md:text-[48px] mb-3 md:mb-4">🌱</div>
-              <h2 className="text-[20px] md:text-[24px] font-extrabold mb-2.5 md:mb-3 leading-tight">Soil Health & Fertilizer Advisor</h2>
-              <p className="opacity-90 leading-relaxed mb-5 md:mb-6 text-[13px] md:text-[15px] max-w-[480px]">Get your soil tested at nearest Krishi Vigyan Kendra (KVK) and receive personalized fertilizer recommendations.</p>
+              <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center mb-6 backdrop-blur-md">
+                <Leaf size={40} className="text-white" />
+              </div>
+              <h2 className="text-[24px] md:text-[32px] font-black mb-4 leading-tight">Soil Health & Fertilizer Advisor</h2>
+              <p className="opacity-90 leading-relaxed mb-8 text-[15px] md:text-[17px] font-medium max-w-[500px]">
+                Get your soil tested at the nearest Krishi Vigyan Kendra (KVK) and receive personalized, scientific fertilizer recommendations to maximize yield.
+              </p>
               <a href="https://soilhealth.dac.gov.in" target="_blank" rel="noopener noreferrer" className="inline-block w-full sm:w-auto">
-                <button className="w-full sm:w-auto py-3 px-6 rounded-full bg-[rgba(255,255,255,0.2)] border-2 border-[rgba(255,255,255,0.4)] text-white font-bold text-[14px] md:text-[15px] hover:bg-[rgba(255,255,255,0.3)] transition-colors min-h-[48px] shadow-none">
+                <button className="w-full sm:w-auto py-4 px-8 rounded-2xl bg-white text-[#1A6B3A] font-black text-[15px] hover:bg-gray-50 transition-colors shadow-lg hover:-translate-y-1">
                   Get Soil Health Card
                 </button>
               </a>
             </div>
             
-            <div className="grid grid-cols-2 gap-2.5 md:gap-3">
+            <div className="grid grid-cols-2 gap-4">
               {[
-                { icon: '🧪', label: 'N-P-K Analysis', desc: 'Nitrogen, Phosphorus, Potassium levels' },
-                { icon: '⚗️', label: 'pH Level', desc: 'Soil acidity/alkalinity' },
-                { icon: '💧', label: 'Moisture', desc: 'Water retention capacity' },
-                { icon: '🌿', label: 'Organic Matter', desc: 'Organic carbon content' },
+                { icon: <Leaf size={24}/>, label: 'N-P-K Analysis', desc: 'Nitrogen, Phosphorus, Potassium' },
+                { icon: <ShieldCheck size={24}/>, label: 'pH Level', desc: 'Soil acidity/alkalinity balance' },
+                { icon: <Droplets size={24}/>, label: 'Moisture', desc: 'Water retention capacity' },
+                { icon: <Sprout size={24}/>, label: 'Organic Matter', desc: 'Organic carbon content' },
               ].map(item => (
-                <div key={item.label} className="p-3 md:p-4 rounded-xl bg-[rgba(255,255,255,0.15)] border border-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.2)] transition-colors">
-                  <div className="text-[20px] md:text-[24px] mb-1.5 md:mb-2">{item.icon}</div>
-                  <div className="font-extrabold text-[12px] md:text-[13px] mb-0.5">{item.label}</div>
-                  <div className="text-[10px] md:text-[11px] opacity-80 leading-snug">{item.desc}</div>
+                <div key={item.label} className="p-5 rounded-2xl bg-white/10 border border-white/20 hover:bg-white/15 transition-colors backdrop-blur-sm">
+                  <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-white mb-4">
+                    {item.icon}
+                  </div>
+                  <div className="font-extrabold text-[14px] md:text-[15px] mb-1">{item.label}</div>
+                  <div className="text-[12px] opacity-80 leading-relaxed font-medium">{item.desc}</div>
                 </div>
               ))}
             </div>

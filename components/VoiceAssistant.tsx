@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Mic, MicOff, Volume2, VolumeX, X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function VoiceAssistant() {
   const { language } = useLanguage();
@@ -69,101 +70,84 @@ export default function VoiceAssistant() {
     <>
       {/* Voice FAB */}
       <button
-        className={`voice-btn ${listening ? 'listening' : ''}`}
         onClick={() => setShowPanel(o => !o)}
         title="Voice Assistant"
-        style={{ bottom: 100 }}
+        className={`fixed bottom-[96px] right-6 w-12 h-12 rounded-full border-none cursor-pointer flex items-center justify-center transition-all duration-300 z-[900] shadow-lg hover:scale-110 active:scale-95 ${listening ? 'bg-red-500 text-white animate-pulse' : 'bg-[var(--secondary)] text-white'}`}
       >
-        {listening ? <MicOff size={22} /> : <Mic size={22} />}
+        {listening ? <MicOff size={20} /> : <Mic size={20} />}
       </button>
 
       {/* Voice Panel */}
-      {showPanel && (
-        <div style={{
-          position: 'fixed', bottom: 168, right: 24,
-          width: 300, background: 'var(--card)',
-          border: '1px solid var(--card-border)', borderRadius: '16px',
-          padding: '20px', boxShadow: '0 16px 48px rgba(0,0,0,0.15)',
-          zIndex: 900,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <div style={{ fontWeight: 700, fontSize: '15px', display: 'flex', alignItems: 'center', gap: 8 }}>
-              🎤 Voice Assistant
-            </div>
-            <button onClick={() => setShowPanel(false)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
-              <X size={16} />
-            </button>
-          </div>
-
-          {/* Language indicator */}
-          <div style={{
-            padding: '8px 12px', borderRadius: '8px', background: 'var(--bg2)',
-            fontSize: '12px', color: 'var(--text-muted)', marginBottom: 16, textAlign: 'center',
-          }}>
-            Language: <strong>{language === 'en' ? 'English' : language === 'te' ? 'తెలుగు' : 'हिंदी'}</strong>
-          </div>
-
-          {/* Mic Button */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
-            <div style={{ position: 'relative' }}>
-              {listening && (
-                <div style={{
-                  position: 'absolute', inset: -8,
-                  borderRadius: '50%', border: '2px solid var(--secondary)',
-                  animation: 'pulse-ring 1.5s ease-out infinite',
-                }} />
-              )}
-              <button
-                onClick={toggleListen}
-                style={{
-                  width: 64, height: 64, borderRadius: '50%',
-                  background: listening
-                    ? 'linear-gradient(135deg, #e74c3c, #c0392b)'
-                    : 'linear-gradient(135deg, #1b4f72, #2980b9)',
-                  border: 'none', color: 'white', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: '0 4px 20px rgba(27,79,114,0.4)',
-                  transition: 'all 0.2s',
-                }}
-              >
-                {listening ? <MicOff size={28} /> : <Mic size={28} />}
+      <AnimatePresence>
+        {showPanel && (
+          <motion.div 
+            initial={{ opacity: 0, x: 50, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 50, scale: 0.9 }}
+            transition={{ duration: 0.2 }}
+            className="fixed bottom-[160px] right-6 w-[320px] bg-[var(--card)] border border-[var(--card-border)] rounded-2xl p-5 shadow-xl z-[900] overflow-hidden"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="font-bold text-[15px] flex items-center gap-2 text-[#0F4C81]">
+                <Mic size={18} /> Voice Assistant
+              </div>
+              <button onClick={() => setShowPanel(false)}
+                className="p-1.5 rounded-lg bg-[var(--bg2)] text-[var(--text-muted)] hover:bg-[var(--card-border)] border-none cursor-pointer transition-colors">
+                <X size={16} />
               </button>
             </div>
-          </div>
 
-          {/* Transcript */}
-          {transcript && (
-            <div style={{
-              padding: '10px 12px', borderRadius: '8px',
-              background: 'var(--bg2)', fontSize: '13px', color: 'var(--text)',
-              marginBottom: 12, minHeight: 40, lineHeight: 1.5,
-            }}>
-              {transcript}
+            {/* Language indicator */}
+            <div className="px-3 py-2 rounded-xl bg-[var(--bg)] text-[12px] text-[var(--text-muted)] mb-5 text-center font-medium border border-[var(--card-border)]">
+              Language: <strong className="text-[var(--text)] ml-1">{language === 'en' ? 'English' : language === 'te' ? 'తెలుగు' : 'हिंदी'}</strong>
             </div>
-          )}
 
-          <div style={{ fontSize: '12px', color: 'var(--text-muted)', textAlign: 'center', marginBottom: 12 }}>
-            {listening ? '🔴 Listening... speak now' : 'Tap mic to speak'}
-          </div>
+            {/* Mic Button */}
+            <div className="flex justify-center mb-5">
+              <div className="relative">
+                {listening && (
+                  <motion.div 
+                    className="absolute -inset-2 rounded-full border-2 border-red-500"
+                    animate={{ scale: [1, 1.3, 1], opacity: [1, 0, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  />
+                )}
+                <button
+                  onClick={toggleListen}
+                  className={`w-16 h-16 rounded-full border-none text-white cursor-pointer flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 ${listening ? 'bg-red-500 shadow-red-500/40' : 'bg-[#0F4C81] shadow-blue-900/40'}`}
+                >
+                  {listening ? <MicOff size={28} /> : <Mic size={28} />}
+                </button>
+              </div>
+            </div>
 
-          {/* Speak Greeting Button */}
-          <button
-            onClick={() => speak(greetings[language])}
-            style={{
-              width: '100%', padding: '10px', borderRadius: '8px',
-              background: speaking ? 'var(--bg2)' : 'transparent',
-              border: '1.5px solid var(--card-border)',
-              color: 'var(--text)', cursor: 'pointer', fontSize: '13px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-              transition: 'all 0.2s',
-            }}
-          >
-            {speaking ? <VolumeX size={16} /> : <Volume2 size={16} />}
-            {speaking ? 'Stop Speaking' : 'Hear Welcome Message'}
-          </button>
-        </div>
-      )}
+            {/* Transcript */}
+            <AnimatePresence>
+              {transcript && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, height: 0 }}
+                  className="p-3.5 rounded-xl bg-[var(--bg)] text-[13px] text-[var(--text)] mb-4 min-h-[48px] leading-relaxed border border-[var(--card-border)] font-medium"
+                >
+                  {transcript}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <div className="text-[12px] text-[var(--text-muted)] text-center mb-4 font-medium h-4">
+              {listening ? <span className="text-red-500">🔴 Listening... speak now</span> : 'Tap mic to speak'}
+            </div>
+
+            {/* Speak Greeting Button */}
+            <button
+              onClick={() => speak(greetings[language])}
+              className={`w-full p-3 rounded-xl border border-[var(--card-border)] text-[var(--text)] cursor-pointer text-[13px] font-semibold flex items-center justify-center gap-2 transition-colors ${speaking ? 'bg-[var(--primary)] text-white border-[var(--primary)]' : 'bg-transparent hover:bg-[var(--bg2)]'}`}
+            >
+              {speaking ? <VolumeX size={16} /> : <Volume2 size={16} />}
+              {speaking ? 'Stop Speaking' : 'Hear Welcome Message'}
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

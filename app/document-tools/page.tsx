@@ -1,16 +1,18 @@
 'use client';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { FileArchive, RefreshCw, FileImage, Crop, FilePlus, SplitSquareHorizontal, SearchCode, ImageOff, Image as ImageIcon, CheckCircle2, FileText, Settings, Lightbulb, Ruler, Lock } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 const TOOLS = [
-  { icon: '🗜️', title: 'Compress PDF', desc: 'Reduce PDF file size without losing quality. Ideal for email and uploads.', action: 'Compress', color: '#e74c3c' },
-  { icon: '🔄', title: 'JPG to PDF', desc: 'Convert one or multiple JPG/PNG images to a single PDF document.', action: 'Convert', color: '#2980b9' },
-  { icon: '📷', title: 'PDF to JPG', desc: 'Extract pages from PDF as high-quality JPG images.', action: 'Convert', color: '#8e44ad' },
-  { icon: '✂️', title: 'Resize Photo', desc: 'Resize photos to specific dimensions. Perfect for passport/ID photos (35x45mm).', action: 'Resize', color: '#27ae60' },
-  { icon: '📎', title: 'Merge PDFs', desc: 'Combine multiple PDF files into one single document easily.', action: 'Merge', color: '#e67e22' },
-  { icon: '✂️', title: 'Split PDF', desc: 'Split a large PDF into smaller files or extract specific pages.', action: 'Split', color: '#1b4f72' },
-  { icon: '🔍', title: 'Extract Text (OCR)', desc: 'Extract text from scanned documents and images using OCR technology.', action: 'Extract', color: '#16a085' },
-  { icon: '🖼️', title: 'Remove Background', desc: 'Automatically remove background from photos for ID/passport use.', action: 'Process', color: '#c0392b' },
+  { icon: <FileArchive size={24}/>, title: 'Compress PDF', desc: 'Reduce PDF file size without losing quality. Ideal for email and uploads.', action: 'Compress', color: '#E74C3C' },
+  { icon: <RefreshCw size={24}/>, title: 'JPG to PDF', desc: 'Convert one or multiple JPG/PNG images to a single PDF document.', action: 'Convert', color: '#2980B9' },
+  { icon: <FileImage size={24}/>, title: 'PDF to JPG', desc: 'Extract pages from PDF as high-quality JPG images.', action: 'Convert', color: '#8E44AD' },
+  { icon: <Crop size={24}/>, title: 'Resize Photo', desc: 'Resize photos to specific dimensions. Perfect for passport/ID photos.', action: 'Resize', color: '#27AE60' },
+  { icon: <FilePlus size={24}/>, title: 'Merge PDFs', desc: 'Combine multiple PDF files into one single document easily.', action: 'Merge', color: '#E67E22' },
+  { icon: <SplitSquareHorizontal size={24}/>, title: 'Split PDF', desc: 'Split a large PDF into smaller files or extract specific pages.', action: 'Split', color: '#1B4F72' },
+  { icon: <SearchCode size={24}/>, title: 'Extract Text (OCR)', desc: 'Extract text from scanned documents and images using OCR technology.', action: 'Extract', color: '#16A085' },
+  { icon: <ImageOff size={24}/>, title: 'Remove Background', desc: 'Automatically remove background from photos for ID/passport use.', action: 'Process', color: '#C0392B' },
 ];
 
 const PHOTO_SIZES = [
@@ -25,91 +27,113 @@ const PHOTO_SIZES = [
 export default function DocumentToolsPage() {
   const { t } = useLanguage();
 
+  const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } };
+
   return (
-    <div className="bg-[var(--bg)] min-h-[90vh] pb-12">
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12 relative">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-[#16213e] to-[#1b4f72] pt-24 pb-10 md:pb-12 px-4 md:px-6 text-white text-center">
-        <div className="text-4xl md:text-5xl mb-3 md:mb-4">📄</div>
-        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.2rem)] font-black mb-2.5">{t('docToolsTitle')}</h1>
-        <p className="opacity-90 max-w-[520px] mx-auto mb-5 md:mb-6 text-[13px] md:text-[15px] leading-relaxed">{t('docToolsDesc')}</p>
-        <div className="flex gap-2 md:gap-3 justify-center flex-wrap">
-          {['🆓 100% Free', '🔒 Private & Secure', '📱 Works on Mobile', '⚡ Fast Processing'].map(b => (
-            <span key={b} className="py-1.5 px-3 md:py-2 md:px-4 rounded-full bg-[rgba(255,255,255,0.12)] border border-[rgba(255,255,255,0.25)] text-[11px] md:text-[12px] font-semibold backdrop-blur-sm">{b}</span>
-          ))}
+      <div className="bg-[var(--primary)] pt-28 pb-20 px-4 md:px-6 text-white text-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--secondary)] opacity-10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3" />
+        
+        <div className="relative z-10 max-w-[800px] mx-auto">
+          <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-white/20 backdrop-blur-md">
+            <Settings size={40} className="text-white" />
+          </div>
+          <h1 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">{t('docToolsTitle')}</h1>
+          <p className="opacity-80 max-w-[600px] mx-auto mb-8 text-[15px] md:text-[17px] leading-relaxed font-medium">{t('docToolsDesc')}</p>
+          
+          <div className="flex gap-4 justify-center flex-wrap">
+            {['🆓 100% Free', '🔒 Private & Secure', '📱 Works Offline', '⚡ Fast Processing'].map(b => (
+              <span key={b} className="py-2 px-4 rounded-xl bg-white/10 border border-white/20 text-[13px] font-bold backdrop-blur-md shadow-sm">{b}</span>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="page-container px-4 md:px-6 py-6 md:py-10">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 -mt-8 relative z-20">
         {/* Tools Grid */}
-        <div className="mb-10 md:mb-12">
-          <div className="text-left mb-6 md:mb-8">
-            <h2 className="text-[20px] md:text-[24px] font-extrabold leading-tight">Document <span className="text-[var(--primary)]">Processing Tools</span></h2>
-            <div className="w-12 h-1 bg-[var(--primary)] mt-3 rounded-full mb-3" />
-            <p className="text-[13px] md:text-[14px] text-[var(--text-muted)] font-medium">All tools work in your browser — no files are uploaded to our servers</p>
-          </div>
+        <div className="mb-12">
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white rounded-3xl shadow-sm border border-[var(--card-border)] p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <h2 className="text-[20px] font-extrabold text-[var(--text)] flex items-center gap-2"><Settings size={20} className="text-[var(--primary)]"/> Document Processing Tools</h2>
+              <p className="text-[14px] text-[var(--text-muted)] font-medium mt-1">All tools work securely in your browser — no files are uploaded to our servers.</p>
+            </div>
+            <div className="px-4 py-2 bg-green-50 text-green-700 rounded-lg text-[13px] font-bold border border-green-100 flex items-center gap-2 shrink-0">
+              <CheckCircle2 size={16}/> Privacy Guaranteed
+            </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 md:gap-4">
-            {TOOLS.map(tool => (
-              <div key={tool.title} className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-2xl p-4 md:p-5 flex flex-col gap-3 cursor-pointer transition-all hover:-translate-y-1 shadow-sm"
-                onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = tool.color; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--card-border)'; }}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {TOOLS.map((tool, idx) => (
+              <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={idx} key={tool.title} className="bg-white border-2 border-[var(--card-border)] hover:border-current rounded-3xl p-6 flex flex-col gap-4 cursor-pointer transition-all shadow-sm hover:shadow-lg hover:-translate-y-1 group"
+                style={{ color: tool.color }}
                 onClick={() => toast.success(`${tool.action} tool: Upload your file to proceed`)}
               >
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center text-[24px] md:text-[28px] mb-1" style={{ background: `${tool.color}15` }}>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 border border-current/20 group-hover:scale-110 transition-transform" style={{ background: `${tool.color}10` }}>
                   {tool.icon}
                 </div>
-                <div className="font-extrabold text-[14px] md:text-[15px]">{tool.title}</div>
-                <div className="text-[11px] md:text-[13px] text-[var(--text-muted)] leading-relaxed flex-1">{tool.desc}</div>
-                <button className="py-2.5 md:py-2 px-4 rounded-xl text-white font-bold text-[12px] md:text-[13px] mt-2 md:mt-3 border-none cursor-pointer w-full min-h-[44px] md:min-h-[40px] shadow-sm active:scale-95 transition-transform" style={{ background: tool.color }}>
-                  {tool.action} Now
-                </button>
-              </div>
+                <div>
+                  <div className="font-black text-[16px] text-[var(--text)] mb-1 group-hover:text-current transition-colors">{tool.title}</div>
+                  <div className="text-[13px] text-[var(--text-muted)] leading-relaxed font-medium line-clamp-3">{tool.desc}</div>
+                </div>
+                <div className="mt-auto pt-4">
+                  <button className="w-full py-3 rounded-xl text-white font-bold text-[14px] border-none cursor-pointer shadow-sm active:scale-95 transition-transform" style={{ background: tool.color }}>
+                    {tool.action} Now
+                  </button>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Photo Size Guide */}
-        <section className="mb-10 md:mb-12">
-          <div className="text-left mb-6 md:mb-8">
-            <h2 className="text-[18px] md:text-[22px] font-extrabold flex items-center gap-2">📸 Standard Photo Sizes Guide</h2>
-            <div className="w-12 h-1 bg-[var(--primary)] mt-3 rounded-full mb-3" />
-            <p className="text-[13px] md:text-[14px] text-[var(--text-muted)] font-medium">Resize your photos to the exact size needed for government documents</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+        <section className="mb-12">
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white rounded-3xl shadow-sm border border-[var(--card-border)] p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <h2 className="text-[20px] font-extrabold text-[var(--text)] flex items-center gap-2"><ImageIcon size={20} className="text-[#27AE60]"/> Standard Photo Sizes Guide</h2>
+              <p className="text-[14px] text-[var(--text-muted)] font-medium mt-1">Resize your photos to the exact dimensions needed for government applications.</p>
+            </div>
+          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {PHOTO_SIZES.map(size => (
-              <div key={size.name} className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-xl md:rounded-2xl p-4 md:p-5 flex gap-3.5 items-center shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-[var(--bg2)] flex items-center justify-center text-[20px] md:text-[22px] shrink-0 border border-[var(--card-border)]">🖼️</div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-extrabold text-[13px] md:text-[14px] mb-0.5 truncate">{size.name}</div>
-                  <div className="text-[12px] md:text-[13px] text-[var(--primary)] font-bold mb-0.5">{size.size}</div>
-                  <div className="text-[10px] md:text-[11px] text-[var(--text-muted)] font-medium">{size.pixels}</div>
+              <motion.div initial="hidden" animate="visible" variants={fadeUp} key={size.name} className="bg-white border border-[var(--card-border)] rounded-2xl p-5 flex gap-4 items-center shadow-sm hover:shadow-md transition-shadow group cursor-pointer" onClick={() => toast.success(`Setting size: ${size.size}`)}>
+                <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-[var(--text-muted)] group-hover:text-[var(--primary)] group-hover:bg-blue-50 shrink-0 border border-[var(--card-border)] transition-colors">
+                  <Crop size={24} />
                 </div>
-                <button className="btn-outline shrink-0 py-2.5 px-3 md:px-4 text-[11px] md:text-[12px] min-h-[40px]"
-                  onClick={() => toast.success(`Setting size: ${size.size}`)}>
+                <div className="flex-1 min-w-0">
+                  <div className="font-extrabold text-[15px] text-[var(--text)] mb-0.5 truncate group-hover:text-[var(--primary)] transition-colors">{size.name}</div>
+                  <div className="text-[13px] text-[var(--primary)] font-bold mb-0.5">{size.size}</div>
+                  <div className="text-[11px] text-[var(--text-muted)] font-bold uppercase tracking-wider">{size.pixels}</div>
+                </div>
+                <button className="bg-[var(--bg2)] hover:bg-[var(--primary)] hover:text-white text-[var(--text)] border border-[var(--card-border)] shrink-0 py-2.5 px-4 text-[12px] font-bold rounded-xl transition-colors">
                   Resize
                 </button>
-              </div>
+              </motion.div>
             ))}
           </div>
         </section>
 
         {/* Tips Section */}
-        <div className="bg-gradient-to-br from-[#1a6b3a] to-[#16a085] rounded-2xl md:rounded-[20px] p-5 md:p-8 text-white shadow-lg">
-          <h2 className="text-[18px] md:text-[20px] font-extrabold mb-5 md:mb-6">💡 Document Upload Tips</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-gradient-to-br from-[#0B6E4F] to-[#16A085] rounded-3xl p-8 md:p-10 text-white shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+          <h2 className="text-[20px] md:text-[24px] font-black mb-8 flex items-center gap-3"><Lightbulb size={28} className="text-yellow-400" /> Pro Tips for Document Uploads</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { tip: 'Scan documents in good lighting — avoid shadows or blur', icon: '💡' },
-              { tip: 'Keep file size under 500KB for MeeSeva/online portals', icon: '📏' },
-              { tip: 'Use PDF format for official documents — JPG for photos', icon: '📄' },
-              { tip: 'Always keep original copies — never give originals to agents', icon: '🔒' },
-            ].map(item => (
-              <div key={item.tip} className="flex gap-3 items-start p-3.5 md:p-4 rounded-xl bg-[rgba(255,255,255,0.15)] hover:bg-[rgba(255,255,255,0.2)] transition-colors">
-                <span className="text-[20px] md:text-[22px] shrink-0 mt-0.5 leading-none">{item.icon}</span>
-                <span className="text-[12px] md:text-[13px] opacity-90 leading-relaxed font-medium">{item.tip}</span>
+              { tip: 'Scan documents in good lighting — avoid shadows or blur.', icon: <Lightbulb size={24} /> },
+              { tip: 'Keep file size under 500KB for MeeSeva and online portals.', icon: <Ruler size={24} /> },
+              { tip: 'Use PDF format for official documents — JPG for photos.', icon: <FileText size={24} /> },
+              { tip: 'Always keep original copies — never give originals to agents.', icon: <Lock size={24} /> },
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col gap-4 p-5 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 transition-colors backdrop-blur-sm">
+                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
+                  {item.icon}
+                </div>
+                <span className="text-[14px] opacity-90 leading-relaxed font-medium">{item.tip}</span>
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

@@ -2,16 +2,17 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useDatabase } from '@/contexts/DatabaseContext';
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { BarChart2, Database } from 'lucide-react';
+import { BarChart2, Database, Users, Briefcase, FileText, CheckSquare, MessageSquare, Activity, AlertTriangle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-const PIE_COLORS = ['#1a6b3a', '#1b4f72', '#e67e22', '#8e44ad', '#27ae60', '#e74c3c', '#2980b9'];
+const PIE_COLORS = ['#0F4C81', '#0B6E4F', '#2F80ED', '#8E44AD', '#E67E22', '#16A085', '#E74C3C'];
 
 export default function AnalyticsPage() {
   const { t } = useLanguage();
   const { users, workers, employers, jobs, surveys, applications, testimonials, isLoading } = useDatabase();
 
   if (isLoading) {
-    return <div className="min-h-[90vh] flex items-center justify-center bg-[var(--bg)] font-semibold">Loading Real-Time Analytics...</div>;
+    return <div className="min-h-[90vh] flex items-center justify-center bg-[var(--bg)] font-semibold text-[var(--text-muted)] text-lg">Loading Real-Time Analytics...</div>;
   }
 
   const totalDataPoints = users.length + workers.length + employers.length + jobs.length + surveys.length + applications.length + testimonials.length;
@@ -19,24 +20,26 @@ export default function AnalyticsPage() {
   if (totalDataPoints === 0) {
     return (
       <div className="bg-[var(--bg)] min-h-[90vh] flex items-center justify-center p-4 md:p-6">
-        <div className="glass-card max-w-[600px] w-full p-8 md:p-10 text-center">
-          <div className="text-[56px] md:text-[64px] mb-3 md:mb-4">📊</div>
-          <h2 className="text-[20px] md:text-[24px] font-black mb-2 md:mb-3">Analytics Dashboard</h2>
-          <p className="text-[var(--text-muted)] mb-5 md:mb-6 leading-relaxed text-sm md:text-base">
+        <div className="bg-white border border-[var(--card-border)] rounded-3xl max-w-[600px] w-full p-8 md:p-12 text-center shadow-xl">
+          <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
+            <BarChart2 size={40} className="text-[var(--primary)]" />
+          </div>
+          <h2 className="text-2xl md:text-3xl font-black mb-3 text-[var(--text)]">Analytics Dashboard</h2>
+          <p className="text-[var(--text-muted)] mb-8 leading-relaxed text-[15px]">
             No data available yet. This dashboard updates in real-time as users interact with the platform.
           </p>
-          <div className="bg-[var(--bg2)] p-5 md:p-6 rounded-2xl text-left border border-[var(--card-border)]">
-            <h3 className="text-[14px] md:text-[16px] font-extrabold mb-3 md:mb-4">Start generating data by:</h3>
-            <ul className="list-none p-0 m-0 flex flex-col gap-2.5 md:gap-3 text-[13px] md:text-[14px]">
-              <li className="flex items-start gap-2"><span className="shrink-0 mt-0.5">✅</span> Registering a new Worker or Employer account</li>
-              <li className="flex items-start gap-2"><span className="shrink-0 mt-0.5">✅</span> Submitting a Community Survey</li>
-              <li className="flex items-start gap-2"><span className="shrink-0 mt-0.5">✅</span> Posting a new Job from an Employer account</li>
-              <li className="flex items-start gap-2"><span className="shrink-0 mt-0.5">✅</span> Applying for a Government Service</li>
-              <li className="flex items-start gap-2"><span className="shrink-0 mt-0.5">✅</span> Submitting a platform Testimonial</li>
+          <div className="bg-[var(--bg2)] p-6 rounded-2xl text-left border border-[var(--card-border)] shadow-inner">
+            <h3 className="text-[15px] font-extrabold mb-4 text-[var(--text)]">Start generating data by:</h3>
+            <ul className="list-none p-0 m-0 flex flex-col gap-3 text-[14px] text-[var(--text-muted)] font-medium">
+              <li className="flex items-center gap-3"><div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center"><div className="w-2 h-2 rounded-full bg-green-600"/></div> Registering a new Worker or Employer account</li>
+              <li className="flex items-center gap-3"><div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center"><div className="w-2 h-2 rounded-full bg-green-600"/></div> Submitting a Community Survey</li>
+              <li className="flex items-center gap-3"><div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center"><div className="w-2 h-2 rounded-full bg-green-600"/></div> Posting a new Job from an Employer account</li>
+              <li className="flex items-center gap-3"><div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center"><div className="w-2 h-2 rounded-full bg-green-600"/></div> Applying for a Government Service</li>
+              <li className="flex items-center gap-3"><div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center"><div className="w-2 h-2 rounded-full bg-green-600"/></div> Submitting a platform Testimonial</li>
             </ul>
           </div>
-          <div className="mt-5 md:mt-6 text-[11px] md:text-[12px] text-[var(--text-muted)] flex items-center justify-center gap-1.5 font-medium">
-            <Database size={14} /> Connected to Firebase Realtime Database
+          <div className="mt-8 text-[13px] text-[var(--primary)] flex items-center justify-center gap-2 font-bold px-4 py-2 bg-blue-50 rounded-lg w-fit mx-auto">
+            <Database size={16} /> Connected to Firebase Realtime Database
           </div>
         </div>
       </div>
@@ -45,13 +48,13 @@ export default function AnalyticsPage() {
 
   // Calculate dynamic stats
   const stats = [
-    { label: 'Total Users', value: users.length, icon: '👥', color: '#1a6b3a' },
-    { label: 'Workers', value: workers.length, icon: '👷', color: '#1b4f72' },
-    { label: 'Employers', value: employers.length, icon: '🏢', color: '#e67e22' },
-    { label: 'Jobs Posted', value: jobs.length, icon: '💼', color: '#8e44ad' },
-    { label: 'Applications', value: applications.length, icon: '📋', color: '#27ae60' },
-    { label: 'Surveys', value: surveys.length, icon: '📊', color: '#16a085' },
-    { label: 'Reviews', value: testimonials.length, icon: '💬', color: '#e74c3c' },
+    { label: 'Total Users', value: users.length, icon: <Users size={24}/>, color: '#0F4C81' },
+    { label: 'Workers', value: workers.length, icon: <Briefcase size={24}/>, color: '#0B6E4F' },
+    { label: 'Employers', value: employers.length, icon: <Users size={24}/>, color: '#2F80ED' },
+    { label: 'Jobs Posted', value: jobs.length, icon: <Briefcase size={24}/>, color: '#8E44AD' },
+    { label: 'Applications', value: applications.length, icon: <FileText size={24}/>, color: '#27AE60' },
+    { label: 'Surveys', value: surveys.length, icon: <CheckSquare size={24}/>, color: '#E67E22' },
+    { label: 'Reviews', value: testimonials.length, icon: <MessageSquare size={24}/>, color: '#E74C3C' },
   ];
 
   // Survey Data Calculation Helpers
@@ -93,105 +96,119 @@ export default function AnalyticsPage() {
     .filter(c => c.value > 0)
     .sort((a, b) => b.value - a.value);
 
-  // Job Categories Calculation
-  const jobPieData = countOccurrences(jobs, 'type');
+  const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } };
 
   return (
-    <div className="bg-[var(--bg)] min-h-[90vh] pb-12">
-      <div className="bg-gradient-to-br from-[#0f4023] to-[#1b4f72] pt-24 pb-10 md:pb-12 px-4 md:px-6 text-white text-center">
-        <div className="text-4xl md:text-5xl mb-3 md:mb-4">📊</div>
-        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.2rem)] font-black mb-2 md:mb-2.5">Real-Time Analytics</h1>
-        <p className="opacity-80 text-sm md:text-base">Live metrics directly from the platform database</p>
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12 relative">
+      <div className="bg-[var(--primary)] pt-28 pb-16 px-4 md:px-6 text-white text-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--secondary)] opacity-10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3" />
+        
+        <div className="relative z-10 max-w-[1200px] mx-auto">
+          <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-white/20 backdrop-blur-md">
+            <Activity size={40} className="text-white" />
+          </div>
+          <h1 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">Real-Time Analytics</h1>
+          <p className="opacity-80 text-[15px] md:text-[17px] font-medium max-w-[500px] mx-auto">Live metrics and insights aggregated directly from platform database interactions.</p>
+        </div>
       </div>
 
-      <div className="page-container px-4 md:px-6 py-6 md:py-8">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-8 md:py-12 -mt-8 relative z-20">
         {/* Dynamic Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
           {stats.map(stat => (
-            <div key={stat.label} className="stat-card p-3 md:p-5 flex-col sm:flex-row text-center sm:text-left gap-2 sm:gap-3">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-[20px] md:text-[24px] shrink-0 mx-auto sm:mx-0" style={{ background: `${stat.color}15` }}>{stat.icon}</div>
+            <div key={stat.label} className="bg-white border border-[var(--card-border)] rounded-2xl p-5 flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4 shadow-sm hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${stat.color}15`, color: stat.color }}>{stat.icon}</div>
               <div>
-                <div className="text-lg md:text-[22px] font-black leading-tight" style={{ color: stat.color }}>{stat.value}</div>
-                <div className="text-[10px] md:text-[12px] text-[var(--text-muted)] font-semibold mt-0.5">{stat.label}</div>
+                <div className="text-[24px] font-black leading-tight text-[var(--text)] mb-1">{stat.value}</div>
+                <div className="text-[12px] font-bold text-[var(--text-muted)] uppercase tracking-wider">{stat.label}</div>
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Charts Row 1 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Top Challenges */}
-          <div className="chart-container p-4 md:p-6 overflow-hidden">
-            <h3 className="font-extrabold mb-4 text-[14px] md:text-[15px]">⚠️ Major Rural Challenges</h3>
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white border border-[var(--card-border)] rounded-3xl p-6 md:p-8 shadow-sm">
+            <h3 className="font-extrabold mb-6 text-[16px] text-[var(--text)] flex items-center gap-2"><AlertTriangle size={18} className="text-[#E74C3C]"/> Major Rural Challenges</h3>
             {challengesData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={challengesData} layout="vertical" margin={{ top: 0, right: 10, left: 20, bottom: 0 }}>
-                  <XAxis type="number" tick={{ fontSize: 11 }} />
-                  <YAxis dataKey="name" type="category" width={110} fontSize={10} tick={{ fontSize: 10 }} />
-                  <Tooltip cursor={{ fill: 'var(--bg2)' }} />
-                  <Bar dataKey="value" fill="#e74c3c" radius={[0, 4, 4, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="h-[280px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={challengesData} layout="vertical" margin={{ top: 0, right: 20, left: 20, bottom: 0 }}>
+                    <XAxis type="number" tick={{ fontSize: 12, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} />
+                    <YAxis dataKey="name" type="category" width={120} fontSize={12} tick={{ fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} />
+                    <Tooltip cursor={{ fill: 'var(--bg2)' }} contentStyle={{ borderRadius: '12px', border: '1px solid var(--card-border)', boxShadow: 'var(--shadow)' }} />
+                    <Bar dataKey="value" fill="#E74C3C" radius={[0, 6, 6, 0]} barSize={24} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             ) : (
-              <div className="h-[260px] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium">No challenge data yet</div>
+              <div className="h-[280px] flex items-center justify-center text-[var(--text-muted)] text-[14px] font-bold bg-[var(--bg2)] rounded-2xl border border-dashed border-[var(--card-border)]">No challenge data yet</div>
             )}
-          </div>
+          </motion.div>
 
           {/* Age Distribution Pie */}
-          <div className="chart-container p-4 md:p-6 overflow-hidden">
-            <h3 className="font-extrabold mb-4 text-[14px] md:text-[15px]">👥 Age Distribution (Survey)</h3>
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white border border-[var(--card-border)] rounded-3xl p-6 md:p-8 shadow-sm">
+            <h3 className="font-extrabold mb-6 text-[16px] text-[var(--text)] flex items-center gap-2"><Users size={18} className="text-[var(--primary)]"/> Age Distribution (Survey)</h3>
             {ageData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={260}>
-                <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 20 }}>
-                  <Pie data={ageData} cx="50%" cy="45%" innerRadius={50} outerRadius={80} dataKey="value" paddingAngle={3}>
-                    {ageData.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
-                  </Pie>
-                  <Tooltip formatter={(v) => [v !== undefined ? Number(v) : 0, 'Responses']} />
-                  <Legend iconType="circle" wrapperStyle={{ fontSize: '11px', bottom: 0 }} />
-                </PieChart>
-              </ResponsiveContainer>
+              <div className="h-[280px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 20 }}>
+                    <Pie data={ageData} cx="50%" cy="45%" innerRadius={60} outerRadius={90} dataKey="value" paddingAngle={4}>
+                      {ageData.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} stroke="transparent" />)}
+                    </Pie>
+                    <Tooltip formatter={(v) => [v !== undefined ? Number(v) : 0, 'Responses']} contentStyle={{ borderRadius: '12px', border: '1px solid var(--card-border)', boxShadow: 'var(--shadow)' }} />
+                    <Legend iconType="circle" wrapperStyle={{ fontSize: '13px', fontWeight: 'bold', color: 'var(--text-muted)', bottom: 0 }} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             ) : (
-              <div className="h-[260px] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium">No age data yet</div>
+              <div className="h-[280px] flex items-center justify-center text-[var(--text-muted)] text-[14px] font-bold bg-[var(--bg2)] rounded-2xl border border-dashed border-[var(--card-border)]">No age data yet</div>
             )}
-          </div>
+          </motion.div>
         </div>
 
         {/* Charts Row 2 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Services Used */}
-          <div className="chart-container p-4 md:p-6 overflow-hidden">
-            <h3 className="font-extrabold mb-4 text-[14px] md:text-[15px]">🏛️ Most Used Govt Services</h3>
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white border border-[var(--card-border)] rounded-3xl p-6 md:p-8 shadow-sm">
+            <h3 className="font-extrabold mb-6 text-[16px] text-[var(--text)] flex items-center gap-2"><FileText size={18} className="text-[#2F80ED]"/> Most Used Govt Services</h3>
             {servicesData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={servicesData.slice(0, 5)} margin={{ top: 10, right: 10, left: -20, bottom: 25 }}>
-                  <XAxis dataKey="name" fontSize={9} tick={{ fontSize: 9 }} angle={-25} textAnchor="end" tickFormatter={(v) => v.length > 15 ? v.substring(0, 15) + '...' : v} />
-                  <YAxis tick={{ fontSize: 11 }} />
-                  <Tooltip cursor={{ fill: 'var(--bg2)' }} />
-                  <Bar dataKey="value" fill="#2980b9" radius={[4, 4, 0, 0]} barSize={32} />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="h-[280px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={servicesData.slice(0, 5)} margin={{ top: 10, right: 10, left: -20, bottom: 30 }}>
+                    <XAxis dataKey="name" fontSize={11} tick={{ fill: 'var(--text-muted)' }} angle={-25} textAnchor="end" tickFormatter={(v) => v.length > 15 ? v.substring(0, 15) + '...' : v} axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fontSize: 12, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} />
+                    <Tooltip cursor={{ fill: 'var(--bg2)' }} contentStyle={{ borderRadius: '12px', border: '1px solid var(--card-border)', boxShadow: 'var(--shadow)' }} />
+                    <Bar dataKey="value" fill="#2F80ED" radius={[6, 6, 0, 0]} barSize={40} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             ) : (
-              <div className="h-[260px] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium">No services data yet</div>
+              <div className="h-[280px] flex items-center justify-center text-[var(--text-muted)] text-[14px] font-bold bg-[var(--bg2)] rounded-2xl border border-dashed border-[var(--card-border)]">No services data yet</div>
             )}
-          </div>
+          </motion.div>
 
           {/* Device Usage */}
-          <div className="chart-container p-4 md:p-6 overflow-hidden">
-            <h3 className="font-extrabold mb-4 text-[14px] md:text-[15px]">📱 Devices Owned</h3>
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="bg-white border border-[var(--card-border)] rounded-3xl p-6 md:p-8 shadow-sm">
+            <h3 className="font-extrabold mb-6 text-[16px] text-[var(--text)] flex items-center gap-2"><Activity size={18} className="text-[#8E44AD]"/> Devices Owned</h3>
             {devicesData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={260}>
-                <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 20 }}>
-                  <Pie data={devicesData} cx="50%" cy="45%" outerRadius={80} dataKey="value">
-                    {devicesData.map((_, i) => <Cell key={i} fill={PIE_COLORS[(i+2) % PIE_COLORS.length]} />)}
-                  </Pie>
-                  <Tooltip formatter={(v) => [v !== undefined ? Number(v) : 0, 'Users']} />
-                  <Legend wrapperStyle={{ fontSize: '11px', bottom: 0 }} />
-                </PieChart>
-              </ResponsiveContainer>
+              <div className="h-[280px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 20 }}>
+                    <Pie data={devicesData} cx="50%" cy="45%" outerRadius={90} dataKey="value" paddingAngle={2}>
+                      {devicesData.map((_, i) => <Cell key={i} fill={PIE_COLORS[(i+3) % PIE_COLORS.length]} stroke="transparent" />)}
+                    </Pie>
+                    <Tooltip formatter={(v) => [v !== undefined ? Number(v) : 0, 'Users']} contentStyle={{ borderRadius: '12px', border: '1px solid var(--card-border)', boxShadow: 'var(--shadow)' }} />
+                    <Legend iconType="circle" wrapperStyle={{ fontSize: '13px', fontWeight: 'bold', color: 'var(--text-muted)', bottom: 0 }} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             ) : (
-              <div className="h-[260px] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium">No device data yet</div>
+              <div className="h-[280px] flex items-center justify-center text-[var(--text-muted)] text-[14px] font-bold bg-[var(--bg2)] rounded-2xl border border-dashed border-[var(--card-border)]">No device data yet</div>
             )}
-          </div>
+          </motion.div>
         </div>
 
       </div>

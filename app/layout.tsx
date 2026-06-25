@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Inter } from 'next/font/google';
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -9,6 +10,13 @@ import Navbar from "@/components/Navbar";
 import ChatbotWidget from "@/components/ChatbotWidget";
 import VoiceAssistant from "@/components/VoiceAssistant";
 import Footer from "@/components/Footer";
+
+// Configure Inter font
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: "RIHC — Rural Internet Help Center | ग्रामीण इंटरनेट सहायता केंद्र",
@@ -23,21 +31,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#1a6b3a" />
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="theme-color" content="#0F4C81" />
       </head>
-      <body>
+      <body className="antialiased min-h-screen flex flex-col">
         <ThemeProvider>
           <LanguageProvider>
             <DatabaseProvider>
               <AuthProvider>
                 <Navbar />
-                <main style={{ paddingTop: '72px', minHeight: '100vh' }}>
+                <main className="flex-1 mt-[72px]">
                   {children}
                 </main>
                 <Footer />
@@ -51,8 +56,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       background: 'var(--card)',
                       color: 'var(--text)',
                       border: '1px solid var(--card-border)',
-                      borderRadius: '12px',
-                      fontFamily: 'Noto Sans, sans-serif',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      fontWeight: 500,
                     },
                   }}
                 />

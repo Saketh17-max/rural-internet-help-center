@@ -1,17 +1,17 @@
 'use client';
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth, UserRole } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { LogIn, Eye, EyeOff, Loader2, User, Briefcase, Building2, Shield } from 'lucide-react';
+import { LogIn, Eye, EyeOff, Loader2, User, Briefcase, Map, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { UserRole } from '@/contexts/AuthContext';
+import { motion } from 'framer-motion';
 
 const ROLES: { id: UserRole; icon: React.ReactNode; label: string; color: string }[] = [
-  { id: 'citizen', icon: <User size={18} />, label: 'Citizen', color: '#1a6b3a' },
-  { id: 'worker', icon: <Briefcase size={18} />, label: 'Worker', color: '#1b4f72' },
-  { id: 'employer', icon: <Building2 size={18} />, label: 'Employer', color: '#e67e22' },
+  { id: 'citizen', icon: <User size={20} />, label: 'Citizen', color: 'var(--primary)' },
+  { id: 'worker', icon: <Briefcase size={20} />, label: 'Worker', color: 'var(--secondary)' },
+  { id: 'employer', icon: <Map size={20} />, label: 'Employer', color: 'var(--accent)' },
 ];
 
 export default function LoginPage() {
@@ -53,45 +53,57 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[90vh] flex items-center justify-center p-4 md:p-10 bg-[var(--bg)]">
-      <div className="w-full max-w-[480px]">
-        {/* Card */}
-        <div className="glass-card p-5 md:p-9 shadow-lg">
+    <div className="min-h-[90vh] flex items-center justify-center p-4 md:p-10 bg-[var(--bg)] relative overflow-hidden">
+      {/* Background patterns */}
+      <div className="absolute top-0 left-0 w-full h-96 bg-[var(--primary)] opacity-5 rounded-b-[100px] blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[var(--secondary)] opacity-5 rounded-t-[100px] blur-3xl" />
+
+      <div className="w-full max-w-[480px] relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+          className="bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-[var(--card-border)]"
+        >
           {/* Header */}
-          <div className="text-center mb-6 md:mb-8">
-            <div className="text-[40px] md:text-[48px] mb-2 md:mb-3">🙏</div>
-            <h1 className="text-[22px] md:text-[26px] font-black mb-1.5">{t('loginTitle')}</h1>
-            <p className="text-[var(--text-muted)] text-[13px] md:text-[14px] leading-relaxed px-4">{t('loginDesc')}</p>
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-[var(--bg)] rounded-2xl flex items-center justify-center mx-auto mb-4 border border-[var(--card-border)]">
+              <ShieldCheck size={32} className="text-[var(--primary)]" />
+            </div>
+            <h1 className="text-2xl md:text-[28px] font-black text-[var(--text)] mb-2 tracking-tight">{t('loginTitle')}</h1>
+            <p className="text-[var(--text-muted)] text-[14px] md:text-[15px] leading-relaxed max-w-[300px] mx-auto">{t('loginDesc')}</p>
           </div>
 
           {/* Role Selector */}
-          <div className="mb-6 md:mb-8">
-            <div className="text-[12px] md:text-[13px] font-bold text-[var(--text-muted)] mb-2.5 md:mb-3 px-1">{t('selectRole')}</div>
-            <div className="grid grid-cols-3 gap-2 md:gap-3">
-              {ROLES.map(r => (
-                <button key={r.id} onClick={() => setRole(r.id)}
-                  className="flex flex-col items-center gap-1.5 md:gap-2 p-2.5 md:p-3 rounded-xl cursor-pointer transition-all active:scale-95"
-                  style={{
-                    border: role === r.id ? `2px solid ${r.color}` : '2px solid var(--card-border)',
-                    background: role === r.id ? `${r.color}10` : 'var(--bg2)',
-                    color: role === r.id ? r.color : 'var(--text-muted)',
-                  }}
-                >
-                  <span className={`${role === r.id ? 'scale-110' : ''} transition-transform`}>{r.icon}</span>
-                  <span className={`text-[11px] md:text-[13px] ${role === r.id ? 'font-bold' : 'font-medium'}`}>{r.label}</span>
-                </button>
-              ))}
+          <div className="mb-8">
+            <div className="text-[13px] font-bold text-[var(--text-muted)] mb-3 uppercase tracking-wider">{t('selectRole')}</div>
+            <div className="grid grid-cols-3 gap-3">
+              {ROLES.map(r => {
+                const isActive = role === r.id;
+                return (
+                  <button key={r.id} onClick={() => setRole(r.id)}
+                    className={`relative flex flex-col items-center justify-center gap-2 p-3 rounded-2xl cursor-pointer transition-all duration-200 border-2 bg-white ${isActive ? 'shadow-md scale-[1.02]' : 'hover:bg-[var(--bg2)]'}`}
+                    style={{ borderColor: isActive ? r.color : 'var(--card-border)' }}
+                  >
+                    <span style={{ color: isActive ? r.color : 'var(--text-light)' }} className="transition-colors">{r.icon}</span>
+                    <span className={`text-[13px] ${isActive ? 'font-bold' : 'font-medium text-[var(--text-muted)]'}`} style={{ color: isActive ? r.color : undefined }}>{r.label}</span>
+                    {isActive && (
+                      <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-white flex items-center justify-center border-2" style={{ borderColor: r.color }}>
+                        <CheckCircle2 size={12} style={{ color: r.color }} />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleLogin} className="flex flex-col gap-4">
+          <form onSubmit={handleLogin} className="flex flex-col gap-5">
             <div>
-              <label className="text-[12px] md:text-[13px] font-bold block mb-1.5 md:mb-2 px-1">
+              <label className="text-[13px] font-bold block mb-2 text-[var(--text)]">
                 {t('mobile')} / {t('email')}
               </label>
               <input
-                className="input-field w-full py-2.5 md:py-3 px-4 text-[14px]"
+                className="w-full px-4 py-3.5 rounded-xl border border-[var(--card-border)] bg-[var(--bg)] text-[15px] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 transition-all placeholder-[var(--text-light)] font-medium"
                 type="text"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -101,10 +113,10 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="text-[12px] md:text-[13px] font-bold block mb-1.5 md:mb-2 px-1">{t('password')}</label>
+              <label className="text-[13px] font-bold block mb-2 text-[var(--text)]">{t('password')}</label>
               <div className="relative">
                 <input
-                  className="input-field w-full py-2.5 md:py-3 pl-4 pr-11 text-[14px]"
+                  className="w-full pl-4 pr-12 py-3.5 rounded-xl border border-[var(--card-border)] bg-[var(--bg)] text-[15px] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/10 transition-all placeholder-[var(--text-light)] font-medium"
                   type={showPass ? 'text' : 'password'}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
@@ -113,58 +125,45 @@ export default function LoginPage() {
                 />
                 <button type="button"
                   onClick={() => setShowPass(o => !o)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 bg-transparent border-none cursor-pointer text-[var(--text-muted)] p-1 active:scale-90 transition-transform"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-transparent border-none cursor-pointer text-[var(--text-muted)] p-1 hover:text-[var(--text)] transition-colors"
                 >
-                  {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPass ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
-              <div className="text-right mt-1.5 px-1">
-                <span className="text-[11px] md:text-[12px] text-[var(--primary)] font-bold cursor-pointer hover:underline">{t('forgotPassword')}</span>
+              <div className="text-right mt-2">
+                <span className="text-[13px] text-[var(--primary)] font-bold cursor-pointer hover:underline">{t('forgotPassword')}</span>
               </div>
             </div>
 
-            <button type="submit" className="btn-primary w-full justify-center min-h-[48px] mt-2 md:mt-3 text-[14px] font-bold shadow-md" disabled={loading}>
-              {loading ? <Loader2 size={18} className="animate-spin mr-1.5" /> : <LogIn size={18} className="mr-1.5" />}
+            <button type="submit" className="w-full bg-[var(--primary)] hover:bg-[var(--primary-light)] text-white border-none py-4 rounded-xl font-bold text-[15px] flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-blue-900/20 transition-all mt-2 disabled:opacity-70 disabled:cursor-not-allowed" disabled={loading}>
+              {loading ? <Loader2 size={20} className="animate-spin" /> : <LogIn size={20} />}
               {loading ? t('loading') : t('login')}
             </button>
           </form>
 
           {/* Demo Login */}
-          <div className="my-6 text-center">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex-1 h-px bg-[var(--card-border)]" />
-              <span className="text-[11px] md:text-[12px] font-semibold text-[var(--text-muted)] tracking-wide uppercase">Quick Demo</span>
-              <div className="flex-1 h-px bg-[var(--card-border)]" />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              <button onClick={() => demoLogin('citizen', 'priya@example.com')}
-                className="p-2 md:p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--bg2)] cursor-pointer text-[12px] text-[var(--text)] font-semibold hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors">
-                👤 Citizen
-              </button>
-              <button onClick={() => demoLogin('worker', 'raju@example.com')}
-                className="p-2 md:p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--bg2)] cursor-pointer text-[12px] text-[var(--text)] font-semibold hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors">
-                👷 Worker
-              </button>
-              <button onClick={() => demoLogin('employer', 'sunita@example.com')}
-                className="p-2 md:p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--bg2)] cursor-pointer text-[12px] text-[var(--text)] font-semibold hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors">
-                🏢 Employer
-              </button>
+          <div className="mt-8 pt-6 border-t border-[var(--card-border)] text-center">
+            <span className="text-[12px] font-bold text-[var(--text-muted)] tracking-wide uppercase mb-4 block">Quick Demo Access</span>
+            <div className="flex justify-center gap-3">
+              {[
+                { r: 'citizen', em: 'priya@example.com', label: 'Citizen', icon: <User size={14} /> },
+                { r: 'worker', em: 'raju@example.com', label: 'Worker', icon: <Briefcase size={14} /> },
+                { r: 'employer', em: 'sunita@example.com', label: 'Employer', icon: <Map size={14} /> },
+              ].map(d => (
+                <button key={d.r} onClick={() => demoLogin(d.r as UserRole, d.em)}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[var(--bg2)] border border-[var(--card-border)] hover:border-[var(--primary)] hover:text-[var(--primary)] text-[12px] font-semibold text-[var(--text-muted)] cursor-pointer transition-colors"
+                >
+                  {d.icon} {d.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Security Note */}
-          <div className="flex items-start gap-2.5 p-3 md:p-3.5 rounded-xl bg-[rgba(26,107,58,0.05)] border border-[rgba(26,107,58,0.15)] mb-5 md:mb-6">
-            <Shield size={16} className="text-[#1a6b3a] shrink-0 mt-0.5" />
-            <span className="text-[11px] md:text-[12px] text-[var(--text-muted)] leading-relaxed font-medium">
-              Secured by Aadhaar-linked OTP verification. We never share your data.
-            </span>
-          </div>
-
-          <p className="text-center text-[12px] md:text-[13px] text-[var(--text-muted)] font-medium">
+          <p className="text-center text-[14px] text-[var(--text-muted)] font-medium mt-8">
             {t('noAccount')}{' '}
             <Link href="/register" className="text-[var(--primary)] font-black no-underline hover:underline ml-1">{t('register')}</Link>
           </p>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
