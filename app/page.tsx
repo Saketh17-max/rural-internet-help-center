@@ -1,7 +1,7 @@
 'use client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useDatabase } from '@/contexts/DatabaseContext';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, ShieldCheck, FileText, Briefcase, Users, Wheat, Map, Heart, Lock, BookOpen, ChevronRight, Play, CheckCircle2, TrendingUp, HelpCircle, PhoneCall, Sparkles } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -33,8 +33,8 @@ export default function HomePage() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
 
-  const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } };
-  const staggerContainer = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
+  const fadeUp: Variants = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } };
+  const staggerContainer: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
 
   const SERVICES = [
     { href: '/government', icon: <FileText size={32} strokeWidth={1.5} />, label: t('govServices'), desc: t('govServicesDesc') },
