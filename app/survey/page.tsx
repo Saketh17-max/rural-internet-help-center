@@ -110,17 +110,17 @@ export default function SurveyPage() {
 
   if (submitted) {
     return (
-      <div style={{ minHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)', padding: 20 }}>
-        <div className="glass-card" style={{ padding: '48px', textAlign: 'center', maxWidth: 520, width: '100%' }}>
-          <div style={{ fontSize: 72, marginBottom: 20 }}>🙏</div>
-          <h2 style={{ fontSize: 28, fontWeight: 900, marginBottom: 12 }}>Thank You!</h2>
-          <p style={{ color: 'var(--text-muted)', marginBottom: 28, lineHeight: 1.7 }}>
+      <div className="min-h-[90vh] flex items-center justify-center bg-[var(--bg)] p-4 md:p-6">
+        <div className="glass-card p-8 md:p-12 text-center w-full max-w-[520px]">
+          <div className="text-[64px] md:text-[72px] mb-4 md:mb-5">🙏</div>
+          <h2 className="text-[24px] md:text-[28px] font-black mb-3">Thank You!</h2>
+          <p className="text-[var(--text-muted)] mb-7 leading-relaxed text-sm md:text-base">
             Your responses to the Community Service Project Survey have been securely recorded. Your data is used anonymously to understand community needs and improve rural digital services.
           </p>
 
-          <a href="/analytics" style={{ textDecoration: 'none' }}>
-            <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-              <BarChart2 size={16} /> View Live Analytics Dashboard
+          <a href="/analytics" className="no-underline block w-full">
+            <button className="btn-primary w-full justify-center min-h-[48px] md:min-h-[52px]">
+              <BarChart2 size={18} /> View Live Analytics Dashboard
             </button>
           </a>
         </div>
@@ -129,71 +129,69 @@ export default function SurveyPage() {
   }
 
   return (
-    <div style={{ minHeight: '90vh', background: 'var(--bg)', display: 'flex', flexDirection: 'column' }}>
+    <div className="min-h-[90vh] bg-[var(--bg)] flex flex-col pb-12">
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg, #1b4f72, #0a2744)', padding: '32px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 40, marginBottom: 10 }}>📋</div>
-        <h1 style={{ fontSize: 'clamp(1.4rem,4vw,1.8rem)', fontWeight: 900, marginBottom: 6 }}>Official Community Service Project Survey</h1>
-        <p style={{ opacity: 0.8, maxWidth: 600, margin: '0 auto', fontSize: 14 }}>
+      <div className="bg-gradient-to-br from-[#1b4f72] to-[#0a2744] pt-24 pb-8 md:pb-10 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">📋</div>
+        <h1 className="text-xl md:text-[clamp(1.4rem,4vw,1.8rem)] font-black mb-2.5">Official Community Service Project Survey</h1>
+        <p className="opacity-80 max-w-[600px] mx-auto text-[13px] md:text-sm leading-relaxed">
           This survey helps us understand the digital needs, challenges, and awareness levels of citizens in rural areas to improve the Rural Internet Help Center platform.
         </p>
       </div>
 
       {/* Progress */}
-      <div style={{ background: 'var(--card)', borderBottom: '1px solid var(--card-border)', padding: '16px 24px', position: 'sticky', top: 60, zIndex: 10 }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, fontSize: 13 }}>
-            <span style={{ color: 'var(--text-muted)' }}>Section {currentSectionIdx + 1} of {SECTIONS.length}</span>
-            <span style={{ fontWeight: 700, color: 'var(--primary)' }}>{Math.round(progress)}% complete</span>
+      <div className="bg-[var(--card)] border-b border-[var(--card-border)] px-4 md:px-6 py-3 md:py-4 sticky top-[60px] md:top-[72px] z-10 shadow-sm">
+        <div className="max-w-[800px] mx-auto">
+          <div className="flex justify-between mb-2 text-[11px] md:text-[13px]">
+            <span className="text-[var(--text-muted)] font-semibold">Section {currentSectionIdx + 1} of {SECTIONS.length}</span>
+            <span className="font-bold text-[var(--primary)]">{Math.round(progress)}% complete</span>
           </div>
-          <div className="progress-bar">
+          <div className="progress-bar h-1.5 md:h-2">
             <div className="progress-fill" style={{ width: `${progress}%` }} />
           </div>
         </div>
       </div>
 
       {/* Form Area */}
-      <div style={{ flex: 1, padding: '40px 20px' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto' }}>
-          <div className="glass-card" style={{ padding: '36px' }}>
-            <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 32, color: 'var(--primary)', borderBottom: '2px solid var(--card-border)', paddingBottom: 16 }}>
+      <div className="flex-1 px-4 md:px-6 py-6 md:py-10">
+        <div className="max-w-[800px] mx-auto">
+          <div className="glass-card p-5 md:p-9">
+            <h2 className="text-lg md:text-[22px] font-extrabold mb-6 md:mb-8 text-[var(--primary)] border-b-2 border-[var(--card-border)] pb-3 md:pb-4 leading-tight">
               {section.title}
             </h2>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 32, marginBottom: 40 }}>
+            <div className="flex flex-col gap-6 md:gap-8 mb-8 md:mb-10">
               {section.questions.map(q => {
                 const isOptional = q.id === 'name' || q.id === 'remarks';
                 
                 return (
                   <div key={q.id}>
-                    <label style={{ fontSize: 16, fontWeight: 700, marginBottom: 12, display: 'block', color: 'var(--text)' }}>
-                      {q.label} {!isOptional && <span style={{ color: '#e74c3c' }}>*</span>}
+                    <label className="text-[14px] md:text-[16px] font-bold mb-2 md:mb-3 block text-[var(--text)] leading-snug">
+                      {q.label} {!isOptional && <span className="text-[#e74c3c]">*</span>}
                     </label>
 
                     {q.type === 'text' && (
                       <input 
                         type="text" 
-                        className="input-field" 
+                        className="input-field w-full py-3 md:py-3.5 px-4 text-sm md:text-[15px]" 
                         value={answers[q.id] || ''} 
                         onChange={(e) => handleAnswer(q.id, e.target.value)}
                         placeholder="Type your answer here..."
-                        style={{ width: '100%', padding: '14px', fontSize: 15 }}
                       />
                     )}
 
                     {q.type === 'textarea' && (
                       <textarea 
-                        className="input-field" 
+                        className="input-field w-full py-3 md:py-3.5 px-4 text-sm md:text-[15px] resize-y min-h-[100px]" 
                         rows={4}
                         value={answers[q.id] || ''} 
                         onChange={(e) => handleAnswer(q.id, e.target.value)}
                         placeholder="Type your remarks/suggestions here..."
-                        style={{ width: '100%', padding: '14px', fontSize: 15, resize: 'vertical' }}
                       />
                     )}
 
                     {(q.type === 'radio' || q.type === 'checkbox') && (
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 md:gap-3">
                         {q.options?.map(opt => {
                           const isSelected = q.type === 'checkbox'
                             ? ((answers[q.id] as string[]) || []).includes(opt)
@@ -201,23 +199,11 @@ export default function SurveyPage() {
 
                           return (
                             <button key={opt} onClick={() => handleAnswer(q.id, opt, q.type === 'checkbox')}
-                              style={{
-                                padding: '14px 16px', borderRadius: 12, cursor: 'pointer', textAlign: 'left',
-                                border: isSelected ? '2px solid var(--primary)' : '2px solid var(--card-border)',
-                                background: isSelected ? 'rgba(26,107,58,0.08)' : 'transparent',
-                                color: isSelected ? 'var(--primary)' : 'var(--text)',
-                                fontWeight: isSelected ? 700 : 500, fontSize: 14,
-                                display: 'flex', alignItems: 'center', gap: 12, transition: 'all 0.2s',
-                              }}>
-                              <div style={{
-                                width: 20, height: 20, borderRadius: q.type === 'checkbox' ? 6 : '50%', flexShrink: 0,
-                                border: isSelected ? '2px solid var(--primary)' : '2px solid var(--card-border)',
-                                background: isSelected ? 'var(--primary)' : 'transparent',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                              }}>
-                                {isSelected && <CheckCircle size={12} style={{ color: 'white' }} />}
+                              className={`p-3 md:p-4 rounded-xl cursor-pointer text-left flex items-start gap-3 transition-all min-h-[44px] border-2 ${isSelected ? 'border-[var(--primary)] bg-[rgba(26,107,58,0.08)] text-[var(--primary)] font-bold' : 'border-[var(--card-border)] bg-transparent text-[var(--text)] font-medium hover:border-[rgba(0,0,0,0.1)] dark:hover:border-[rgba(255,255,255,0.1)]'}`}>
+                              <div className={`w-5 h-5 md:w-[22px] md:h-[22px] shrink-0 border-2 flex items-center justify-center mt-0.5 ${q.type === 'checkbox' ? 'rounded-md' : 'rounded-full'} ${isSelected ? 'border-[var(--primary)] bg-[var(--primary)]' : 'border-[var(--card-border)] bg-[var(--bg2)]'}`}>
+                                {isSelected && <CheckCircle size={14} className="text-white" />}
                               </div>
-                              {opt}
+                              <span className="text-[13px] md:text-[14px] leading-snug pt-0.5">{opt}</span>
                             </button>
                           );
                         })}
@@ -229,16 +215,15 @@ export default function SurveyPage() {
             </div>
 
             {/* Navigation Buttons */}
-            <div style={{ display: 'flex', gap: 16, borderTop: '2px solid var(--card-border)', paddingTop: 24 }}>
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 border-t-2 border-[var(--card-border)] pt-5 md:pt-6">
               {currentSectionIdx > 0 && (
-                <button className="btn-outline" onClick={() => setCurrentSectionIdx(s => s - 1)}
-                  style={{ flex: 1, justifyContent: 'center' }}>
+                <button className="btn-outline flex-1 justify-center min-h-[48px] text-[14px] md:text-[15px]" onClick={() => setCurrentSectionIdx(s => s - 1)}>
                   ← Previous Section
                 </button>
               )}
               
               {currentSectionIdx < SECTIONS.length - 1 ? (
-                <button className="btn-primary" 
+                <button className="btn-primary sm:flex-[2] justify-center min-h-[48px] text-[14px] md:text-[15px] transition-opacity" 
                   onClick={() => {
                     if (isSectionComplete()) {
                       setCurrentSectionIdx(s => s + 1);
@@ -247,25 +232,25 @@ export default function SurveyPage() {
                       toast.error('Please complete all required fields in this section.');
                     }
                   }}
-                  style={{ flex: 2, justifyContent: 'center', opacity: isSectionComplete() ? 1 : 0.5 }}>
+                  style={{ opacity: isSectionComplete() ? 1 : 0.5 }}>
                   Next Section <ChevronRight size={18} />
                 </button>
               ) : (
-                <button className="btn-primary" onClick={() => {
+                <button className="btn-primary sm:flex-[2] justify-center min-h-[48px] text-[14px] md:text-[15px] transition-opacity" onClick={() => {
                   if (isSectionComplete()) {
                     handleSubmit();
                   } else {
                     toast.error('Please complete all required fields before submitting.');
                   }
                 }}
-                  style={{ flex: 2, justifyContent: 'center', opacity: isSectionComplete() && !isSubmitting ? 1 : 0.5 }}
+                  style={{ opacity: isSectionComplete() && !isSubmitting ? 1 : 0.5 }}
                   disabled={isSubmitting}>
                   {isSubmitting ? 'Submitting securely...' : 'Submit Official Survey ✓'}
                 </button>
               )}
             </div>
 
-            <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-muted)', marginTop: 20 }}>
+            <p className="text-center text-[11px] md:text-xs text-[var(--text-muted)] mt-4 md:mt-5 font-semibold">
               Section {currentSectionIdx + 1} of {SECTIONS.length}
             </p>
           </div>

@@ -215,22 +215,18 @@ export default function GovernmentServicesPage() {
   const getLabel = (s: typeof SERVICES[0]) => language === 'te' ? s.labelTe : language === 'hi' ? s.labelHi : s.label;
 
   return (
-    <div style={{ minHeight: '90vh', background: 'var(--bg)' }}>
+    <div className="min-h-[90vh] bg-[var(--bg)] pb-12">
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(135deg, #0f4023, #1b4f72)', padding: '60px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 16 }}>🏛️</div>
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.6rem)', fontWeight: 900, marginBottom: 12 }}>{t('govServices')}</h1>
-        <p style={{ opacity: 0.8, maxWidth: 560, margin: '0 auto 28px', lineHeight: 1.7 }}>{t('govServicesDesc')}</p>
+      <div className="bg-gradient-to-br from-[#0f4023] to-[#1b4f72] pt-24 pb-12 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">🏛️</div>
+        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.6rem)] font-black mb-3">{t('govServices')}</h1>
+        <p className="opacity-80 max-w-[560px] mx-auto mb-6 md:mb-7 leading-relaxed text-sm md:text-base">{t('govServicesDesc')}</p>
 
         {/* Search */}
-        <div style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
-          <Search size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+        <div className="max-w-[480px] mx-auto relative">
+          <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
-            style={{
-              width: '100%', padding: '14px 16px 14px 44px', borderRadius: '50px',
-              border: 'none', background: 'rgba(255,255,255,0.95)', fontSize: 15,
-              fontFamily: 'inherit', outline: 'none',
-            }}
+            className="w-full py-3.5 md:py-4 pl-12 pr-4 rounded-full border-none bg-[rgba(255,255,255,0.95)] text-gray-800 text-sm md:text-[15px] font-[inherit] outline-none shadow-lg focus:shadow-xl transition-shadow"
             placeholder={`${t('search')} services...`}
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -238,18 +234,12 @@ export default function GovernmentServicesPage() {
         </div>
       </div>
 
-      <div className="page-container" style={{ padding: '32px 20px' }}>
+      <div className="page-container px-4 md:px-6 py-6 md:py-8">
         {/* Category Filter */}
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 28 }}>
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 md:pb-0 md:flex-wrap mb-6 md:mb-7">
           {CATEGORIES.map(cat => (
             <button key={cat} onClick={() => setCategory(cat)}
-              style={{
-                padding: '6px 16px', borderRadius: '50px', fontSize: 13, fontWeight: 600, cursor: 'pointer',
-                border: category === cat ? 'none' : '1.5px solid var(--card-border)',
-                background: category === cat ? 'var(--primary)' : 'transparent',
-                color: category === cat ? 'white' : 'var(--text)',
-                transition: 'all 0.2s',
-              }}
+              className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[11px] md:text-xs font-bold cursor-pointer whitespace-nowrap transition-all border shrink-0 ${category === cat ? 'border-transparent bg-[var(--primary)] text-white shadow-md' : 'border-[var(--card-border)] bg-transparent text-[var(--text)] hover:bg-[var(--bg2)]'}`}
             >
               {cat}
             </button>
@@ -257,44 +247,39 @@ export default function GovernmentServicesPage() {
         </div>
 
         {/* Services Grid + Detail Panel */}
-        <div style={{ display: 'grid', gridTemplateColumns: selected ? '1fr 1.2fr' : '1fr', gap: 24 }}>
+        <div className={`grid gap-6 ${selected ? 'grid-cols-1 lg:grid-cols-[1fr_1.2fr]' : 'grid-cols-1'}`}>
           {/* Grid */}
-          <div className="grid-auto" style={{ alignContent: 'start' }}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 ${selected ? 'lg:grid-cols-2' : 'lg:grid-cols-3'} gap-4 md:gap-5 content-start`}>
             {filtered.map(svc => (
               <div key={svc.id}
                 onClick={() => setSelected(selected?.id === svc.id ? null : svc)}
-                style={{
-                  background: 'var(--card)', border: selected?.id === svc.id ? `2px solid ${svc.color}` : '1.5px solid var(--card-border)',
-                  borderRadius: 16, padding: '20px', cursor: 'pointer',
-                  transition: 'all 0.2s', boxShadow: 'var(--shadow)',
-                }}
-                onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.transform = 'translateY(-2px)')}
-                onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.transform = 'none')}
+                className={`bg-[var(--card)] rounded-2xl p-4 md:p-5 cursor-pointer transition-all shadow-[var(--shadow)] hover:-translate-y-1 active:scale-[0.98] border-2 ${selected?.id === svc.id ? 'border-current' : 'border-[var(--card-border)] hover:border-[rgba(0,0,0,0.1)] dark:hover:border-[rgba(255,255,255,0.1)]'}`}
+                style={{ borderColor: selected?.id === svc.id ? svc.color : undefined }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 10, background: `${svc.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl flex items-center justify-center text-xl shrink-0" style={{ background: `${svc.color}15` }}>
                     {svc.icon}
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: 14 }}>{getLabel(svc)}</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{svc.category}</div>
+                    <div className="font-bold text-sm md:text-[14px] leading-tight">{getLabel(svc)}</div>
+                    <div className="text-[10px] md:text-[11px] text-[var(--text-muted)] mt-0.5">{svc.category}</div>
                   </div>
                 </div>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
-                  <span className="badge badge-info" style={{ fontSize: 11 }}>
-                    <Clock size={10} /> {svc.time}
+                <div className="flex gap-2 flex-wrap mb-3">
+                  <span className="badge badge-info text-[9px] md:text-[10px] px-2 py-0.5">
+                    <Clock size={10} className="inline mr-1" /> {svc.time}
                   </span>
-                  <span className="badge badge-success" style={{ fontSize: 11 }}>
-                    <DollarSign size={10} /> {svc.fee}
+                  <span className="badge badge-success text-[9px] md:text-[10px] px-2 py-0.5">
+                    <DollarSign size={10} className="inline mr-1" /> {svc.fee}
                   </span>
                 </div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <CheckSquare size={12} /> {applications.filter((a: any) => a.serviceId === svc.id).length} Applications
+                <div className="text-[11px] md:text-[12px] text-[var(--text-muted)] flex items-center gap-1 font-semibold">
+                  <CheckSquare size={12} className="shrink-0" /> {applications.filter((a: any) => a.serviceId === svc.id).length} Active Applications
                 </div>
               </div>
             ))}
             {filtered.length === 0 && (
-              <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: 60, color: 'var(--text-muted)' }}>
+              <div className="col-span-full text-center p-12 text-[var(--text-muted)] font-medium">
                 No services found. Try a different search.
               </div>
             )}
@@ -302,72 +287,79 @@ export default function GovernmentServicesPage() {
 
           {/* Detail Panel */}
           {selected && (
-            <div style={{ background: 'var(--card)', border: '1.5px solid var(--card-border)', borderRadius: 20, padding: '28px', alignSelf: 'start', position: 'sticky', top: 90 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-                <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                  <div style={{ width: 52, height: 52, borderRadius: 12, background: `${selected.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28 }}>
-                    {selected.icon}
+            <>
+              {/* Backdrop for mobile */}
+              <div className="fixed inset-0 bg-black/40 z-[799] lg:hidden backdrop-blur-sm" onClick={() => setSelected(null)} />
+              
+              <div className="fixed lg:sticky lg:top-[90px] bottom-0 left-0 right-0 lg:left-auto lg:right-auto bg-[var(--card)] border-t lg:border border-[var(--card-border)] rounded-t-3xl lg:rounded-2xl p-5 md:p-7 z-[800] lg:z-auto shadow-[0_-8px_32px_rgba(0,0,0,0.12)] lg:shadow-none max-h-[85vh] lg:max-h-none overflow-y-auto transform transition-transform duration-300">
+                <div className="flex justify-between items-start mb-5">
+                  <div className="flex gap-3 items-center">
+                    <div className="w-12 h-12 md:w-[52px] md:h-[52px] rounded-xl flex items-center justify-center text-2xl md:text-[28px] shrink-0" style={{ background: `${selected.color}15` }}>
+                      {selected.icon}
+                    </div>
+                    <div>
+                      <h2 className="text-base md:text-[18px] font-extrabold leading-tight mb-1.5">{getLabel(selected)}</h2>
+                      <div className="flex gap-2 flex-wrap mb-1.5">
+                        <span className="badge badge-info text-[9px] md:text-[10px]"><Clock size={10} className="inline mr-1" /> {selected.time}</span>
+                        <span className="badge badge-success text-[9px] md:text-[10px]"><DollarSign size={10} className="inline mr-1" /> {selected.fee}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h2 style={{ fontSize: 18, fontWeight: 800 }}>{getLabel(selected)}</h2>
-                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 6 }}>
-                      <span className="badge badge-info"><Clock size={10} /> {selected.time}</span>
-                      <span className="badge badge-success"><DollarSign size={10} /> {selected.fee}</span>
-                    </div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>
-                      ✅ {applications.filter((a: any) => a.serviceId === selected.id).length} Active Applications
-                    </div>
+                  <button onClick={() => setSelected(null)} className="bg-transparent border-none cursor-pointer text-[var(--text-muted)] text-xl p-1 hover:text-[var(--text)] transition-colors">✕</button>
+                </div>
+                
+                <div className="text-[11px] md:text-[13px] text-[var(--text-muted)] font-bold mb-5">
+                  ✅ {applications.filter((a: any) => a.serviceId === selected.id).length} Active Applications from our portal
+                </div>
+
+                {/* Eligibility */}
+                <div className="mb-5">
+                  <h3 className="text-xs md:text-[14px] font-bold text-[var(--primary)] mb-2 md:mb-3 flex items-center gap-1.5">
+                    <CheckCircle size={14} className="shrink-0" /> {t('eligibility')}
+                  </h3>
+                  <ul className="list-none flex flex-col gap-1.5 md:gap-2 pl-0">
+                    {selected.eligibility.map(e => (
+                      <li key={e} className="text-[11px] md:text-[13px] text-[var(--text-muted)] flex items-start gap-1.5 leading-relaxed">
+                        <span className="text-[var(--primary)] shrink-0 mt-[2px] font-bold">✓</span> {e}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Documents */}
+                <div className="mb-5">
+                  <h3 className="text-xs md:text-[14px] font-bold text-[#2980b9] mb-2 md:mb-3 flex items-center gap-1.5">
+                    <FileText size={14} className="shrink-0" /> {t('requiredDocs')}
+                  </h3>
+                  <div className="flex flex-wrap gap-1.5 md:gap-2">
+                    {selected.documents.map(d => (
+                      <span key={d} className="badge badge-info text-[10px] md:text-[11px] px-2 md:px-2.5 py-1">{d}</span>
+                    ))}
                   </div>
                 </div>
-                <button onClick={() => setSelected(null)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: 20, padding: 4 }}>✕</button>
-              </div>
 
-              {/* Eligibility */}
-              <div style={{ marginBottom: 20 }}>
-                <h3 style={{ fontSize: 14, fontWeight: 700, color: 'var(--primary)', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <CheckCircle size={14} /> {t('eligibility')}
-                </h3>
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 5 }}>
-                  {selected.eligibility.map(e => (
-                    <li key={e} style={{ fontSize: 13, color: 'var(--text-muted)', display: 'flex', alignItems: 'flex-start', gap: 6 }}>
-                      <span style={{ color: 'var(--primary)', flexShrink: 0, marginTop: 2 }}>✓</span> {e}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Documents */}
-              <div style={{ marginBottom: 20 }}>
-                <h3 style={{ fontSize: 14, fontWeight: 700, color: '#2980b9', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <FileText size={14} /> {t('requiredDocs')}
-                </h3>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                  {selected.documents.map(d => (
-                    <span key={d} className="badge badge-info" style={{ fontSize: 11 }}>{d}</span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Steps */}
-              <div style={{ marginBottom: 24 }}>
-                <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
-                  📋 {t('steps')}
-                </h3>
-                {selected.steps.map((step, i) => (
-                  <div key={i} className="step-card">
-                    <div className="step-number">{i + 1}</div>
-                    <div style={{ fontSize: 13, color: 'var(--text)', lineHeight: 1.6 }}>{step}</div>
+                {/* Steps */}
+                <div className="mb-6">
+                  <h3 className="text-xs md:text-[14px] font-bold mb-3 flex items-center gap-1.5">
+                    📋 {t('steps')}
+                  </h3>
+                  <div className="flex flex-col gap-3">
+                    {selected.steps.map((step, i) => (
+                      <div key={i} className="step-card p-3 md:p-3.5 bg-[var(--bg2)] rounded-xl flex items-start gap-3">
+                        <div className="w-6 h-6 md:w-[26px] md:h-[26px] rounded-full bg-[var(--primary)] text-white text-[11px] md:text-[12px] font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</div>
+                        <div className="text-[11px] md:text-[13px] text-[var(--text)] leading-relaxed">{step}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
 
-              <a href={selected.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-                  <ExternalLink size={16} /> {t('officialLink')}
-                </button>
-              </a>
-            </div>
+                <a href={selected.link} target="_blank" rel="noopener noreferrer" className="no-underline block">
+                  <button className="btn-primary w-full justify-center min-h-[48px] text-[13px] md:text-[14px]">
+                    <ExternalLink size={16} /> {t('officialLink')}
+                  </button>
+                </a>
+              </div>
+            </>
           )}
         </div>
       </div>

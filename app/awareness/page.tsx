@@ -102,53 +102,48 @@ export default function AwarenessPage() {
   const { t } = useLanguage();
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '90vh' }}>
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12">
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(135deg, #1b2631, #2c3e50)', padding: '50px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>🛡️</div>
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.4rem)', fontWeight: 900, marginBottom: 10 }}>{t('awarenessTitle')}</h1>
-        <p style={{ opacity: 0.8, maxWidth: 560, margin: '0 auto 20px' }}>{t('awarenessDesc')}</p>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, padding: '12px 24px', borderRadius: '50px', background: 'rgba(231,76,60,0.2)', border: '2px solid rgba(231,76,60,0.5)', color: '#e74c3c', fontWeight: 700 }}>
-          🚨 Cybercrime Helpline: <strong>1930</strong>
+      <div className="bg-gradient-to-br from-[#1b2631] to-[#2c3e50] pt-24 pb-10 md:pb-12 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">🛡️</div>
+        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.4rem)] font-black mb-2.5">{t('awarenessTitle')}</h1>
+        <p className="opacity-90 max-w-[560px] mx-auto mb-5 md:mb-6 text-[13px] md:text-[15px] leading-relaxed">{t('awarenessDesc')}</p>
+        <div className="inline-flex items-center gap-2 md:gap-3 py-2.5 px-5 md:py-3 md:px-6 rounded-full bg-[rgba(231,76,60,0.2)] border-2 border-[rgba(231,76,60,0.5)] text-[#e74c3c] font-bold text-[13px] md:text-[15px]">
+          🚨 Cybercrime Helpline: <strong className="font-black tracking-wide">1930</strong>
         </div>
       </div>
 
-      <div className="page-container" style={{ padding: '40px 20px' }}>
+      <div className="page-container px-4 md:px-6 py-6 md:py-10">
         {/* Awareness Cards */}
-        <div style={{ marginBottom: 48 }}>
-          <div className="section-header">
-            <h2>Common <span className="gradient-text">Online Scams</span> & How to Avoid Them</h2>
-            <div className="section-divider" />
-            <p>Learn to recognize and protect yourself from digital fraud</p>
+        <div className="mb-10 md:mb-12">
+          <div className="text-left mb-6 md:mb-8">
+            <h2 className="text-[20px] md:text-[24px] font-extrabold leading-tight">Common <span className="text-[var(--primary)]">Online Scams</span> & How to Avoid Them</h2>
+            <div className="w-12 h-1 bg-[var(--primary)] mt-3 rounded-full mb-3" />
+            <p className="text-[13px] md:text-[15px] text-[var(--text-muted)]">Learn to recognize and protect yourself from digital fraud</p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="flex flex-col gap-4 md:gap-5">
             {TIPS.map(tip => (
-              <div key={tip.id} style={{
-                background: 'var(--card)', border: `2px solid ${tip.color}20`,
-                borderRadius: 16, padding: '24px', overflow: 'hidden', position: 'relative',
-              }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, width: 4, bottom: 0, background: tip.color, borderRadius: '16px 0 0 16px' }} />
-                <div style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
-                  <div style={{ width: 56, height: 56, borderRadius: 12, background: `${tip.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, flexShrink: 0 }}>
+              <div key={tip.id} className="bg-[var(--card)] rounded-2xl p-4 md:p-6 overflow-hidden relative shadow-sm" style={{ border: `1.5px solid ${tip.color}20` }}>
+                <div className="absolute top-0 left-0 w-1.5 bottom-0" style={{ background: tip.color, borderRadius: '16px 0 0 16px' }} />
+                <div className="flex flex-col sm:flex-row gap-4 md:gap-5 items-start pl-2">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center text-[26px] md:text-[28px] shrink-0" style={{ background: `${tip.color}15` }}>
                     {tip.icon}
                   </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 800, fontSize: 17, color: tip.color, marginBottom: 12 }}>{tip.title}</div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                  <div className="flex-1 min-w-0 w-full">
+                    <div className="font-extrabold text-[15px] md:text-[17px] mb-3 md:mb-4" style={{ color: tip.color }}>{tip.title}</div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
                       {tip.signs.map((sign, i) => (
-                        <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: 13, lineHeight: 1.5 }}>
-                          <span style={{ color: tip.color, flexShrink: 0, marginTop: 2 }}>
-                            {i < 2 ? '✓' : '✓'}
-                          </span>
-                          <span style={{ color: 'var(--text-muted)' }}>{sign}</span>
+                        <div key={i} className="flex gap-2.5 items-start text-[12px] md:text-[13px] leading-relaxed">
+                          <span className="shrink-0 mt-[1px] font-bold" style={{ color: tip.color }}>✓</span>
+                          <span className="text-[var(--text-muted)] font-medium">{sign}</span>
                         </div>
                       ))}
                     </div>
                     {tip.realLink && (
-                      <div style={{ marginTop: 12, display: 'flex', gap: 8, alignItems: 'center' }}>
-                        <span className="badge badge-success" style={{ fontSize: 12 }}>✅ Real: {tip.realLink}</span>
-                        {tip.fakeLink && <span className="badge badge-danger" style={{ fontSize: 12 }}>❌ Fake: {tip.fakeLink}</span>}
+                      <div className="mt-4 md:mt-5 flex flex-col sm:flex-row gap-2 md:gap-3 items-start sm:items-center">
+                        <span className="badge badge-success text-[10px] md:text-[11px] px-2.5 py-1">✅ Real: {tip.realLink}</span>
+                        {tip.fakeLink && <span className="badge badge-danger text-[10px] md:text-[11px] px-2.5 py-1">❌ Fake: {tip.fakeLink}</span>}
                       </div>
                     )}
                   </div>
@@ -159,28 +154,22 @@ export default function AwarenessPage() {
         </div>
 
         {/* Quick Quiz */}
-        <section style={{ marginBottom: 48 }}>
-          <div className="section-header">
-            <h2>Test Your <span className="gradient-text">Digital Safety</span> Knowledge</h2>
-            <div className="section-divider" />
+        <section className="mb-10 md:mb-12">
+          <div className="text-left mb-6 md:mb-8">
+            <h2 className="text-[20px] md:text-[24px] font-extrabold leading-tight">Test Your <span className="text-[var(--primary)]">Digital Safety</span> Knowledge</h2>
+            <div className="w-12 h-1 bg-[var(--primary)] mt-3 rounded-full" />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div className="flex flex-col gap-4 md:gap-5">
             {QUIZ_QUESTIONS.map((q, i) => (
-              <div key={i} style={{ background: 'var(--card)', border: '1.5px solid var(--card-border)', borderRadius: 16, padding: '24px', overflow: 'hidden' }}>
-                <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 16, display: 'flex', gap: 12 }}>
-                  <span style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, flexShrink: 0 }}>{i + 1}</span>
-                  {q.q}
+              <div key={i} className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-2xl p-4 md:p-6 shadow-sm">
+                <div className="font-bold text-[14px] md:text-[15px] mb-4 md:mb-5 flex gap-3 leading-snug">
+                  <span className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-[var(--primary)] text-white flex items-center justify-center text-[12px] md:text-[13px] font-black shrink-0 mt-0.5">{i + 1}</span>
+                  <span className="pt-1">{q.q}</span>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 md:gap-3">
                   {q.options.map((opt, j) => (
-                    <div key={j} style={{
-                      padding: '10px 14px', borderRadius: 10, fontSize: 13, cursor: 'pointer',
-                      border: j === q.correct ? '2px solid #27ae60' : '1.5px solid var(--card-border)',
-                      background: j === q.correct ? 'rgba(39,174,96,0.08)' : 'var(--bg2)',
-                      color: j === q.correct ? '#27ae60' : 'var(--text)',
-                      fontWeight: j === q.correct ? 700 : 400, lineHeight: 1.4,
-                    }}>
-                      {j === q.correct ? '✅ ' : '○ '}{opt}
+                    <div key={j} className={`p-3 md:p-3.5 rounded-xl text-[12px] md:text-[13px] cursor-pointer transition-colors ${j === q.correct ? 'border-2 border-[#27ae60] bg-[rgba(39,174,96,0.08)] text-[#27ae60] font-bold' : 'border-[1.5px] border-[var(--card-border)] bg-[var(--bg2)] text-[var(--text)] font-medium hover:border-[rgba(0,0,0,0.1)]'}`}>
+                      <span className="mr-1.5">{j === q.correct ? '✅' : '○'}</span> {opt}
                     </div>
                   ))}
                 </div>
@@ -190,19 +179,19 @@ export default function AwarenessPage() {
         </section>
 
         {/* Report Cybercrime */}
-        <div style={{ background: 'linear-gradient(135deg, #c0392b, #e74c3c)', borderRadius: 20, padding: '32px', color: 'white', textAlign: 'center' }}>
-          <div style={{ fontSize: 56, marginBottom: 12 }}>🚨</div>
-          <h2 style={{ fontSize: 26, fontWeight: 900, marginBottom: 10 }}>Victim of Online Fraud?</h2>
-          <p style={{ opacity: 0.85, marginBottom: 24, maxWidth: 500, margin: '0 auto 24px', lineHeight: 1.7 }}>
+        <div className="bg-gradient-to-br from-[#c0392b] to-[#e74c3c] rounded-2xl md:rounded-[20px] p-6 md:p-8 text-white text-center shadow-lg">
+          <div className="text-[48px] md:text-[56px] mb-3 md:mb-4">🚨</div>
+          <h2 className="text-[22px] md:text-[26px] font-black mb-2 md:mb-3">Victim of Online Fraud?</h2>
+          <p className="opacity-90 mb-6 md:mb-8 max-w-[500px] mx-auto text-[13px] md:text-[15px] leading-relaxed">
             Act immediately! The faster you report, the better the chances of recovering your money.
           </p>
-          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <div style={{ padding: '16px 24px', borderRadius: 14, background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.4)' }}>
-              <div style={{ fontSize: 32, fontWeight: 900 }}>1930</div>
-              <div style={{ fontSize: 13, opacity: 0.9 }}>National Cybercrime Helpline</div>
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center">
+            <div className="p-3 md:p-4 rounded-xl md:rounded-2xl bg-[rgba(255,255,255,0.2)] border-2 border-[rgba(255,255,255,0.4)] w-full sm:w-auto">
+              <div className="text-[28px] md:text-[32px] font-black tracking-widest leading-none mb-1">1930</div>
+              <div className="text-[11px] md:text-[13px] opacity-90 font-bold">National Cybercrime Helpline</div>
             </div>
-            <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-              <button style={{ padding: '16px 28px', borderRadius: 14, background: 'white', color: '#c0392b', border: 'none', fontWeight: 800, cursor: 'pointer', fontSize: 14 }}>
+            <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" className="no-underline w-full sm:w-auto block h-full">
+              <button className="w-full h-full py-4 px-6 md:px-8 rounded-xl md:rounded-2xl bg-white text-[#c0392b] border-none font-black text-[13px] md:text-[15px] cursor-pointer hover:bg-gray-100 transition-colors shadow-md">
                 🌐 Report at cybercrime.gov.in
               </button>
             </a>

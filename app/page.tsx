@@ -9,7 +9,6 @@ import {
   ChevronRight, Star, CheckCircle, TrendingUp, Award, Zap, Lock
 } from 'lucide-react';
 
-
 const SERVICES = [
   { href: '/government', icon: '🏛️', label: 'Government Services', labelKey: 'govServices', color: '#1a6b3a', desc: '18+ certificates & services' },
   { href: '/marketplace', icon: '💼', label: 'Worker Marketplace', labelKey: 'marketplaceTitle', color: '#1b4f72', desc: 'Find jobs & hire workers' },
@@ -29,7 +28,6 @@ const FEATURES = [
   { icon: '📱', title: 'Mobile First', desc: 'Works perfectly on any smartphone or tablet' },
   { icon: '📄', title: 'Document Tools', desc: 'Compress, convert & manage documents online' },
 ];
-
 
 function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
   const [count, setCount] = useState(0);
@@ -64,72 +62,54 @@ export default function HomePage() {
     { value: users.length, label: 'Citizens Served', icon: '👥', suffix: '' },
     { value: workers.length, label: 'Workers Registered', icon: '👷', suffix: '' },
     { value: jobs.length, label: 'Jobs Matched', icon: '💼', suffix: '' },
-    { value: 12, label: 'Districts Active', icon: '🗺️', suffix: '' }, // Keep districts static as it's a structural metric, or could derive from distinct worker locations
+    { value: 12, label: 'Districts Active', icon: '🗺️', suffix: '' },
   ];
 
   return (
     <div>
       {/* HERO */}
-      <section className="hero-bg" style={{ minHeight: '92vh', display: 'flex', alignItems: 'center', padding: '60px 24px', position: 'relative' }}>
+      <section className="hero-bg min-h-[92vh] flex items-center pt-24 pb-16 px-4 md:px-8 relative">
         {/* Animated circles */}
-        <div style={{ position: 'absolute', top: '10%', right: '5%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(74,222,128,0.12), transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '10%', left: '5%', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(96,165,250,0.12), transparent 70%)', pointerEvents: 'none' }} />
+        <div className="absolute top-[10%] right-[5%] w-64 h-64 md:w-96 md:h-96 rounded-full bg-[radial-gradient(circle,rgba(74,222,128,0.12),transparent_70%)] pointer-events-none" />
+        <div className="absolute bottom-[10%] left-[5%] w-48 h-48 md:w-72 md:h-72 rounded-full bg-[radial-gradient(circle,rgba(96,165,250,0.12),transparent_70%)] pointer-events-none" />
 
-        <div style={{ maxWidth: 1200, margin: '0 auto', width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
+        <div className="max-w-[1200px] mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           {/* Left content */}
-          <div>
+          <div className="text-center md:text-left z-10">
             {/* Badge */}
-            <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              padding: '8px 16px', borderRadius: '50px',
-              background: 'rgba(74,222,128,0.15)', border: '1px solid rgba(74,222,128,0.3)',
-              color: '#4ade80', fontSize: 13, fontWeight: 600, marginBottom: 24,
-            }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(74,222,128,0.15)] border border-[rgba(74,222,128,0.3)] text-[#4ade80] text-xs md:text-sm font-semibold mb-6">
               🇮🇳 Digital India Initiative
             </div>
 
-            <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 900, color: 'white', lineHeight: 1.15, marginBottom: 20 }}>
+            <h1 className="text-3xl md:text-5xl lg:text-[3.2rem] font-black text-white leading-[1.15] mb-5">
               {t('heroTitle')}
             </h1>
 
-            <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: 12, fontWeight: 600 }}>
+            <p className="text-base md:text-lg text-[rgba(255,255,255,0.75)] leading-relaxed mb-3 font-semibold">
               {t('heroSubtitle')}
             </p>
-            <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, marginBottom: 36 }}>
+            <p className="text-sm md:text-[15px] text-[rgba(255,255,255,0.6)] leading-relaxed mb-8">
               {t('heroDesc')}
             </p>
 
             {/* CTA Buttons */}
-            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 40 }}>
-              <Link href="/register" style={{ textDecoration: 'none' }}>
-                <button style={{
-                  background: 'linear-gradient(135deg, #4ade80, #22c55e)',
-                  color: '#0f4023', border: 'none', padding: '14px 32px',
-                  borderRadius: '50px', fontWeight: 800, fontSize: 16, cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', gap: 8,
-                  boxShadow: '0 4px 20px rgba(74,222,128,0.4)',
-                  transition: 'all 0.2s',
-                }}>
+            <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mb-8">
+              <Link href="/register" className="no-underline w-full sm:w-auto">
+                <button className="w-full sm:w-auto bg-gradient-to-br from-[#4ade80] to-[#22c55e] text-[#0f4023] border-none px-6 py-3.5 md:py-4 rounded-full font-extrabold text-[15px] md:text-[16px] cursor-pointer flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(74,222,128,0.4)] transition-all hover:scale-105 active:scale-95">
                   {t('getStarted')} <ChevronRight size={18} />
                 </button>
               </Link>
-              <Link href="/government" style={{ textDecoration: 'none' }}>
-                <button style={{
-                  background: 'rgba(255,255,255,0.1)',
-                  color: 'white', border: '2px solid rgba(255,255,255,0.3)',
-                  padding: '14px 32px', borderRadius: '50px',
-                  fontWeight: 600, fontSize: 16, cursor: 'pointer',
-                  backdropFilter: 'blur(8px)', transition: 'all 0.2s',
-                }}>
+              <Link href="/government" className="no-underline w-full sm:w-auto">
+                <button className="w-full sm:w-auto bg-[rgba(255,255,255,0.1)] text-white border-2 border-[rgba(255,255,255,0.3)] px-6 py-3.5 md:py-4 rounded-full font-semibold text-[15px] md:text-[16px] cursor-pointer backdrop-blur-md transition-all hover:bg-[rgba(255,255,255,0.2)] active:scale-95">
                   {t('govServices')}
                 </button>
               </Link>
             </div>
 
             {/* Trust badges */}
-            <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+            <div className="flex flex-wrap justify-center md:justify-start gap-4 lg:gap-6">
               {['✓ Free Services', '✓ Multilingual', '✓ AI-Powered', '✓ Govt Certified'].map(b => (
-                <span key={b} style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span key={b} className="text-[11px] md:text-xs text-[rgba(255,255,255,0.6)] flex items-center gap-1">
                   {b}
                 </span>
               ))}
@@ -137,39 +117,23 @@ export default function HomePage() {
           </div>
 
           {/* Right: Role Cards */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="flex flex-col gap-4 z-10">
             {[
               { href: '/register?role=citizen', icon: '👤', role: t('citizen'), desc: t('citizenDesc'), color: '#4ade80', id: 'hero-citizen' },
               { href: '/register?role=worker', icon: '👷', role: t('worker'), desc: t('workerDesc'), color: '#60a5fa', id: 'hero-worker' },
               { href: '/register?role=employer', icon: '🏢', role: t('employer'), desc: t('employerDesc'), color: '#fbbf24', id: 'hero-employer' },
             ].map(card => (
-              <Link key={card.id} href={card.href} id={card.id} style={{ textDecoration: 'none' }}>
-                <div style={{
-                  background: 'rgba(255,255,255,0.08)',
-                  border: `1px solid ${card.color}30`,
-                  borderRadius: 16, padding: '20px 24px',
-                  display: 'flex', alignItems: 'center', gap: 16,
-                  cursor: 'pointer', transition: 'all 0.2s',
-                  backdropFilter: 'blur(8px)',
-                }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.14)';
-                  (e.currentTarget as HTMLDivElement).style.transform = 'translateX(8px)';
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.08)';
-                  (e.currentTarget as HTMLDivElement).style.transform = 'translateX(0)';
-                }}
+              <Link key={card.id} href={card.href} id={card.id} className="no-underline">
+                <div 
+                  className="bg-[rgba(255,255,255,0.08)] rounded-2xl p-4 md:p-5 flex items-center gap-4 cursor-pointer transition-all backdrop-blur-md hover:bg-[rgba(255,255,255,0.14)] hover:translate-x-2 active:scale-[0.98]"
+                  style={{ border: `1px solid ${card.color}30` }}
                 >
-                  <div style={{
-                    width: 52, height: 52, borderRadius: 12,
-                    background: `${card.color}20`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 26, flexShrink: 0,
-                  }}>{card.icon}</div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 700, color: card.color, fontSize: 16 }}>{card.role}</div>
-                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', marginTop: 2 }}>{card.desc}</div>
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center text-2xl md:text-3xl shrink-0" style={{ background: `${card.color}20` }}>
+                    {card.icon}
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-bold text-[15px] md:text-[16px]" style={{ color: card.color }}>{card.role}</div>
+                    <div className="text-[12px] md:text-[13px] text-[rgba(255,255,255,0.65)] mt-1">{card.desc}</div>
                   </div>
                   <ChevronRight size={18} style={{ color: card.color }} />
                 </div>
@@ -179,64 +143,53 @@ export default function HomePage() {
         </div>
 
         {/* Scroll indicator */}
-        <div style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 24, height: 40, border: '2px solid rgba(255,255,255,0.3)', borderRadius: 12, display: 'flex', justifyContent: 'center', paddingTop: 6 }}>
-            <div style={{ width: 4, height: 8, background: 'white', borderRadius: 2, animation: 'float 1.5s ease-in-out infinite' }} />
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 hidden md:flex">
+          <div className="w-6 h-10 border-2 border-[rgba(255,255,255,0.3)] rounded-full flex justify-center pt-1.5">
+            <div className="w-1 h-2 bg-white rounded-full animate-[float_1.5s_ease-in-out_infinite]" />
           </div>
         </div>
-
-        <style>{`
-          @media (max-width: 768px) {
-            section > div > div { grid-template-columns: 1fr !important; }
-          }
-        `}</style>
       </section>
 
       {/* STATS */}
-      <section style={{ background: 'var(--bg2)', padding: '60px 24px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 24 }}>
+      <section className="bg-[var(--bg2)] py-12 px-4 md:px-8">
+        <div className="max-w-[1000px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {dynamicStats.map(stat => (
-            <div key={stat.label} style={{
-              textAlign: 'center', padding: '32px 20px',
-              background: 'var(--card)', borderRadius: 16,
-              boxShadow: 'var(--shadow)', border: '1px solid var(--card-border)',
-            }}>
-              <div style={{ fontSize: 40, marginBottom: 12 }}>{stat.icon}</div>
-              <div style={{ fontSize: 'clamp(1.6rem,3vw,2.2rem)', fontWeight: 900, color: 'var(--primary)', lineHeight: 1 }}>
+            <div key={stat.label} className="text-center p-4 md:p-8 bg-[var(--card)] rounded-2xl shadow-[var(--shadow)] border border-[var(--card-border)]">
+              <div className="text-3xl md:text-4xl mb-2 md:mb-3">{stat.icon}</div>
+              <div className="text-xl md:text-[clamp(1.6rem,3vw,2.2rem)] font-black text-[var(--primary)] leading-none">
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} />
               </div>
-              <div style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: 8 }}>{stat.label}</div>
+              <div className="text-[11px] md:text-[14px] text-[var(--text-muted)] mt-2 font-medium">{stat.label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* SERVICES GRID */}
-      <section style={{ padding: '80px 24px', background: 'var(--bg)' }}>
+      <section className="py-16 md:py-20 px-4 md:px-8 bg-[var(--bg)]">
         <div className="page-container">
           <div className="section-header">
-            <h2 style={{ color: 'var(--text)' }}>Our <span className="gradient-text">Services</span></h2>
+            <h2 className="text-[var(--text)]">Our <span className="gradient-text">Services</span></h2>
             <div className="section-divider" />
             <p>Everything you need — government services, jobs, education, and more, all in one place</p>
           </div>
 
-          <div className="grid-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {SERVICES.map(svc => (
-              <Link key={svc.href} href={svc.href} id={`service-${svc.href.replace('/', '')}`} style={{ textDecoration: 'none' }}>
-                <div className="service-card" style={{ border: `1.5px solid ${svc.color}20` }}
+              <Link key={svc.href} href={svc.href} id={`service-${svc.href.replace('/', '')}`} className="no-underline">
+                <div 
+                  className="service-card group h-full" 
+                  style={{ border: `1.5px solid ${svc.color}20` }}
                   onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.borderColor = svc.color)}
                   onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.borderColor = `${svc.color}20`)}
                 >
-                  <div style={{
-                    width: 64, height: 64, borderRadius: 16,
-                    background: `${svc.color}15`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 32,
-                  }}>{svc.icon}</div>
-                  <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)' }}>{svc.label}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{svc.desc}</div>
-                  <div style={{ color: svc.color, display: 'flex', alignItems: 'center', gap: 4, fontSize: 13, fontWeight: 600 }}>
-                    Explore <ChevronRight size={14} />
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center text-2xl md:text-3xl mb-1" style={{ background: `${svc.color}15` }}>
+                    {svc.icon}
+                  </div>
+                  <div className="font-bold text-[14px] md:text-[15px] text-[var(--text)]">{svc.label}</div>
+                  <div className="text-[11px] md:text-[12px] text-[var(--text-muted)]">{svc.desc}</div>
+                  <div className="flex items-center gap-1 text-[12px] md:text-[13px] font-semibold mt-auto pt-2" style={{ color: svc.color }}>
+                    Explore <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </Link>
@@ -246,20 +199,20 @@ export default function HomePage() {
       </section>
 
       {/* FEATURES */}
-      <section style={{ padding: '80px 24px', background: 'var(--bg2)' }}>
+      <section className="py-16 md:py-20 px-4 md:px-8 bg-[var(--bg2)]">
         <div className="page-container">
           <div className="section-header">
             <h2>Why Choose <span className="gradient-text">RIHC?</span></h2>
             <div className="section-divider" />
             <p>Built specifically for rural India — simple, fast, and in your language</p>
           </div>
-          <div className="grid-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {FEATURES.map(f => (
-              <div key={f.title} className="glass-card" style={{ padding: 28, display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-                <div style={{ fontSize: 36, flexShrink: 0 }}>{f.icon}</div>
+              <div key={f.title} className="glass-card p-5 md:p-7 flex gap-4 items-start">
+                <div className="text-2xl md:text-4xl shrink-0 mt-1 md:mt-0">{f.icon}</div>
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>{f.title}</div>
-                  <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>{f.desc}</div>
+                  <div className="font-bold text-[15px] md:text-[16px] mb-1.5">{f.title}</div>
+                  <div className="text-[12px] md:text-[13px] text-[var(--text-muted)] leading-relaxed">{f.desc}</div>
                 </div>
               </div>
             ))}
@@ -268,80 +221,70 @@ export default function HomePage() {
       </section>
 
       {/* SALARY FAIRNESS BANNER */}
-      <section style={{ padding: '60px 24px', background: 'linear-gradient(135deg, #1a6b3a, #1b4f72)' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'center' }}>
-          <div style={{ color: 'white' }}>
-            <div style={{ fontSize: 40, marginBottom: 16 }}>⚖️</div>
-            <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 12 }}>Fair Salary System</h2>
-            <p style={{ opacity: 0.8, lineHeight: 1.7, marginBottom: 20 }}>
+      <section className="py-12 md:py-16 px-4 md:px-8 bg-gradient-to-br from-[#1a6b3a] to-[#1b4f72]">
+        <div className="max-w-[900px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
+          <div className="text-white text-center md:text-left">
+            <div className="text-3xl md:text-4xl mb-3 md:mb-4">⚖️</div>
+            <h2 className="text-2xl md:text-[28px] font-extrabold mb-3">Fair Salary System</h2>
+            <p className="opacity-80 leading-relaxed mb-6 text-sm md:text-base">
               Our platform automatically warns employers when they offer below the recommended local wage rate, ensuring fair pay for every worker.
             </p>
-            <Link href="/marketplace">
-              <button style={{
-                background: 'rgba(255,255,255,0.15)', border: '2px solid rgba(255,255,255,0.4)',
-                color: 'white', padding: '12px 28px', borderRadius: '50px',
-                fontWeight: 700, cursor: 'pointer', fontSize: 15,
-                display: 'flex', alignItems: 'center', gap: 8,
-                transition: 'all 0.2s',
-              }}>
+            <Link href="/marketplace" className="no-underline inline-block w-full md:w-auto">
+              <button className="w-full md:w-auto bg-[rgba(255,255,255,0.15)] border-2 border-[rgba(255,255,255,0.4)] text-white px-6 py-3 rounded-full font-bold cursor-pointer text-sm md:text-[15px] flex items-center justify-center gap-2 transition-all hover:bg-[rgba(255,255,255,0.25)] active:scale-95">
                 View Marketplace <ChevronRight size={16} />
               </button>
             </Link>
           </div>
-          <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 20, padding: 28, border: '1px solid rgba(255,255,255,0.2)' }}>
-            <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', marginBottom: 8 }}>Farm Labour — Guntur District</div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+          <div className="bg-[rgba(255,255,255,0.1)] rounded-2xl p-5 md:p-7 border border-[rgba(255,255,255,0.2)]">
+            <div className="text-xs md:text-sm text-[rgba(255,255,255,0.7)] mb-2">Farm Labour — Guntur District</div>
+            <div className="flex justify-between mb-4">
               <div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>Recommended</div>
-                <div style={{ fontSize: 24, fontWeight: 800, color: '#4ade80' }}>₹700/day</div>
+                <div className="text-[11px] md:text-xs text-[rgba(255,255,255,0.6)]">Recommended</div>
+                <div className="text-xl md:text-2xl font-extrabold text-[#4ade80]">₹700/day</div>
               </div>
-              <div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>Offered</div>
-                <div style={{ fontSize: 24, fontWeight: 800, color: '#fbbf24' }}>₹680/day</div>
+              <div className="text-right">
+                <div className="text-[11px] md:text-xs text-[rgba(255,255,255,0.6)]">Offered</div>
+                <div className="text-xl md:text-2xl font-extrabold text-[#fbbf24]">₹680/day</div>
               </div>
             </div>
-            <div style={{
-              padding: '10px 14px', borderRadius: 10,
-              background: 'rgba(251,191,36,0.2)', border: '1px solid rgba(251,191,36,0.4)',
-              color: '#fbbf24', fontSize: 13,
-            }}>
+            <div className="p-2.5 md:p-3 rounded-xl bg-[rgba(251,191,36,0.2)] border border-[rgba(251,191,36,0.4)] text-[#fbbf24] text-xs md:text-[13px] leading-snug">
               ⚠️ Wage slightly below recommended rate. Workers can negotiate.
             </div>
-            <div style={{ height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 3, marginTop: 16 }}>
-              <div style={{ height: '100%', width: '97%', background: 'linear-gradient(90deg, #4ade80, #fbbf24)', borderRadius: 3 }} />
+            <div className="h-1.5 bg-[rgba(255,255,255,0.1)] rounded-full mt-4">
+              <div className="h-full w-[97%] bg-gradient-to-r from-[#4ade80] to-[#fbbf24] rounded-full" />
             </div>
           </div>
         </div>
       </section>
 
       {/* TESTIMONIALS */}
-      <section style={{ padding: '80px 24px', background: 'var(--bg)' }}>
+      <section className="py-16 md:py-20 px-4 md:px-8 bg-[var(--bg)]">
         <div className="page-container">
           <div className="section-header">
             <h2>What Citizens <span className="gradient-text">Say</span></h2>
             <div className="section-divider" />
           </div>
           {testimonials.length === 0 ? (
-            <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '60px 20px', background: 'var(--card)', borderRadius: 16, border: '1px solid var(--card-border)' }}>
-              <div style={{ fontSize: 40, marginBottom: 12 }}>💬</div>
-              <h3 style={{ fontSize: 18, fontWeight: 800, marginBottom: 8 }}>No testimonials available yet.</h3>
-              <p style={{ color: 'var(--text-muted)' }}>When a user submits feedback, it will automatically appear here.</p>
+            <div className="text-center p-10 md:p-16 bg-[var(--card)] rounded-2xl border border-[var(--card-border)] col-span-full">
+              <div className="text-3xl md:text-4xl mb-3">💬</div>
+              <h3 className="text-base md:text-lg font-extrabold mb-2">No testimonials available yet.</h3>
+              <p className="text-sm text-[var(--text-muted)]">When a user submits feedback, it will automatically appear here.</p>
             </div>
           ) : (
-            <div className="grid-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {testimonials.map((t2, i) => (
-                <div key={i} className="glass-card" style={{ padding: 28 }}>
-                  <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: 16 }}>
-                    <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'var(--bg2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28 }}>
+                <div key={i} className="glass-card p-5 md:p-7">
+                  <div className="flex gap-3 items-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-[var(--bg2)] flex items-center justify-center text-xl shrink-0">
                       {t2.avatar || '👤'}
                     </div>
                     <div>
-                      <div style={{ fontWeight: 700 }}>{t2.name}</div>
-                      <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t2.role} • {t2.village || 'India'}</div>
-                      {t2.rating && <div className="stars">{'★'.repeat(t2.rating)}</div>}
+                      <div className="font-bold text-sm md:text-base">{t2.name}</div>
+                      <div className="text-[11px] md:text-[12px] text-[var(--text-muted)]">{t2.role} • {t2.village || 'India'}</div>
+                      {t2.rating && <div className="stars text-xs md:text-sm mt-0.5">{'★'.repeat(t2.rating)}</div>}
                     </div>
                   </div>
-                  <p style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.7, fontStyle: 'italic' }}>
+                  <p className="text-[13px] md:text-[14px] text-[var(--text-muted)] leading-relaxed italic">
                     "{t2.text}"
                   </p>
                 </div>
@@ -352,37 +295,23 @@ export default function HomePage() {
       </section>
 
       {/* CTA SECTION */}
-      <section style={{
-        padding: '80px 24px', textAlign: 'center',
-        background: 'linear-gradient(135deg, #0f4023, #0a2744)',
-        color: 'white',
-      }}>
-        <div style={{ maxWidth: 640, margin: '0 auto' }}>
-          <div style={{ fontSize: 48, marginBottom: 20 }}>🌿</div>
-          <h2 style={{ fontSize: 'clamp(1.8rem,4vw,2.6rem)', fontWeight: 900, marginBottom: 16 }}>
+      <section className="py-16 md:py-24 px-4 md:px-8 text-center bg-gradient-to-br from-[#0f4023] to-[#0a2744] text-white">
+        <div className="max-w-[640px] mx-auto">
+          <div className="text-4xl md:text-5xl mb-4 md:mb-5">🌿</div>
+          <h2 className="text-2xl md:text-3xl lg:text-[2.6rem] font-extrabold mb-4 leading-tight">
             Start Your Digital Journey Today
           </h2>
-          <p style={{ opacity: 0.75, fontSize: 16, lineHeight: 1.7, marginBottom: 36 }}>
+          <p className="opacity-75 text-sm md:text-base leading-relaxed mb-8 md:mb-10 px-2">
             Join thousands of citizens from across rural India who are already using RIHC to access services, find jobs, and build a better future.
           </p>
-          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/register" style={{ textDecoration: 'none' }}>
-              <button id="cta-register" style={{
-                background: 'linear-gradient(135deg, #4ade80, #22c55e)',
-                color: '#0f4023', border: 'none', padding: '16px 40px',
-                borderRadius: '50px', fontWeight: 800, fontSize: 17, cursor: 'pointer',
-                boxShadow: '0 4px 24px rgba(74,222,128,0.4)',
-                transition: 'all 0.2s',
-              }}>
+          <div className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 px-4">
+            <Link href="/register" className="no-underline w-full sm:w-auto">
+              <button id="cta-register" className="w-full sm:w-auto bg-gradient-to-br from-[#4ade80] to-[#22c55e] text-[#0f4023] border-none px-6 py-4 rounded-full font-extrabold text-[15px] md:text-[17px] cursor-pointer shadow-[0_4px_24px_rgba(74,222,128,0.4)] transition-all hover:scale-105 active:scale-95">
                 Register Free →
               </button>
             </Link>
-            <Link href="/government" style={{ textDecoration: 'none' }}>
-              <button style={{
-                background: 'rgba(255,255,255,0.1)', border: '2px solid rgba(255,255,255,0.3)',
-                color: 'white', padding: '16px 40px', borderRadius: '50px',
-                fontWeight: 600, fontSize: 17, cursor: 'pointer', backdropFilter: 'blur(8px)',
-              }}>
+            <Link href="/government" className="no-underline w-full sm:w-auto">
+              <button className="w-full sm:w-auto bg-[rgba(255,255,255,0.1)] border-2 border-[rgba(255,255,255,0.3)] text-white px-6 py-4 rounded-full font-semibold text-[15px] md:text-[17px] cursor-pointer backdrop-blur-md transition-all hover:bg-[rgba(255,255,255,0.2)] active:scale-95">
                 Explore Services
               </button>
             </Link>

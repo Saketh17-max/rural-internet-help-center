@@ -45,51 +45,46 @@ export default function SeniorsPage() {
   };
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '90vh', fontSize: largeText ? '1.2em' : '1em' }}>
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12" style={{ fontSize: largeText ? '1.2em' : '1em' }}>
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(135deg, #e65100, #f39c12)', padding: '50px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>🧓</div>
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.4rem)', fontWeight: 900, marginBottom: 10 }}>{t('seniorsTitle')}</h1>
-        <p style={{ opacity: 0.85, maxWidth: 560, margin: '0 auto 20px' }}>Dedicated support for senior citizens — pension, health, emergency contacts, and medicine reminders</p>
+      <div className="bg-gradient-to-br from-[#e65100] to-[#f39c12] pt-24 pb-12 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">🧓</div>
+        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.4rem)] font-black mb-2.5">{t('seniorsTitle')}</h1>
+        <p className="opacity-90 max-w-[560px] mx-auto mb-6 md:mb-8 text-sm md:text-base leading-relaxed">Dedicated support for senior citizens — pension, health, emergency contacts, and medicine reminders</p>
 
         {/* Accessibility Controls */}
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <button onClick={() => setLargeText(l => !l)}
-            style={{ padding: '10px 20px', borderRadius: '50px', background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.4)', color: 'white', cursor: 'pointer', fontWeight: 700, fontSize: 14 }}>
+            className="w-full sm:w-auto px-5 py-3 rounded-full bg-[rgba(255,255,255,0.2)] border-2 border-[rgba(255,255,255,0.4)] text-white cursor-pointer font-bold text-[14px] md:text-[15px] hover:bg-[rgba(255,255,255,0.3)] transition-colors min-h-[48px]">
             {largeText ? '🔡 Normal Text' : '🔤 Large Text Mode'}
           </button>
           <button onClick={() => speak('Welcome to the Senior Citizen Support page. This page helps you with pension, health, and emergency contacts.')}
-            style={{ padding: '10px 20px', borderRadius: '50px', background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.4)', color: 'white', cursor: 'pointer', fontWeight: 700, fontSize: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <Volume2 size={16} /> Speak Page
+            className="w-full sm:w-auto px-5 py-3 rounded-full bg-[rgba(255,255,255,0.2)] border-2 border-[rgba(255,255,255,0.4)] text-white cursor-pointer font-bold text-[14px] md:text-[15px] hover:bg-[rgba(255,255,255,0.3)] transition-colors min-h-[48px] flex items-center justify-center gap-2">
+            <Volume2 size={18} /> Speak Page
           </button>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 16px', borderRadius: '50px', background: 'rgba(255,255,255,0.15)', border: '2px solid rgba(255,255,255,0.3)' }}>
-            <button onClick={() => setFontSize(f => Math.max(14, f - 2))} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: 18, padding: 0 }}><Minus size={16} /></button>
-            <span style={{ fontSize: 12 }}>Text Size</span>
-            <button onClick={() => setFontSize(f => Math.min(24, f + 2))} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: 18, padding: 0 }}><Plus size={16} /></button>
+          <div className="w-full sm:w-auto flex justify-between sm:justify-center items-center gap-3 px-5 py-3 rounded-full bg-[rgba(255,255,255,0.15)] border-2 border-[rgba(255,255,255,0.3)] min-h-[48px]">
+            <button onClick={() => setFontSize(f => Math.max(14, f - 2))} className="bg-transparent border-none text-white cursor-pointer p-1 active:scale-95"><Minus size={18} /></button>
+            <span className="text-[13px] font-bold">Text Size</span>
+            <button onClick={() => setFontSize(f => Math.min(24, f + 2))} className="bg-transparent border-none text-white cursor-pointer p-1 active:scale-95"><Plus size={18} /></button>
           </div>
         </div>
       </div>
 
-      <div className="page-container" style={{ padding: '40px 20px', fontSize: `${fontSize}px` }}>
+      <div className="page-container px-4 md:px-6 py-6 md:py-10" style={{ fontSize: `${fontSize}px` }}>
         {/* Emergency Contacts - MOST IMPORTANT, shown first */}
-        <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontSize: '1.4em', fontWeight: 800, marginBottom: 20, color: '#e74c3c' }}>🆘 {t('emergencyContacts')}</h2>
-          <div className="grid-4">
+        <section className="mb-10 md:mb-12">
+          <h2 className="text-[1.3em] md:text-[1.4em] font-extrabold mb-5 md:mb-6 text-[#e74c3c] flex items-center gap-2">🆘 {t('emergencyContacts')}</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {EMERGENCY_CONTACTS.map(contact => (
               <button key={contact.name}
                 onClick={() => { speak(`Calling ${contact.name} at ${contact.number}`); toast.success(`Calling ${contact.number}...`); }}
-                style={{
-                  background: contact.color, border: 'none', borderRadius: 20, padding: '24px 20px',
-                  cursor: 'pointer', textAlign: 'center', color: 'white', transition: 'all 0.2s',
-                  boxShadow: `0 4px 20px ${contact.color}40`,
-                }}
-                onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-3px)')}
-                onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.transform = 'none')}
+                className="border-none rounded-2xl p-4 md:p-6 cursor-pointer text-center text-white transition-transform active:scale-95 flex flex-col items-center shadow-lg"
+                style={{ background: contact.color, boxShadow: `0 4px 20px ${contact.color}40` }}
               >
-                <div style={{ fontSize: 40, marginBottom: 8 }}>{contact.icon}</div>
-                <div style={{ fontWeight: 900, fontSize: '1.5em', letterSpacing: 2 }}>{contact.number}</div>
-                <div style={{ fontSize: '0.9em', opacity: 0.9, marginTop: 4 }}>{contact.name}</div>
-                <div style={{ marginTop: 10, padding: '6px 12px', borderRadius: '50px', background: 'rgba(255,255,255,0.2)', fontSize: '0.75em', fontWeight: 700 }}>
+                <div className="text-[32px] md:text-[40px] mb-2">{contact.icon}</div>
+                <div className="font-black text-[1.2em] md:text-[1.5em] tracking-widest leading-none mb-1">{contact.number}</div>
+                <div className="text-[0.8em] md:text-[0.9em] opacity-90 mt-1">{contact.name}</div>
+                <div className="mt-3 md:mt-4 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-[rgba(255,255,255,0.2)] text-[0.7em] md:text-[0.75em] font-bold w-full max-w-[120px]">
                   📞 CALL NOW
                 </div>
               </button>
@@ -98,32 +93,31 @@ export default function SeniorsPage() {
         </section>
 
         {/* Medicine Reminders */}
-        <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontSize: '1.4em', fontWeight: 800, marginBottom: 20 }}>💊 {t('medicineReminder')}</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <section className="mb-10 md:mb-12">
+          <h2 className="text-[1.3em] md:text-[1.4em] font-extrabold mb-5 md:mb-6 flex items-center gap-2">💊 {t('medicineReminder')}</h2>
+          <div className="flex flex-col gap-3 md:gap-4">
             {MEDICINE_REMINDERS.map((med, i) => (
-              <div key={i} style={{
-                background: 'var(--card)', border: med.taken ? '2px solid #27ae60' : '2px solid #f39c12',
-                borderRadius: 14, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16,
-              }}>
-                <div style={{
-                  width: 44, height: 44, borderRadius: '50%', flexShrink: 0,
-                  background: med.taken ? '#27ae6015' : '#f39c1215',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22,
-                }}>
-                  {med.taken ? '✅' : '⏰'}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: '1em' }}>{med.medicine}</div>
-                  <div style={{ fontSize: '0.85em', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <Clock size={12} /> {med.time}
+              <div key={i} className="bg-[var(--card)] rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row sm:items-center gap-3.5 md:gap-4 shadow-sm"
+                style={{ border: med.taken ? '2px solid #27ae60' : '2px solid #f39c12' }}>
+                <div className="flex items-center gap-3 md:gap-4 w-full sm:w-auto flex-1">
+                  <div className="w-10 h-10 md:w-11 md:h-11 rounded-full shrink-0 flex items-center justify-center text-[20px] md:text-[22px]"
+                    style={{ background: med.taken ? '#27ae6015' : '#f39c1215' }}>
+                    {med.taken ? '✅' : '⏰'}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-bold text-[0.95em] md:text-[1em] mb-0.5 leading-tight">{med.medicine}</div>
+                    <div className="text-[0.8em] md:text-[0.85em] text-[var(--text-muted)] flex items-center gap-1 mt-1 font-medium">
+                      <Clock size={12} className="shrink-0" /> {med.time}
+                    </div>
                   </div>
                 </div>
-                <div>
+                <div className="w-full sm:w-auto mt-1 sm:mt-0">
                   {med.taken ? (
-                    <span className="badge badge-success">Taken ✓</span>
+                    <div className="px-3 py-1.5 rounded-lg bg-[rgba(39,174,96,0.1)] text-[#27ae60] font-bold text-[0.8em] md:text-[0.85em] inline-block w-full sm:w-auto text-center border border-[rgba(39,174,96,0.2)]">
+                      Taken ✓
+                    </div>
                   ) : (
-                    <button className="btn-accent" style={{ padding: '8px 16px', fontSize: '0.85em' }}
+                    <button className="btn-accent w-full sm:w-auto justify-center py-2 px-4 text-[0.8em] md:text-[0.85em] min-h-[40px] md:min-h-[44px]"
                       onClick={() => toast.success('Medicine marked as taken!')}>
                       Mark Taken
                     </button>
@@ -132,30 +126,30 @@ export default function SeniorsPage() {
               </div>
             ))}
           </div>
-          <button className="btn-outline" style={{ marginTop: 12, fontSize: '0.9em' }}
+          <button className="btn-outline w-full sm:w-auto mt-4 md:mt-5 text-[0.85em] md:text-[0.9em] justify-center min-h-[44px] md:min-h-[48px]"
             onClick={() => toast.success('Add medicine reminder (coming soon)')}>
             ➕ Add Medicine
           </button>
         </section>
 
         {/* Pension Schemes */}
-        <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontSize: '1.4em', fontWeight: 800, marginBottom: 20 }}>💰 {t('pensionInfo')}</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <section className="mb-10 md:mb-12">
+          <h2 className="text-[1.3em] md:text-[1.4em] font-extrabold mb-5 md:mb-6 flex items-center gap-2">💰 {t('pensionInfo')}</h2>
+          <div className="flex flex-col gap-3 md:gap-4">
             {SCHEMES.map(scheme => (
-              <div key={scheme.name} style={{ background: 'var(--card)', border: '1.5px solid var(--card-border)', borderRadius: 14, padding: '18px 20px', display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: '1em', marginBottom: 4 }}>{scheme.name}</div>
-                  <div style={{ color: '#27ae60', fontWeight: 700, fontSize: '0.9em', marginBottom: 4 }}>{scheme.amount}</div>
-                  <div style={{ fontSize: '0.8em', color: 'var(--text-muted)' }}>Eligibility: {scheme.eligibility}</div>
+              <div key={scheme.name} className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col md:flex-row gap-4 md:gap-5 md:items-center shadow-sm">
+                <div className="flex-1 min-w-0">
+                  <div className="font-extrabold text-[0.95em] md:text-[1em] mb-1.5 leading-tight">{scheme.name}</div>
+                  <div className="text-[#27ae60] font-bold text-[0.85em] md:text-[0.9em] mb-1">{scheme.amount}</div>
+                  <div className="text-[0.75em] md:text-[0.8em] text-[var(--text-muted)] font-medium mt-1.5">Eligibility: {scheme.eligibility}</div>
                 </div>
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div className="flex gap-2.5 md:gap-3 mt-2 md:mt-0 w-full md:w-auto">
                   <button onClick={() => speak(`${scheme.name} provides ${scheme.amount}. Eligibility: ${scheme.eligibility}`)}
-                    style={{ padding: '8px', borderRadius: 8, border: '1px solid var(--card-border)', background: 'none', cursor: 'pointer' }}>
-                    <Volume2 size={16} style={{ color: 'var(--text-muted)' }} />
+                    className="p-2.5 md:p-3 rounded-lg border border-[var(--card-border)] bg-[var(--bg2)] cursor-pointer hover:bg-[rgba(0,0,0,0.05)] transition-colors active:scale-95 flex items-center justify-center min-h-[44px]">
+                    <Volume2 size={18} className="text-[var(--text)]" />
                   </button>
-                  <a href={scheme.link} target="_blank" rel="noopener noreferrer">
-                    <button className="btn-outline" style={{ padding: '8px 16px', fontSize: '0.85em' }}>Apply</button>
+                  <a href={scheme.link} target="_blank" rel="noopener noreferrer" className="no-underline flex-1 md:flex-none">
+                    <button className="btn-outline w-full justify-center text-[0.8em] md:text-[0.85em] min-h-[44px] px-5">Apply</button>
                   </a>
                 </div>
               </div>
@@ -164,25 +158,27 @@ export default function SeniorsPage() {
         </section>
 
         {/* Hospital Locator */}
-        <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontSize: '1.4em', fontWeight: 800, marginBottom: 20 }}>🏥 {t('hospitalLocator')}</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <section className="mb-10 md:mb-12">
+          <h2 className="text-[1.3em] md:text-[1.4em] font-extrabold mb-5 md:mb-6 flex items-center gap-2">🏥 {t('hospitalLocator')}</h2>
+          <div className="flex flex-col gap-3 md:gap-4">
             {HOSPITALS.map(h => (
-              <div key={h.name} style={{ background: 'var(--card)', border: '1.5px solid var(--card-border)', borderRadius: 14, padding: '18px 20px', display: 'flex', gap: 16, alignItems: 'center' }}>
-                <div style={{ fontSize: 32, flexShrink: 0 }}>🏥</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: '1em' }}>{h.name}</div>
-                  <div style={{ display: 'flex', gap: 12, marginTop: 4, flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '0.8em', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>
-                      <MapPin size={11} /> {h.dist}
-                    </span>
-                    <span className="badge badge-info" style={{ fontSize: '0.75em' }}>{h.type}</span>
-                    <span style={{ fontSize: '0.8em', color: 'var(--text-muted)' }}>🛏️ {h.beds} beds</span>
+              <div key={h.name} className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row gap-3.5 md:gap-4 sm:items-center shadow-sm">
+                <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0 w-full">
+                  <div className="text-[28px] md:text-[32px] shrink-0">🏥</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-bold text-[0.95em] md:text-[1em] leading-tight truncate mb-1">{h.name}</div>
+                    <div className="flex gap-2 md:gap-3 flex-wrap mt-1.5 items-center">
+                      <span className="text-[0.75em] md:text-[0.8em] text-[var(--text-muted)] flex items-center gap-1 font-semibold">
+                        <MapPin size={12} className="shrink-0" /> {h.dist}
+                      </span>
+                      <span className="badge badge-info text-[0.7em] md:text-[0.75em] px-2 py-0.5">{h.type}</span>
+                      <span className="text-[0.75em] md:text-[0.8em] text-[var(--text-muted)] font-medium">🛏️ {h.beds} beds</span>
+                    </div>
                   </div>
                 </div>
                 <button onClick={() => toast.success(`Calling ${h.phone}`)}
-                  className="btn-primary" style={{ padding: '10px 16px', fontSize: '0.85em', flexShrink: 0 }}>
-                  <Phone size={14} /> Call
+                  className="btn-primary w-full sm:w-auto justify-center py-2.5 px-5 text-[0.8em] md:text-[0.85em] min-h-[44px] mt-1 sm:mt-0">
+                  <Phone size={14} className="mr-1.5" /> Call
                 </button>
               </div>
             ))}
@@ -190,9 +186,9 @@ export default function SeniorsPage() {
         </section>
 
         {/* Health Tips */}
-        <div style={{ background: 'linear-gradient(135deg, #e65100, #ef6c00)', borderRadius: 20, padding: '32px', color: 'white' }}>
-          <h2 style={{ fontSize: '1.4em', fontWeight: 800, marginBottom: 20 }}>🌟 Daily Health Tips for Seniors</h2>
-          <div className="grid-3">
+        <div className="bg-gradient-to-br from-[#e65100] to-[#ef6c00] rounded-2xl md:rounded-[20px] p-5 md:p-8 text-white shadow-lg">
+          <h2 className="text-[1.3em] md:text-[1.4em] font-extrabold mb-5 md:mb-6">🌟 Daily Health Tips for Seniors</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {[
               { icon: '🚶', tip: 'Walk 20-30 minutes daily for better heart health' },
               { icon: '💧', tip: 'Drink 6-8 glasses of water daily' },
@@ -201,9 +197,9 @@ export default function SeniorsPage() {
               { icon: '🧘', tip: 'Practice yoga or meditation for mental peace' },
               { icon: '👨‍⚕️', tip: 'Get health checkup every 6 months' },
             ].map((item, i) => (
-              <div key={i} style={{ padding: '14px', borderRadius: 12, background: 'rgba(255,255,255,0.12)', display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                <span style={{ fontSize: 24, flexShrink: 0 }}>{item.icon}</span>
-                <span style={{ fontSize: '0.85em', opacity: 0.9, lineHeight: 1.5 }}>{item.tip}</span>
+              <div key={i} className="p-3 md:p-4 rounded-xl bg-[rgba(255,255,255,0.15)] flex gap-3 items-start hover:bg-[rgba(255,255,255,0.2)] transition-colors">
+                <span className="text-[22px] md:text-[24px] shrink-0 leading-none">{item.icon}</span>
+                <span className="text-[0.8em] md:text-[0.85em] opacity-90 leading-relaxed font-medium mt-0.5">{item.tip}</span>
               </div>
             ))}
           </div>

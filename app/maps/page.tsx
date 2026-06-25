@@ -2,8 +2,6 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { MapPin, ExternalLink, Phone } from 'lucide-react';
 
-
-
 const DISTRICTS = [
   'Srikakulam', 'Vizianagaram', 'Visakhapatnam', 'Anakapalli', 'Kakinada', 'East Godavari',
   'Konaseema', 'Eluru', 'West Godavari', 'Krishna', 'NTR', 'Guntur', 'Bapatla', 'Palnadu',
@@ -15,60 +13,56 @@ export default function MapsPage() {
   const { t } = useLanguage();
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '90vh' }}>
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12">
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(135deg, #1a3a5c, #2980b9)', padding: '40px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>🗺️</div>
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.2rem)', fontWeight: 900, marginBottom: 8 }}>{t('mapsTitle')}</h1>
-        <p style={{ opacity: 0.8, maxWidth: 520, margin: '0 auto' }}>{t('mapsDesc')}</p>
+      <div className="bg-gradient-to-br from-[#1a3a5c] to-[#2980b9] pt-24 pb-12 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">🗺️</div>
+        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.2rem)] font-black mb-2.5">{t('mapsTitle')}</h1>
+        <p className="opacity-80 max-w-[520px] mx-auto text-sm md:text-base leading-relaxed">{t('mapsDesc')}</p>
       </div>
 
-      <div className="page-container" style={{ padding: '32px 20px' }}>
-
+      <div className="page-container px-4 md:px-6 py-6 md:py-8">
 
         {/* Map Embed */}
-        <div style={{ marginBottom: 40 }}>
-          <h2 style={{ fontWeight: 800, fontSize: 20, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div className="mb-8 md:mb-10">
+          <h2 className="font-extrabold text-lg md:text-[20px] mb-4 flex items-center gap-2 flex-wrap leading-tight">
             🗺️ Find MeeSeva Centers — Andhra Pradesh
           </h2>
-          <div style={{ borderRadius: 20, overflow: 'hidden', boxShadow: 'var(--shadow-lg)', border: '1px solid var(--card-border)' }}>
+          <div className="rounded-2xl overflow-hidden shadow-[var(--shadow-lg)] border border-[var(--card-border)] bg-[var(--card)]">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7637841.448554278!2d79.7400!3d15.9129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1234567890"
-              width="100%"
-              height="400"
-              style={{ border: 0 }}
+              className="w-full h-[300px] md:h-[400px] border-none"
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title="Andhra Pradesh Service Centers Map"
             />
           </div>
-          <div style={{ marginTop: 12, padding: '12px 16px', borderRadius: 10, background: 'var(--bg2)', fontSize: 13, color: 'var(--text-muted)', display: 'flex', gap: 8 }}>
-            💡 <span>Search for "MeeSeva near me" or "CSC center [your village]" in Google Maps for exact locations.</span>
+          <div className="mt-3 md:mt-4 p-3 md:p-4 rounded-xl bg-[var(--bg2)] text-xs md:text-[13px] text-[var(--text-muted)] flex items-start gap-2 leading-relaxed">
+            <span className="shrink-0 mt-0.5">💡</span>
+            <span>Search for "MeeSeva near me" or "CSC center [your village]" in Google Maps for exact locations.</span>
           </div>
         </div>
 
         {/* District Directory */}
-        <div style={{ marginBottom: 40 }}>
-          <h2 style={{ fontWeight: 800, fontSize: 20, marginBottom: 16 }}>📍 District-wise Service Directory</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(160px,1fr))', gap: 10 }}>
+        <div className="mb-8 md:mb-10">
+          <h2 className="font-extrabold text-lg md:text-[20px] mb-4">📍 District-wise Service Directory</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 md:gap-3">
             {DISTRICTS.map(dist => (
               <div key={dist}
-                style={{ background: 'var(--card)', border: '1.5px solid var(--card-border)', borderRadius: 12, padding: '14px 16px', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: 8 }}
-                onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--primary)'; (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-2px)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--card-border)'; (e.currentTarget as HTMLDivElement).style.transform = 'none'; }}
+                className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-xl p-3 md:p-[14px_16px] cursor-pointer transition-all flex items-center gap-2 hover:border-[var(--primary)] hover:-translate-y-1 active:scale-95 shadow-[var(--shadow)]"
               >
-                <MapPin size={14} style={{ color: 'var(--primary)', flexShrink: 0 }} />
-                <span style={{ fontWeight: 600, fontSize: 13 }}>{dist}</span>
+                <MapPin size={14} className="text-[var(--primary)] shrink-0" />
+                <span className="font-semibold text-xs md:text-[13px] truncate">{dist}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Quick Contacts */}
-        <div style={{ background: 'linear-gradient(135deg, #1a3a5c, #2980b9)', borderRadius: 20, padding: '28px', color: 'white' }}>
-          <h2 style={{ fontSize: 18, fontWeight: 800, marginBottom: 16 }}>📞 Important Helplines</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 12 }}>
+        <div className="bg-gradient-to-br from-[#1a3a5c] to-[#2980b9] rounded-2xl p-5 md:p-7 text-white">
+          <h2 className="text-base md:text-[18px] font-extrabold mb-4">📞 Important Helplines</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[
               { name: 'MeeSeva Helpline', number: '1100', icon: '🏛️' },
               { name: 'CSC Helpline', number: '1800-121-3468', icon: '🖥️' },
@@ -77,11 +71,11 @@ export default function MapsPage() {
               { name: 'Ambulance', number: '108', icon: '🚑' },
               { name: 'Cybercrime', number: '1930', icon: '🛡️' },
             ].map(h => (
-              <div key={h.name} style={{ padding: '12px 16px', borderRadius: 12, background: 'rgba(255,255,255,0.1)', display: 'flex', gap: 10, alignItems: 'center' }}>
-                <span style={{ fontSize: 20 }}>{h.icon}</span>
+              <div key={h.name} className="p-3.5 md:p-[12px_16px] rounded-xl bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.05)] flex gap-3 items-center hover:bg-[rgba(255,255,255,0.15)] transition-colors">
+                <span className="text-2xl md:text-[20px] shrink-0">{h.icon}</span>
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: 18 }}>{h.number}</div>
-                  <div style={{ fontSize: 11, opacity: 0.8 }}>{h.name}</div>
+                  <div className="font-bold text-[16px] md:text-[18px] leading-tight">{h.number}</div>
+                  <div className="text-[11px] md:text-[11px] opacity-80 mt-0.5">{h.name}</div>
                 </div>
               </div>
             ))}

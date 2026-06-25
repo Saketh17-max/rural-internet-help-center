@@ -11,31 +11,31 @@ export default function AnalyticsPage() {
   const { users, workers, employers, jobs, surveys, applications, testimonials, isLoading } = useDatabase();
 
   if (isLoading) {
-    return <div style={{ minHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Real-Time Analytics...</div>;
+    return <div className="min-h-[90vh] flex items-center justify-center bg-[var(--bg)] font-semibold">Loading Real-Time Analytics...</div>;
   }
 
   const totalDataPoints = users.length + workers.length + employers.length + jobs.length + surveys.length + applications.length + testimonials.length;
 
   if (totalDataPoints === 0) {
     return (
-      <div style={{ background: 'var(--bg)', minHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-        <div className="glass-card" style={{ maxWidth: 600, padding: 40, textAlign: 'center' }}>
-          <div style={{ fontSize: 64, marginBottom: 16 }}>📊</div>
-          <h2 style={{ fontSize: 24, fontWeight: 900, marginBottom: 12 }}>Analytics Dashboard</h2>
-          <p style={{ color: 'var(--text-muted)', marginBottom: 24, lineHeight: 1.6 }}>
+      <div className="bg-[var(--bg)] min-h-[90vh] flex items-center justify-center p-4 md:p-6">
+        <div className="glass-card max-w-[600px] w-full p-8 md:p-10 text-center">
+          <div className="text-[56px] md:text-[64px] mb-3 md:mb-4">📊</div>
+          <h2 className="text-[20px] md:text-[24px] font-black mb-2 md:mb-3">Analytics Dashboard</h2>
+          <p className="text-[var(--text-muted)] mb-5 md:mb-6 leading-relaxed text-sm md:text-base">
             No data available yet. This dashboard updates in real-time as users interact with the platform.
           </p>
-          <div style={{ background: 'var(--bg2)', padding: 24, borderRadius: 16, textAlign: 'left' }}>
-            <h3 style={{ fontSize: 16, fontWeight: 800, marginBottom: 12 }}>Start generating data by:</h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
-              <li>✅ Registering a new Worker or Employer account</li>
-              <li>✅ Submitting a Community Survey</li>
-              <li>✅ Posting a new Job from an Employer account</li>
-              <li>✅ Applying for a Government Service</li>
-              <li>✅ Submitting a platform Testimonial</li>
+          <div className="bg-[var(--bg2)] p-5 md:p-6 rounded-2xl text-left border border-[var(--card-border)]">
+            <h3 className="text-[14px] md:text-[16px] font-extrabold mb-3 md:mb-4">Start generating data by:</h3>
+            <ul className="list-none p-0 m-0 flex flex-col gap-2.5 md:gap-3 text-[13px] md:text-[14px]">
+              <li className="flex items-start gap-2"><span className="shrink-0 mt-0.5">✅</span> Registering a new Worker or Employer account</li>
+              <li className="flex items-start gap-2"><span className="shrink-0 mt-0.5">✅</span> Submitting a Community Survey</li>
+              <li className="flex items-start gap-2"><span className="shrink-0 mt-0.5">✅</span> Posting a new Job from an Employer account</li>
+              <li className="flex items-start gap-2"><span className="shrink-0 mt-0.5">✅</span> Applying for a Government Service</li>
+              <li className="flex items-start gap-2"><span className="shrink-0 mt-0.5">✅</span> Submitting a platform Testimonial</li>
             </ul>
           </div>
-          <div style={{ marginTop: 24, fontSize: 12, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+          <div className="mt-5 md:mt-6 text-[11px] md:text-[12px] text-[var(--text-muted)] flex items-center justify-center gap-1.5 font-medium">
             <Database size={14} /> Connected to Firebase Realtime Database
           </div>
         </div>
@@ -97,99 +97,99 @@ export default function AnalyticsPage() {
   const jobPieData = countOccurrences(jobs, 'type');
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '90vh' }}>
-      <div style={{ background: 'linear-gradient(135deg, #0f4023, #1b4f72)', padding: '40px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>📊</div>
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.2rem)', fontWeight: 900, marginBottom: 8 }}>Real-Time Analytics</h1>
-        <p style={{ opacity: 0.8 }}>Live metrics directly from the platform database</p>
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12">
+      <div className="bg-gradient-to-br from-[#0f4023] to-[#1b4f72] pt-24 pb-10 md:pb-12 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">📊</div>
+        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.2rem)] font-black mb-2 md:mb-2.5">Real-Time Analytics</h1>
+        <p className="opacity-80 text-sm md:text-base">Live metrics directly from the platform database</p>
       </div>
 
-      <div className="page-container" style={{ padding: '32px 20px' }}>
+      <div className="page-container px-4 md:px-6 py-6 md:py-8">
         {/* Dynamic Stats Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(180px,1fr))', gap: 16, marginBottom: 32 }}>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
           {stats.map(stat => (
-            <div key={stat.label} className="stat-card">
-              <div className="stat-icon" style={{ background: `${stat.color}15`, fontSize: 24 }}>{stat.icon}</div>
+            <div key={stat.label} className="stat-card p-3 md:p-5 flex-col sm:flex-row text-center sm:text-left gap-2 sm:gap-3">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-[20px] md:text-[24px] shrink-0 mx-auto sm:mx-0" style={{ background: `${stat.color}15` }}>{stat.icon}</div>
               <div>
-                <div style={{ fontSize: 22, fontWeight: 900, color: stat.color }}>{stat.value}</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{stat.label}</div>
+                <div className="text-lg md:text-[22px] font-black leading-tight" style={{ color: stat.color }}>{stat.value}</div>
+                <div className="text-[10px] md:text-[12px] text-[var(--text-muted)] font-semibold mt-0.5">{stat.label}</div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Charts Row 1 */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(400px,1fr))', gap: 24, marginBottom: 24 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
           {/* Top Challenges */}
-          <div className="chart-container">
-            <h3 style={{ fontWeight: 800, marginBottom: 16, fontSize: 15 }}>⚠️ Major Rural Challenges</h3>
+          <div className="chart-container p-4 md:p-6 overflow-hidden">
+            <h3 className="font-extrabold mb-4 text-[14px] md:text-[15px]">⚠️ Major Rural Challenges</h3>
             {challengesData.length > 0 ? (
               <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={challengesData} layout="vertical" margin={{ left: 40 }}>
-                  <XAxis type="number" />
-                  <YAxis dataKey="name" type="category" width={120} fontSize={12} />
-                  <Tooltip />
+                <BarChart data={challengesData} layout="vertical" margin={{ top: 0, right: 10, left: 20, bottom: 0 }}>
+                  <XAxis type="number" tick={{ fontSize: 11 }} />
+                  <YAxis dataKey="name" type="category" width={110} fontSize={10} tick={{ fontSize: 10 }} />
+                  <Tooltip cursor={{ fill: 'var(--bg2)' }} />
                   <Bar dataKey="value" fill="#e74c3c" radius={[0, 4, 4, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <div style={{ height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>No challenge data yet</div>
+              <div className="h-[260px] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium">No challenge data yet</div>
             )}
           </div>
 
           {/* Age Distribution Pie */}
-          <div className="chart-container">
-            <h3 style={{ fontWeight: 800, marginBottom: 16, fontSize: 15 }}>👥 Age Distribution (Survey)</h3>
+          <div className="chart-container p-4 md:p-6 overflow-hidden">
+            <h3 className="font-extrabold mb-4 text-[14px] md:text-[15px]">👥 Age Distribution (Survey)</h3>
             {ageData.length > 0 ? (
               <ResponsiveContainer width="100%" height={260}>
-                <PieChart>
-                  <Pie data={ageData} cx="50%" cy="50%" innerRadius={60} outerRadius={90} dataKey="value" paddingAngle={3}>
+                <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 20 }}>
+                  <Pie data={ageData} cx="50%" cy="45%" innerRadius={50} outerRadius={80} dataKey="value" paddingAngle={3}>
                     {ageData.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
                   </Pie>
                   <Tooltip formatter={(v) => [v !== undefined ? Number(v) : 0, 'Responses']} />
-                  <Legend iconType="circle" />
+                  <Legend iconType="circle" wrapperStyle={{ fontSize: '11px', bottom: 0 }} />
                 </PieChart>
               </ResponsiveContainer>
             ) : (
-              <div style={{ height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>No age data yet</div>
+              <div className="h-[260px] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium">No age data yet</div>
             )}
           </div>
         </div>
 
         {/* Charts Row 2 */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(400px,1fr))', gap: 24, marginBottom: 24 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           {/* Services Used */}
-          <div className="chart-container">
-            <h3 style={{ fontWeight: 800, marginBottom: 16, fontSize: 15 }}>🏛️ Most Used Govt Services</h3>
+          <div className="chart-container p-4 md:p-6 overflow-hidden">
+            <h3 className="font-extrabold mb-4 text-[14px] md:text-[15px]">🏛️ Most Used Govt Services</h3>
             {servicesData.length > 0 ? (
               <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={servicesData.slice(0, 5)}>
-                  <XAxis dataKey="name" fontSize={11} tickFormatter={(v) => v.length > 15 ? v.substring(0, 15) + '...' : v} />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="value" fill="#2980b9" radius={[4, 4, 0, 0]} />
+                <BarChart data={servicesData.slice(0, 5)} margin={{ top: 10, right: 10, left: -20, bottom: 25 }}>
+                  <XAxis dataKey="name" fontSize={9} tick={{ fontSize: 9 }} angle={-25} textAnchor="end" tickFormatter={(v) => v.length > 15 ? v.substring(0, 15) + '...' : v} />
+                  <YAxis tick={{ fontSize: 11 }} />
+                  <Tooltip cursor={{ fill: 'var(--bg2)' }} />
+                  <Bar dataKey="value" fill="#2980b9" radius={[4, 4, 0, 0]} barSize={32} />
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <div style={{ height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>No services data yet</div>
+              <div className="h-[260px] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium">No services data yet</div>
             )}
           </div>
 
           {/* Device Usage */}
-          <div className="chart-container">
-            <h3 style={{ fontWeight: 800, marginBottom: 16, fontSize: 15 }}>📱 Devices Owned</h3>
+          <div className="chart-container p-4 md:p-6 overflow-hidden">
+            <h3 className="font-extrabold mb-4 text-[14px] md:text-[15px]">📱 Devices Owned</h3>
             {devicesData.length > 0 ? (
               <ResponsiveContainer width="100%" height={260}>
-                <PieChart>
-                  <Pie data={devicesData} cx="50%" cy="50%" outerRadius={90} dataKey="value">
+                <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 20 }}>
+                  <Pie data={devicesData} cx="50%" cy="45%" outerRadius={80} dataKey="value">
                     {devicesData.map((_, i) => <Cell key={i} fill={PIE_COLORS[(i+2) % PIE_COLORS.length]} />)}
                   </Pie>
                   <Tooltip formatter={(v) => [v !== undefined ? Number(v) : 0, 'Users']} />
-                  <Legend />
+                  <Legend wrapperStyle={{ fontSize: '11px', bottom: 0 }} />
                 </PieChart>
               </ResponsiveContainer>
             ) : (
-              <div style={{ height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>No device data yet</div>
+              <div className="h-[260px] flex items-center justify-center text-[var(--text-muted)] text-sm font-medium">No device data yet</div>
             )}
           </div>
         </div>

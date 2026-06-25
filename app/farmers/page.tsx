@@ -34,59 +34,60 @@ export default function FarmersPage() {
   const { t } = useLanguage();
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '90vh' }}>
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12">
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(135deg, #1a4001, #2d6a4f)', padding: '50px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>🌾</div>
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.4rem)', fontWeight: 900, marginBottom: 10 }}>{t('farmersTitle')}</h1>
-        <p style={{ opacity: 0.8, maxWidth: 520, margin: '0 auto' }}>Crop prices, weather forecasts, government schemes and agricultural support for farmers</p>
+      <div className="bg-gradient-to-br from-[#1a4001] to-[#2d6a4f] pt-24 pb-10 md:pb-12 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">🌾</div>
+        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.4rem)] font-black mb-2.5">{t('farmersTitle')}</h1>
+        <p className="opacity-80 max-w-[520px] mx-auto text-[13px] md:text-[15px] leading-relaxed">Crop prices, weather forecasts, government schemes and agricultural support for farmers</p>
       </div>
 
-      <div className="page-container" style={{ padding: '40px 20px' }}>
+      <div className="page-container px-4 md:px-6 py-6 md:py-10">
         {/* Quick Links */}
-        <div className="grid-4" style={{ marginBottom: 40 }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
           {[
             { icon: '💹', label: t('cropPrices'), href: '#prices', color: '#27ae60' },
             { icon: '🌤️', label: t('weather'), href: '#weather', color: '#2980b9' },
             { icon: '📋', label: t('govSchemes'), href: '#schemes', color: '#e67e22' },
             { icon: '🛡️', label: t('cropInsurance'), href: '#schemes', color: '#8e44ad' },
           ].map(item => (
-            <a key={item.label} href={item.href} style={{ textDecoration: 'none' }}>
-              <div className="service-card">
-                <div style={{ width: 52, height: 52, borderRadius: 12, background: `${item.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26 }}>{item.icon}</div>
-                <div style={{ fontWeight: 700, fontSize: 14 }}>{item.label}</div>
+            <a key={item.label} href={item.href} className="no-underline block h-full">
+              <div className="service-card flex flex-col items-center justify-center p-4 md:p-5 h-full transition-transform active:scale-95">
+                <div className="w-12 h-12 md:w-[52px] md:h-[52px] rounded-xl flex items-center justify-center text-2xl md:text-[26px] mb-3" style={{ background: `${item.color}15` }}>{item.icon}</div>
+                <div className="font-bold text-[13px] md:text-[14px] text-center text-[var(--text)]">{item.label}</div>
               </div>
             </a>
           ))}
         </div>
 
         {/* Weather & Prices Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 24, marginBottom: 40 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-6 md:gap-8 mb-10 md:mb-12">
           {/* Weather */}
-          <section id="weather">
-            <h2 style={{ fontSize: 20, fontWeight: 800, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <section id="weather" className="flex flex-col">
+            <h2 className="text-[18px] md:text-[20px] font-extrabold mb-4 flex items-center gap-2">
               🌡️ {t('weather')} - Guntur
             </h2>
-            <div style={{ background: 'linear-gradient(135deg, #1b4f72, #2980b9)', borderRadius: 16, padding: 20, color: 'white', marginBottom: 12 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
-                <div style={{ fontSize: 56 }}>⛅</div>
+            <div className="bg-gradient-to-br from-[#1b4f72] to-[#2980b9] rounded-2xl p-5 md:p-6 text-white mb-3 md:mb-4 shadow-md">
+              <div className="flex items-center gap-4 md:gap-5 mb-5 md:mb-6">
+                <div className="text-[48px] md:text-[56px] leading-none">⛅</div>
                 <div>
-                  <div style={{ fontSize: 36, fontWeight: 900 }}>32°C</div>
-                  <div style={{ opacity: 0.8 }}>Partly Cloudy • 65% Humidity</div>
-                  <div style={{ opacity: 0.7, fontSize: 13 }}>🌬️ Wind: 12 km/h NE</div>
+                  <div className="text-[32px] md:text-[36px] font-black leading-tight">32°C</div>
+                  <div className="opacity-90 text-[13px] md:text-[14px] font-medium">Partly Cloudy • 65% Humidity</div>
+                  <div className="opacity-80 text-[12px] md:text-[13px] mt-1 flex items-center gap-1">🌬️ Wind: 12 km/h NE</div>
                 </div>
               </div>
-              <div style={{ padding: '12px', borderRadius: 10, background: 'rgba(255,255,255,0.15)', fontSize: 13 }}>
-                🌾 <strong>Farming Advisory:</strong> Good day for irrigation. Rain expected tomorrow — harvest if possible.
+              <div className="p-3 md:p-3.5 rounded-xl bg-[rgba(255,255,255,0.15)] text-[12px] md:text-[13px] leading-relaxed border border-[rgba(255,255,255,0.1)]">
+                🌾 <strong className="font-bold">Farming Advisory:</strong> Good day for irrigation. Rain expected tomorrow — harvest if possible.
               </div>
             </div>
-            <div style={{ display: 'flex', gap: 8, overflowX: 'auto' }}>
+            
+            <div className="flex gap-2.5 md:gap-3 overflow-x-auto hide-scrollbar pb-2 pt-1 px-1 -mx-1">
               {WEATHER.map(w => (
-                <div key={w.day} style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: 12, padding: '12px 10px', textAlign: 'center', minWidth: 72, flexShrink: 0 }}>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>{w.day}</div>
-                  <div style={{ fontSize: 24, marginBottom: 4 }}>{w.icon}</div>
-                  <div style={{ fontWeight: 700, fontSize: 14 }}>{w.temp}</div>
-                  <div style={{ fontSize: 10, color: '#2980b9' }}>💧 {w.rain}</div>
+                <div key={w.day} className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-2.5 md:p-3 text-center min-w-[72px] md:min-w-[80px] shrink-0 shadow-sm">
+                  <div className="text-[10px] md:text-[11px] text-[var(--text-muted)] mb-1 font-semibold">{w.day}</div>
+                  <div className="text-2xl md:text-[26px] mb-1">{w.icon}</div>
+                  <div className="font-extrabold text-[13px] md:text-[15px]">{w.temp}</div>
+                  <div className="text-[10px] text-[#2980b9] font-bold mt-0.5">💧 {w.rain}</div>
                 </div>
               ))}
             </div>
@@ -94,33 +95,35 @@ export default function FarmersPage() {
 
           {/* Crop Prices */}
           <section id="prices">
-            <h2 style={{ fontSize: 20, fontWeight: 800, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <h2 className="text-[18px] md:text-[20px] font-extrabold mb-4 flex items-center gap-2">
               💹 {t('cropPrices')} — MSP Rates
             </h2>
-            <div style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: 16, overflow: 'hidden' }}>
-              <table className="data-table">
-                <thead>
-                  <tr>
-                    <th>Crop</th>
-                    <th>MSP / Market Price</th>
-                    <th>Change</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {CROP_PRICES.map(c => (
-                    <tr key={c.crop}>
-                      <td style={{ fontWeight: 600 }}>🌾 {c.crop}</td>
-                      <td style={{ fontWeight: 700 }}>{c.price}</td>
-                      <td>
-                        <span style={{ color: c.positive ? '#27ae60' : '#e74c3c', fontWeight: 700, fontSize: 13 }}>
-                          {c.positive ? '▲' : '▼'} {c.change}
-                        </span>
-                      </td>
+            <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-2xl overflow-hidden shadow-sm flex flex-col h-full">
+              <div className="overflow-x-auto w-full">
+                <table className="data-table w-full text-left border-collapse min-w-[400px]">
+                  <thead>
+                    <tr>
+                      <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">Crop</th>
+                      <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">MSP / Market Price</th>
+                      <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">Change</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div style={{ padding: '12px 16px', borderTop: '1px solid var(--card-border)', fontSize: 11, color: 'var(--text-muted)' }}>
+                  </thead>
+                  <tbody>
+                    {CROP_PRICES.map((c, i) => (
+                      <tr key={c.crop} className={i !== CROP_PRICES.length - 1 ? 'border-b border-[var(--card-border)]' : ''}>
+                        <td className="font-bold text-[13px] md:text-[14px] p-3 md:p-4">🌾 {c.crop}</td>
+                        <td className="font-extrabold text-[13px] md:text-[14px] p-3 md:p-4">{c.price}</td>
+                        <td className="p-3 md:p-4">
+                          <span className={`font-bold text-[12px] md:text-[13px] px-2 py-1 rounded-md ${c.positive ? 'text-[#27ae60] bg-[rgba(39,174,96,0.1)]' : 'text-[#e74c3c] bg-[rgba(231,76,60,0.1)]'}`}>
+                            {c.positive ? '▲' : '▼'} {c.change}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="p-3 md:p-4 border-t border-[var(--card-border)] text-[10px] md:text-[11px] text-[var(--text-muted)] font-medium mt-auto bg-[var(--bg2)]">
                 Source: APMC Market Prices • Updated daily • Last updated: 25 Jun 2024
               </div>
             </div>
@@ -128,27 +131,24 @@ export default function FarmersPage() {
         </div>
 
         {/* Government Schemes */}
-        <section id="schemes" style={{ marginBottom: 40 }}>
-          <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <section id="schemes" className="mb-10 md:mb-12">
+          <h2 className="text-[18px] md:text-[22px] font-extrabold mb-5 md:mb-6 flex items-center gap-2">
             📋 {t('govSchemes')}
           </h2>
-          <div className="grid-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 md:gap-4">
             {SCHEMES.map(scheme => (
-              <div key={scheme.name} style={{ background: 'var(--card)', border: '1.5px solid var(--card-border)', borderRadius: 16, padding: '20px', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: 10 }}
-                onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.transform = 'translateY(-3px)')}
-                onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.transform = 'none')}
-              >
-                <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                  <div style={{ fontSize: 32 }}>{scheme.icon}</div>
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: 14 }}>{scheme.name}</div>
-                    <div style={{ fontSize: 13, color: 'var(--primary)', fontWeight: 700 }}>{scheme.amount}</div>
+              <div key={scheme.name} className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-2xl p-4 md:p-5 flex flex-col gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all">
+                <div className="flex gap-3 items-center">
+                  <div className="text-[28px] md:text-[32px] shrink-0">{scheme.icon}</div>
+                  <div className="min-w-0">
+                    <div className="font-extrabold text-[14px] md:text-[15px] leading-tight truncate">{scheme.name}</div>
+                    <div className="text-[12px] md:text-[13px] text-[var(--primary)] font-bold mt-0.5">{scheme.amount}</div>
                   </div>
                 </div>
-                <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>{scheme.desc}</p>
-                <a href={scheme.link} target="_blank" rel="noopener noreferrer">
-                  <button className="btn-outline" style={{ width: '100%', justifyContent: 'center', fontSize: 12, padding: '8px 12px' }}>
-                    <ExternalLink size={12} /> Learn More
+                <p className="text-[12px] md:text-[13px] text-[var(--text-muted)] leading-relaxed flex-1">{scheme.desc}</p>
+                <a href={scheme.link} target="_blank" rel="noopener noreferrer" className="no-underline w-full mt-2">
+                  <button className="btn-outline w-full justify-center text-[12px] md:text-[13px] min-h-[40px] md:min-h-[44px]">
+                    <ExternalLink size={14} className="mr-1.5" /> Learn More
                   </button>
                 </a>
               </div>
@@ -157,29 +157,32 @@ export default function FarmersPage() {
         </section>
 
         {/* Soil & Fertilizer Advisor */}
-        <section style={{ background: 'linear-gradient(135deg, #1a6b3a, #27ae60)', borderRadius: 20, padding: '32px', color: 'white' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'center' }}>
+        <section className="bg-gradient-to-br from-[#1a6b3a] to-[#27ae60] rounded-2xl md:rounded-[20px] p-5 md:p-8 text-white shadow-lg overflow-hidden relative">
+          <div className="absolute right-0 top-0 opacity-10 text-[150px] md:text-[250px] pointer-events-none translate-x-1/4 -translate-y-1/4">🌱</div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center relative z-10">
             <div>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>🌱</div>
-              <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 10 }}>Soil Health & Fertilizer Advisor</h2>
-              <p style={{ opacity: 0.85, lineHeight: 1.7, marginBottom: 20 }}>Get your soil tested at nearest Krishi Vigyan Kendra (KVK) and receive personalized fertilizer recommendations.</p>
-              <a href="https://soilhealth.dac.gov.in" target="_blank" rel="noopener noreferrer">
-                <button style={{ padding: '12px 24px', borderRadius: '50px', background: 'rgba(255,255,255,0.2)', border: '2px solid rgba(255,255,255,0.4)', color: 'white', cursor: 'pointer', fontWeight: 700 }}>
+              <div className="text-[40px] md:text-[48px] mb-3 md:mb-4">🌱</div>
+              <h2 className="text-[20px] md:text-[24px] font-extrabold mb-2.5 md:mb-3 leading-tight">Soil Health & Fertilizer Advisor</h2>
+              <p className="opacity-90 leading-relaxed mb-5 md:mb-6 text-[13px] md:text-[15px] max-w-[480px]">Get your soil tested at nearest Krishi Vigyan Kendra (KVK) and receive personalized fertilizer recommendations.</p>
+              <a href="https://soilhealth.dac.gov.in" target="_blank" rel="noopener noreferrer" className="inline-block w-full sm:w-auto">
+                <button className="w-full sm:w-auto py-3 px-6 rounded-full bg-[rgba(255,255,255,0.2)] border-2 border-[rgba(255,255,255,0.4)] text-white font-bold text-[14px] md:text-[15px] hover:bg-[rgba(255,255,255,0.3)] transition-colors min-h-[48px] shadow-none">
                   Get Soil Health Card
                 </button>
               </a>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            
+            <div className="grid grid-cols-2 gap-2.5 md:gap-3">
               {[
                 { icon: '🧪', label: 'N-P-K Analysis', desc: 'Nitrogen, Phosphorus, Potassium levels' },
                 { icon: '⚗️', label: 'pH Level', desc: 'Soil acidity/alkalinity' },
                 { icon: '💧', label: 'Moisture', desc: 'Water retention capacity' },
                 { icon: '🌿', label: 'Organic Matter', desc: 'Organic carbon content' },
               ].map(item => (
-                <div key={item.label} style={{ padding: '14px', borderRadius: 12, background: 'rgba(255,255,255,0.12)' }}>
-                  <div style={{ fontSize: 24, marginBottom: 6 }}>{item.icon}</div>
-                  <div style={{ fontWeight: 700, fontSize: 12 }}>{item.label}</div>
-                  <div style={{ fontSize: 11, opacity: 0.8 }}>{item.desc}</div>
+                <div key={item.label} className="p-3 md:p-4 rounded-xl bg-[rgba(255,255,255,0.15)] border border-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.2)] transition-colors">
+                  <div className="text-[20px] md:text-[24px] mb-1.5 md:mb-2">{item.icon}</div>
+                  <div className="font-extrabold text-[12px] md:text-[13px] mb-0.5">{item.label}</div>
+                  <div className="text-[10px] md:text-[11px] opacity-80 leading-snug">{item.desc}</div>
                 </div>
               ))}
             </div>

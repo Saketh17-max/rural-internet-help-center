@@ -44,57 +44,60 @@ export default function DigitalLockerPage() {
   };
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '90vh' }}>
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12">
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(135deg, #1b4f72, #16a085)', padding: '40px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>🔒</div>
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.2rem)', fontWeight: 900, marginBottom: 8 }}>{t('lockerTitle')}</h1>
-        <p style={{ opacity: 0.8, maxWidth: 500, margin: '0 auto 20px' }}>{t('lockerDesc')}</p>
+      <div className="bg-gradient-to-br from-[#1b4f72] to-[#16a085] pt-24 pb-12 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">🔒</div>
+        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.2rem)] font-black mb-2.5">{t('lockerTitle')}</h1>
+        <p className="opacity-90 max-w-[500px] mx-auto mb-6 md:mb-8 text-sm md:text-base leading-relaxed">{t('lockerDesc')}</p>
 
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+        <div className="flex gap-2 md:gap-3 justify-center flex-wrap">
           {['🔐 AES-256 Encrypted', '☁️ Secure Cloud', '📱 Access Anytime'].map(badge => (
-            <div key={badge} style={{ padding: '6px 16px', borderRadius: '50px', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', fontSize: 13 }}>{badge}</div>
+            <div key={badge} className="py-1.5 px-3 md:py-2 md:px-4 rounded-full bg-[rgba(255,255,255,0.15)] border border-[rgba(255,255,255,0.3)] text-[11px] md:text-[13px] font-semibold backdrop-blur-sm">
+              {badge}
+            </div>
           ))}
         </div>
       </div>
 
-      <div className="page-container" style={{ padding: '32px 20px' }}>
+      <div className="page-container px-4 md:px-6 py-6 md:py-10">
         {/* Storage Info */}
-        <div style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: 16, padding: '20px 24px', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: 700, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Lock size={16} style={{ color: 'var(--primary)' }} /> Storage Used: 1.9 MB of 100 MB
+        <div className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-2xl p-5 md:p-6 mb-6 md:mb-8 flex flex-col md:flex-row items-center gap-5 md:gap-6 shadow-sm">
+          <div className="flex-1 w-full">
+            <div className="font-bold mb-2.5 md:mb-3 flex items-center gap-2 md:gap-2.5 text-[13px] md:text-[15px]">
+              <Lock size={16} className="text-[var(--primary)]" /> Storage Used: 1.9 MB of 100 MB
             </div>
-            <div className="progress-bar" style={{ height: 10 }}>
+            <div className="progress-bar h-2.5 md:h-3">
               <div className="progress-fill" style={{ width: '1.9%' }} />
             </div>
           </div>
-          <div style={{ display: 'flex', gap: 12 }}>
-            <div style={{ textAlign: 'center', padding: '10px 16px', borderRadius: 10, background: 'var(--bg2)' }}>
-              <div style={{ fontWeight: 800, fontSize: 20, color: 'var(--primary)' }}>{docs.length}</div>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Documents</div>
+          <div className="flex gap-3 w-full md:w-auto">
+            <div className="text-center p-3 md:p-[10px_16px] rounded-xl bg-[var(--bg2)] flex-1 md:flex-none">
+              <div className="font-black text-[20px] md:text-[24px] text-[var(--primary)] leading-tight">{docs.length}</div>
+              <div className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-semibold mt-0.5">Documents</div>
             </div>
-            <div style={{ textAlign: 'center', padding: '10px 16px', borderRadius: 10, background: 'var(--bg2)' }}>
-              <div style={{ fontWeight: 800, fontSize: 20, color: '#27ae60' }}>{docs.filter(d => d.verified).length}</div>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Verified</div>
+            <div className="text-center p-3 md:p-[10px_16px] rounded-xl bg-[var(--bg2)] flex-1 md:flex-none">
+              <div className="font-black text-[20px] md:text-[24px] text-[#27ae60] leading-tight">{docs.filter(d => d.verified).length}</div>
+              <div className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-semibold mt-0.5">Verified</div>
             </div>
           </div>
         </div>
 
         {/* Actions Bar */}
-        <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
-          <input className="input-field" style={{ flex: 1, minWidth: 200 }} placeholder="Search documents..."
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4 mb-6 md:mb-8">
+          <input className="input-field flex-1 py-3 px-4 text-[14px]" placeholder="Search documents..."
             value={search} onChange={e => setSearch(e.target.value)} />
-          <button className="btn-primary" onClick={() => setShowUpload(true)}>
-            <Plus size={16} /> {t('uploadDoc')}
+          <button className="btn-primary justify-center w-full md:w-auto min-h-[48px] md:px-6" onClick={() => setShowUpload(true)}>
+            <Plus size={18} className="mr-1.5" /> {t('uploadDoc')}
           </button>
         </div>
 
         {/* Document Type Categories */}
-        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', marginBottom: 24, paddingBottom: 4 }}>
+        <div className="flex gap-2 md:gap-2.5 overflow-x-auto hide-scrollbar mb-6 md:mb-8 pb-2">
           {['All', 'Identity', 'Certificates', 'Education', 'Financial'].map(cat => (
             <button key={cat}
-              style={{ padding: '6px 16px', borderRadius: '50px', whiteSpace: 'nowrap', fontSize: 13, cursor: 'pointer', border: cat === 'All' ? 'none' : '1.5px solid var(--card-border)', background: cat === 'All' ? 'var(--primary)' : 'transparent', color: cat === 'All' ? 'white' : 'var(--text)', fontWeight: cat === 'All' ? 700 : 500 }}>
+              className={`px-4 py-2 rounded-full whitespace-nowrap text-[12px] md:text-[13px] font-bold cursor-pointer transition-all border shrink-0 ${cat === 'All' ? 'border-transparent bg-[var(--primary)] text-white shadow-md' : 'border-[var(--card-border)] bg-transparent text-[var(--text)] hover:bg-[var(--bg2)]'}`}
+            >
               {cat}
             </button>
           ))}
@@ -102,42 +105,39 @@ export default function DigitalLockerPage() {
 
         {/* Documents Grid */}
         {filtered.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text-muted)' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>📂</div>
-            <p>{t('noDocuments')}</p>
-            <button className="btn-primary" style={{ marginTop: 16 }} onClick={() => setShowUpload(true)}>
-              <Upload size={16} /> Upload First Document
+          <div className="text-center p-8 md:p-16 text-[var(--text-muted)] border-2 border-dashed border-[var(--card-border)] rounded-2xl">
+            <div className="text-[48px] md:text-[56px] mb-4">📂</div>
+            <p className="text-[14px] md:text-[16px] font-semibold">{t('noDocuments')}</p>
+            <button className="btn-primary mx-auto mt-5 min-h-[44px]" onClick={() => setShowUpload(true)}>
+              <Upload size={16} className="mr-2" /> Upload First Document
             </button>
           </div>
         ) : (
-          <div className="grid-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 md:gap-4">
             {filtered.map(doc => (
-              <div key={doc.id} style={{ background: 'var(--card)', border: '1.5px solid var(--card-border)', borderRadius: 16, padding: '20px', transition: 'all 0.2s', boxShadow: 'var(--shadow)' }}
-                onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.transform = 'translateY(-2px)')}
-                onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.transform = 'none')}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-                  <div style={{ fontSize: 36 }}>{doc.icon}</div>
-                  {doc.verified && <span className="badge badge-verified" style={{ fontSize: 10 }}>✓ Verified</span>}
+              <div key={doc.id} className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-2xl p-4 md:p-5 transition-transform hover:-translate-y-1 shadow-sm flex flex-col">
+                <div className="flex justify-between items-start mb-3 md:mb-4">
+                  <div className="text-[32px] md:text-[36px]">{doc.icon}</div>
+                  {doc.verified && <span className="badge badge-verified text-[10px] md:text-[11px] px-2 py-1">✓ Verified</span>}
                 </div>
-                <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{doc.name}</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>{doc.type}</div>
-                <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-                  <span className="badge badge-info" style={{ fontSize: 10 }}>📁 {doc.size}</span>
-                  <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>📅 {doc.date}</span>
+                <div className="font-extrabold text-[14px] md:text-[15px] mb-1 leading-tight truncate">{doc.name}</div>
+                <div className="text-[12px] md:text-[13px] text-[var(--text-muted)] mb-3">{doc.type}</div>
+                <div className="flex gap-2 mb-4 md:mb-5">
+                  <span className="badge badge-info text-[10px] md:text-[11px] px-2 py-0.5">📁 {doc.size}</span>
+                  <span className="text-[10px] md:text-[11px] text-[var(--text-muted)] font-medium mt-1">📅 {doc.date}</span>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: 6 }}>
-                  <button className="btn-primary" style={{ padding: '7px 12px', fontSize: 12, justifyContent: 'center', borderRadius: 8 }}
+                <div className="grid grid-cols-[1fr_1fr_auto] gap-2 md:gap-2.5 mt-auto">
+                  <button className="btn-primary justify-center py-2 px-3 text-[12px] md:text-[13px] rounded-xl min-h-[40px]"
                     onClick={() => toast.success('Downloading...')}>
-                    <Download size={12} />
+                    <Download size={14} />
                   </button>
-                  <button className="btn-outline" style={{ padding: '7px 12px', fontSize: 12, justifyContent: 'center', borderRadius: 8 }}
+                  <button className="btn-outline justify-center py-2 px-3 text-[12px] md:text-[13px] rounded-xl min-h-[40px]"
                     onClick={() => toast.success('Document shared!')}>
                     Share
                   </button>
                   <button onClick={() => deleteDoc(doc.id)}
-                    style={{ padding: '7px 10px', borderRadius: 8, background: 'rgba(231,76,60,0.1)', border: '1px solid rgba(231,76,60,0.3)', color: '#e74c3c', cursor: 'pointer' }}>
-                    <Trash2 size={13} />
+                    className="flex items-center justify-center p-2 rounded-xl bg-[rgba(231,76,60,0.1)] border border-[rgba(231,76,60,0.3)] text-[#e74c3c] cursor-pointer hover:bg-[rgba(231,76,60,0.2)] transition-colors active:scale-95 w-10 min-h-[40px]">
+                    <Trash2 size={16} />
                   </button>
                 </div>
               </div>
@@ -147,43 +147,37 @@ export default function DigitalLockerPage() {
 
         {/* Upload Modal */}
         {showUpload && (
-          <div className="modal-overlay" onClick={() => setShowUpload(false)}>
-            <div className="modal-box" onClick={e => e.stopPropagation()}>
-              <h2 style={{ fontWeight: 800, marginBottom: 6 }}>Upload Document</h2>
-              <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 24 }}>Securely upload your document to Digital Locker</p>
+          <div className="modal-overlay px-4" onClick={() => setShowUpload(false)}>
+            <div className="modal-box w-full max-w-[480px] p-5 md:p-8" onClick={e => e.stopPropagation()}>
+              <h2 className="font-black text-lg md:text-[22px] mb-1.5 md:mb-2">Upload Document</h2>
+              <p className="text-[var(--text-muted)] text-[13px] md:text-[14px] mb-5 md:mb-6">Securely upload your document to Digital Locker</p>
 
-              <div style={{ marginBottom: 16 }}>
-                <label style={{ fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 }}>Document Name</label>
-                <input className="input-field" placeholder="e.g., Aadhaar Card, PAN Card..."
+              <div className="mb-4 md:mb-5">
+                <label className="text-[12px] md:text-[13px] font-bold block mb-1.5 md:mb-2">Document Name</label>
+                <input className="input-field py-2.5 md:py-3.5 text-sm" placeholder="e.g., Aadhaar Card, PAN Card..."
                   value={newDocName} onChange={e => setNewDocName(e.target.value)} />
               </div>
 
-              <div style={{ marginBottom: 16 }}>
-                <label style={{ fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 }}>Document Type</label>
-                <select className="input-field" value={newDocType} onChange={e => setNewDocType(e.target.value)}>
+              <div className="mb-4 md:mb-5">
+                <label className="text-[12px] md:text-[13px] font-bold block mb-1.5 md:mb-2">Document Type</label>
+                <select className="input-field py-2.5 md:py-3.5 text-sm" value={newDocType} onChange={e => setNewDocType(e.target.value)}>
                   {DOC_TYPES.map(t => <option key={t}>{t}</option>)}
                 </select>
               </div>
 
-              <div style={{ marginBottom: 24 }}>
-                <label style={{ fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 }}>Select File</label>
-                <div style={{
-                  border: '2px dashed var(--card-border)', borderRadius: 12, padding: '32px',
-                  textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s',
-                }}
-                  onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.borderColor = 'var(--primary)')}
-                  onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.borderColor = 'var(--card-border)')}
-                >
-                  <div style={{ fontSize: 36, marginBottom: 8 }}>📎</div>
-                  <div style={{ fontSize: 14, fontWeight: 600 }}>Drop file here or click to browse</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>PDF, JPG, PNG up to 5MB</div>
+              <div className="mb-6 md:mb-8">
+                <label className="text-[12px] md:text-[13px] font-bold block mb-1.5 md:mb-2">Select File</label>
+                <div className="border-2 border-dashed border-[var(--card-border)] hover:border-[var(--primary)] rounded-2xl p-6 md:p-8 text-center cursor-pointer transition-colors bg-[var(--bg2)]">
+                  <div className="text-[32px] md:text-[40px] mb-2 md:mb-3">📎</div>
+                  <div className="text-[13px] md:text-[15px] font-bold">Drop file here or click to browse</div>
+                  <div className="text-[11px] md:text-[12px] text-[var(--text-muted)] mt-1.5">PDF, JPG, PNG up to 5MB</div>
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                <button className="btn-outline" onClick={() => setShowUpload(false)}>Cancel</button>
-                <button className="btn-primary" style={{ justifyContent: 'center' }} onClick={handleUpload}>
-                  <Upload size={16} /> Upload
+              <div className="grid grid-cols-2 gap-3">
+                <button className="btn-outline justify-center min-h-[44px] md:min-h-[48px] text-[13px] md:text-[14px]" onClick={() => setShowUpload(false)}>Cancel</button>
+                <button className="btn-primary justify-center min-h-[44px] md:min-h-[48px] text-[13px] md:text-[14px]" onClick={handleUpload}>
+                  <Upload size={16} className="mr-1.5" /> Upload
                 </button>
               </div>
             </div>

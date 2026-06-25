@@ -52,24 +52,24 @@ export default function WomenPage() {
   const { t } = useLanguage();
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '90vh' }}>
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12">
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(135deg, #880e4f, #c2185b, #e91e8c)', padding: '50px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>💜</div>
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.4rem)', fontWeight: 900, marginBottom: 10 }}>{t('womenTitle')}</h1>
-        <p style={{ opacity: 0.85, maxWidth: 560, margin: '0 auto' }}>
+      <div className="bg-gradient-to-br from-[#880e4f] via-[#c2185b] to-[#e91e8c] pt-24 pb-12 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">💜</div>
+        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.4rem)] font-black mb-2.5">{t('womenTitle')}</h1>
+        <p className="opacity-90 max-w-[560px] mx-auto text-sm md:text-base leading-relaxed">
           Empowering rural women with financial support, health schemes, skill development, and self-employment opportunities
         </p>
       </div>
 
-      <div className="page-container" style={{ padding: '40px 20px' }}>
+      <div className="page-container px-4 md:px-6 py-6 md:py-10">
         {/* Quick Access */}
-        <div className="grid-4" style={{ marginBottom: 40 }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-10 md:mb-12">
           {SECTIONS.map(s => (
-            <a key={s.id} href={`#${s.id}`} style={{ textDecoration: 'none' }}>
-              <div className="service-card">
-                <div style={{ width: 52, height: 52, borderRadius: 12, background: `${s.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26 }}>{s.icon}</div>
-                <div style={{ fontWeight: 700, fontSize: 13 }}>{s.title.split(' ')[0]} {s.title.split(' ')[1] || ''}</div>
+            <a key={s.id} href={`#${s.id}`} className="no-underline block h-full">
+              <div className="service-card flex flex-col items-center justify-center p-4 md:p-5 h-full transition-transform active:scale-95">
+                <div className="w-12 h-12 md:w-[52px] md:h-[52px] rounded-xl flex items-center justify-center text-2xl md:text-[26px] mb-3" style={{ background: `${s.color}15` }}>{s.icon}</div>
+                <div className="font-bold text-[13px] md:text-[14px] text-center text-[var(--text)]">{s.title.split(' ')[0]} {s.title.split(' ')[1] || ''}</div>
               </div>
             </a>
           ))}
@@ -77,26 +77,26 @@ export default function WomenPage() {
 
         {/* Main Sections */}
         {SECTIONS.map(section => (
-          <section key={section.id} id={section.id} style={{ marginBottom: 48 }}>
-            <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 20 }}>
-              <div style={{ width: 52, height: 52, borderRadius: 12, background: `${section.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28 }}>
+          <section key={section.id} id={section.id} className="mb-10 md:mb-12">
+            <div className="flex gap-4 items-center mb-5 md:mb-6">
+              <div className="w-12 h-12 md:w-[52px] md:h-[52px] rounded-xl flex items-center justify-center text-[24px] md:text-[28px] shrink-0" style={{ background: `${section.color}15` }}>
                 {section.icon}
               </div>
               <div>
-                <h2 style={{ fontSize: 20, fontWeight: 800 }}>{section.title}</h2>
-                <p style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 3 }}>{section.desc}</p>
+                <h2 className="text-lg md:text-[20px] font-extrabold leading-tight mb-1">{section.title}</h2>
+                <p className="text-[12px] md:text-[13px] text-[var(--text-muted)] leading-snug">{section.desc}</p>
               </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div className="flex flex-col gap-3 md:gap-4">
               {section.items.map((item, i) => (
-                <div key={i} style={{ background: 'var(--card)', border: `1.5px solid ${section.color}20`, borderRadius: 14, padding: '18px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{item.label}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>{item.desc}</div>
+                <div key={i} className="bg-[var(--card)] rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row sm:items-center gap-3.5 md:gap-4 shadow-sm" style={{ border: `1.5px solid ${section.color}20` }}>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-bold text-[14px] md:text-[15px] mb-1">{item.label}</div>
+                    <div className="text-[12px] md:text-[13px] text-[var(--text-muted)] leading-relaxed">{item.desc}</div>
                   </div>
-                  <a href={item.link} target="_blank" rel="noopener noreferrer">
-                    <button className="btn-outline" style={{ padding: '8px 16px', fontSize: 12, borderColor: section.color, color: section.color, whiteSpace: 'nowrap' }}>
-                      <ExternalLink size={12} /> Know More
+                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="no-underline w-full sm:w-auto mt-1 sm:mt-0">
+                    <button className="btn-outline w-full sm:w-auto justify-center py-2 px-4 text-[12px] md:text-[13px] min-h-[44px]" style={{ borderColor: section.color, color: section.color }}>
+                      <ExternalLink size={14} className="mr-1.5" /> Know More
                     </button>
                   </a>
                 </div>
@@ -106,19 +106,19 @@ export default function WomenPage() {
         ))}
 
         {/* Emergency Helplines */}
-        <div style={{ background: 'linear-gradient(135deg, #c0392b, #e74c3c)', borderRadius: 20, padding: '28px', color: 'white', marginBottom: 40 }}>
-          <h2 style={{ fontSize: 20, fontWeight: 800, marginBottom: 16 }}>🆘 Women Helplines</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 12 }}>
+        <div className="bg-gradient-to-br from-[#c0392b] to-[#e74c3c] rounded-2xl md:rounded-[20px] p-5 md:p-7 text-white mb-10 md:mb-12 shadow-lg">
+          <h2 className="text-[18px] md:text-[20px] font-extrabold mb-4 md:mb-5">🆘 Women Helplines</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {[
               { name: 'Women Helpline', number: '181', desc: '24x7 support for women in distress' },
               { name: 'Domestic Violence', number: '1800-599-0019', desc: 'National DV helpline' },
               { name: 'Child Helpline', number: '1098', desc: 'For child abuse cases' },
               { name: 'Police', number: '100', desc: 'Emergency police help' },
             ].map(h => (
-              <div key={h.name} style={{ padding: '14px', borderRadius: 12, background: 'rgba(255,255,255,0.15)' }}>
-                <div style={{ fontWeight: 700, fontSize: 20 }}>{h.number}</div>
-                <div style={{ fontWeight: 700, fontSize: 13 }}>{h.name}</div>
-                <div style={{ fontSize: 11, opacity: 0.8 }}>{h.desc}</div>
+              <div key={h.name} className="p-3.5 md:p-4 rounded-xl bg-[rgba(255,255,255,0.15)] hover:bg-[rgba(255,255,255,0.2)] transition-colors">
+                <div className="font-black text-[22px] md:text-[24px] mb-0.5">{h.number}</div>
+                <div className="font-bold text-[13px] md:text-[14px] mb-1">{h.name}</div>
+                <div className="text-[11px] md:text-[12px] opacity-90 leading-snug">{h.desc}</div>
               </div>
             ))}
           </div>
@@ -126,15 +126,17 @@ export default function WomenPage() {
 
         {/* Success Stories */}
         <section>
-          <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 20 }}>🌟 Success Stories</h2>
-          <div className="grid-3">
+          <h2 className="text-xl md:text-[22px] font-extrabold mb-5 md:mb-6">🌟 Success Stories</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {SUCCESS_STORIES.map(story => (
-              <div key={story.name} className="glass-card" style={{ padding: 24 }}>
-                <div style={{ fontSize: 48, marginBottom: 12, textAlign: 'center' }}>{story.emoji}</div>
-                <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 4 }}>{story.name}</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12 }}>📍 {story.village}</div>
-                <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 12, fontStyle: 'italic' }}>"{story.story}"</p>
-                <span className="badge badge-success" style={{ fontSize: 12 }}>✨ {story.achievement}</span>
+              <div key={story.name} className="glass-card p-5 md:p-6 text-center hover:-translate-y-1 transition-transform flex flex-col h-full">
+                <div className="text-[48px] md:text-[56px] mb-2.5">{story.emoji}</div>
+                <div className="font-black text-[15px] md:text-[16px] mb-1">{story.name}</div>
+                <div className="text-[12px] md:text-[13px] text-[var(--text-muted)] mb-3">📍 {story.village}</div>
+                <p className="text-[13px] md:text-[14px] text-[var(--text-muted)] leading-relaxed italic mb-4 flex-1">"{story.story}"</p>
+                <div className="mt-auto">
+                  <span className="badge badge-success text-[11px] md:text-[12px] px-3 py-1 bg-[rgba(39,174,96,0.1)] text-[#27ae60] font-bold">✨ {story.achievement}</span>
+                </div>
               </div>
             ))}
           </div>

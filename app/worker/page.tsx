@@ -47,78 +47,69 @@ export default function WorkerDashboard() {
   const statusColor = (s: string) => ({ pending: '#f39c12', accepted: '#2980b9', completed: '#27ae60', rejected: '#e74c3c' }[s] || '#666');
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '90vh', padding: '32px 20px' }}>
+    <div className="bg-[var(--bg)] min-h-[90vh] pt-24 pb-12 px-4 md:px-8">
       <div className="page-container">
         {/* Worker ID Card */}
-        <div className="id-card" style={{ marginBottom: 28 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
-            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 36, border: '2px solid rgba(255,255,255,0.3)' }}>
-              👷
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 11, opacity: 0.7 }}>WORKER ID</div>
-              <div style={{ fontSize: 22, fontWeight: 900, letterSpacing: 2 }}>{user.userId || 'WRK000145'}</div>
-              <div style={{ fontSize: 17, fontWeight: 700, marginTop: 2 }}>{user.name}</div>
-              <div style={{ fontSize: 13, opacity: 0.8 }}>Carpenter • Guntur</div>
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 11, opacity: 0.7, marginBottom: 4 }}>AVAILABILITY</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div onClick={() => { setAvailable(!available); toast.success(available ? 'Marked as unavailable' : 'Marked as available!'); }}
-                  style={{
-                    width: 52, height: 26, borderRadius: 13, cursor: 'pointer', transition: 'all 0.3s',
-                    background: available ? '#4ade80' : 'rgba(255,255,255,0.2)',
-                    position: 'relative', display: 'flex', alignItems: 'center', padding: '0 3px',
-                  }}>
-                  <div style={{
-                    width: 20, height: 20, borderRadius: '50%', background: 'white',
-                    transition: 'transform 0.3s', transform: available ? 'translateX(26px)' : 'translateX(0)',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                  }} />
-                </div>
-                <span style={{ fontSize: 12, fontWeight: 700 }}>{available ? t('availableNow') : t('notAvailable')}</span>
+        <div className="id-card mb-7">
+          <div className="flex items-start md:items-center justify-between gap-6 flex-col md:flex-row relative z-10">
+            <div className="flex items-center gap-4 md:gap-6 w-full md:w-auto">
+              <div className="w-14 h-14 md:w-18 md:h-18 rounded-full bg-[rgba(255,255,255,0.15)] flex items-center justify-center text-3xl md:text-4xl border-2 border-[rgba(255,255,255,0.3)] shrink-0">
+                👷
               </div>
-              <div style={{ display: 'flex', gap: 6, marginTop: 8, justifyContent: 'flex-end' }}>
-                {user.verified && <span className="badge badge-verified" style={{ fontSize: 11 }}>✓ Verified</span>}
+              <div className="flex-1">
+                <div className="text-[10px] md:text-[11px] opacity-70">WORKER ID</div>
+                <div className="text-xl md:text-2xl font-black tracking-widest leading-none mt-1">{user.userId || 'WRK000145'}</div>
+                <div className="text-base md:text-[17px] font-bold mt-1.5">{user.name}</div>
+                <div className="text-xs md:text-[13px] opacity-80 mt-0.5">Carpenter • Guntur</div>
+              </div>
+            </div>
+            
+            <div className="text-left md:text-right w-full md:w-auto border-t border-[rgba(255,255,255,0.2)] pt-4 md:pt-0 md:border-none">
+              <div className="text-[10px] md:text-[11px] opacity-70 mb-2 md:mb-1">AVAILABILITY</div>
+              <div className="flex items-center md:justify-end gap-3">
+                <div onClick={() => { setAvailable(!available); toast.success(available ? 'Marked as unavailable' : 'Marked as available!'); }}
+                  className={`w-12 h-6 md:w-[52px] md:h-[26px] rounded-full cursor-pointer transition-all flex items-center px-1 relative ${available ? 'bg-[#4ade80]' : 'bg-[rgba(255,255,255,0.2)]'}`}
+                >
+                  <div className={`w-4 h-4 md:w-5 md:h-5 rounded-full bg-white transition-transform shadow-[0_2px_4px_rgba(0,0,0,0.2)] ${available ? 'translate-x-6 md:translate-x-[26px]' : 'translate-x-0'}`} />
+                </div>
+                <span className="text-xs md:text-[12px] font-bold">{available ? t('availableNow') : t('notAvailable')}</span>
+              </div>
+              <div className="flex gap-1.5 mt-3 md:mt-2 md:justify-end">
+                {user.verified && <span className="badge badge-verified text-[10px] md:text-[11px]">✓ Verified</span>}
               </div>
             </div>
           </div>
         </div>
 
         {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 28 }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-7">
           {[
             { label: 'Total Earnings', value: `₹${totalEarnings.toLocaleString('en-IN')}`, icon: '💰', color: '#27ae60' },
             { label: 'Jobs Completed', value: '24', icon: '✅', color: '#1b4f72' },
             { label: 'Rating', value: '4.8★', icon: '⭐', color: '#f39c12' },
             { label: 'Active Jobs', value: '2', icon: '💼', color: '#e67e22' },
           ].map(stat => (
-            <div key={stat.label} className="stat-card">
-              <div className="stat-icon" style={{ background: `${stat.color}15`, fontSize: 24 }}>{stat.icon}</div>
+            <div key={stat.label} className="stat-card p-3 md:p-5 flex-col sm:flex-row text-center sm:text-left gap-2 sm:gap-4">
+              <div className="w-10 h-10 md:w-[52px] md:h-[52px] rounded-lg md:rounded-xl flex items-center justify-center text-xl md:text-2xl shrink-0 mx-auto sm:mx-0" style={{ background: `${stat.color}15` }}>{stat.icon}</div>
               <div>
-                <div style={{ fontSize: 20, fontWeight: 800, color: stat.color }}>{stat.value}</div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{stat.label}</div>
+                <div className="text-lg md:text-[20px] font-extrabold" style={{ color: stat.color }}>{stat.value}</div>
+                <div className="text-[10px] md:text-[11px] text-[var(--text-muted)] leading-tight">{stat.label}</div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Tabs */}
-        <div style={{ display: 'flex', gap: 4, marginBottom: 24, borderBottom: '2px solid var(--card-border)', paddingBottom: 0 }}>
+        <div className="flex gap-2 md:gap-4 mb-6 border-b-2 border-[var(--card-border)] pb-0 overflow-x-auto hide-scrollbar whitespace-nowrap">
           {[
             { id: 'overview', label: '📊 Overview' },
-            { id: 'jobs', label: '💼 Job Invitations' },
+            { id: 'jobs', label: '💼 Invitations' },
             { id: 'payments', label: '💰 Payments' },
             { id: 'reviews', label: '⭐ Reviews' },
           ].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id as typeof activeTab)}
-              style={{
-                padding: '10px 18px', border: 'none', background: 'none', cursor: 'pointer',
-                fontSize: 13, fontWeight: activeTab === tab.id ? 700 : 500,
-                color: activeTab === tab.id ? 'var(--primary)' : 'var(--text-muted)',
-                borderBottom: activeTab === tab.id ? '2px solid var(--primary)' : '2px solid transparent',
-                marginBottom: -2, transition: 'all 0.2s',
-              }}>
+              className={`px-3 md:px-[18px] py-2 md:py-2.5 border-none bg-transparent cursor-pointer text-xs md:text-[13px] -mb-[2px] transition-all border-b-2 ${activeTab === tab.id ? 'font-bold text-[var(--primary)] border-[var(--primary)]' : 'font-medium text-[var(--text-muted)] border-transparent'}`}
+            >
               {tab.label}
             </button>
           ))}
@@ -126,16 +117,16 @@ export default function WorkerDashboard() {
 
         {/* Overview Tab */}
         {activeTab === 'overview' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 24 }}>
-            <div>
-              <h3 style={{ fontWeight: 800, marginBottom: 16, fontSize: 15 }}>Monthly Earnings</h3>
-              <div className="chart-container">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6">
+            <div className="w-full">
+              <h3 className="font-extrabold mb-4 text-[15px]">Monthly Earnings</h3>
+              <div className="chart-container overflow-hidden w-full p-2 sm:p-5">
                 <ResponsiveContainer width="100%" height={220}>
-                  <BarChart data={EARNINGS_DATA}>
-                    <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-                    <YAxis tick={{ fontSize: 12 }} tickFormatter={v => `₹${(v/1000).toFixed(0)}k`} />
+                  <BarChart data={EARNINGS_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <XAxis dataKey="month" tick={{ fontSize: 11 }} />
+                    <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `₹${(v/1000).toFixed(0)}k`} />
                     <Tooltip formatter={(v) => [`₹${v !== undefined ? Number(v).toLocaleString('en-IN') : 0}`, 'Earnings']} />
-                    <Bar dataKey="amount" fill="#1a6b3a" radius={[6, 6, 0, 0]} />
+                    <Bar dataKey="amount" fill="#1a6b3a" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -143,18 +134,18 @@ export default function WorkerDashboard() {
 
             {/* Pending Jobs */}
             <div>
-              <h3 style={{ fontWeight: 800, marginBottom: 16, fontSize: 15 }}>Pending Invitations</h3>
+              <h3 className="font-extrabold mb-4 text-[15px]">Pending Invitations</h3>
               {JOB_INVITATIONS.filter(j => j.status === 'pending').map(job => (
-                <div key={job.id} style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: 12, padding: 16, marginBottom: 12 }}>
-                  <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{job.work}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8 }}>{job.employer} • {job.location}</div>
-                  <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--primary)', marginBottom: 12 }}>₹{job.wage}/day</div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-                    <button className="btn-primary" style={{ padding: '8px 12px', fontSize: 12, justifyContent: 'center', borderRadius: 8 }}
+                <div key={job.id} className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-4 mb-3">
+                  <div className="font-bold text-sm mb-1">{job.work}</div>
+                  <div className="text-[11px] md:text-xs text-[var(--text-muted)] mb-2">{job.employer} • {job.location}</div>
+                  <div className="text-[15px] md:text-base font-extrabold text-[var(--primary)] mb-3">₹{job.wage}/day</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button className="btn-primary py-2 px-0 text-[11px] md:text-xs justify-center rounded-lg min-h-[44px]"
                       onClick={() => toast.success('Job accepted! 🎉')}>
                       <CheckCircle size={13} /> Accept
                     </button>
-                    <button className="btn-outline" style={{ padding: '8px 12px', fontSize: 12, justifyContent: 'center', borderRadius: 8, borderColor: '#e74c3c', color: '#e74c3c' }}
+                    <button className="btn-outline py-2 px-0 text-[11px] md:text-xs justify-center rounded-lg min-h-[44px] border-[#e74c3c] text-[#e74c3c]"
                       onClick={() => toast.success('Job rejected.')}>
                       <XCircle size={13} /> Reject
                     </button>
@@ -168,28 +159,34 @@ export default function WorkerDashboard() {
         {/* Jobs Tab */}
         {activeTab === 'jobs' && (
           <div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div className="flex flex-col gap-3">
               {JOB_INVITATIONS.map(job => (
-                <div key={job.id} style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: 14, padding: '18px 20px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 15 }}>{job.work}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{job.employer} ({job.empId}) • {job.location}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Date: {job.date}</div>
+                <div key={job.id} className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-4 md:p-[18px_20px] flex flex-col md:flex-row md:align-center gap-4">
+                  <div className="flex-1">
+                    <div className="font-bold text-sm md:text-[15px]">{job.work}</div>
+                    <div className="text-[11px] md:text-xs text-[var(--text-muted)] mt-1">{job.employer} ({job.empId}) • {job.location}</div>
+                    <div className="text-[11px] md:text-xs text-[var(--text-muted)] mt-0.5">Date: {job.date}</div>
                   </div>
-                  <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--primary)' }}>₹{job.wage}/day</div>
-                  <span className="badge" style={{ background: `${statusColor(job.status)}20`, color: statusColor(job.status) }}>
-                    {job.status}
-                  </span>
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    {job.status === 'pending' && (
-                      <>
-                        <button className="btn-primary" style={{ padding: '6px 14px', fontSize: 12 }} onClick={() => toast.success('Accepted!')}>Accept</button>
-                        <button className="btn-outline" style={{ padding: '6px 14px', fontSize: 12, borderColor: '#e74c3c', color: '#e74c3c' }} onClick={() => toast('Rejected.')}>Reject</button>
-                      </>
-                    )}
-                    <button className="btn-outline" style={{ padding: '6px 14px', fontSize: 12 }} onClick={() => toast.success('Chat opened!')}>
-                      <Phone size={12} /> Chat
-                    </button>
+                  
+                  <div className="flex items-center justify-between md:flex-row md:gap-4 md:justify-end w-full md:w-auto border-t border-[var(--card-border)] pt-3 md:border-none md:pt-0">
+                    <div className="flex flex-col md:items-end gap-1">
+                      <div className="text-[16px] md:text-[18px] font-extrabold text-[var(--primary)]">₹{job.wage}/day</div>
+                      <span className="badge text-[10px] self-start md:self-end" style={{ background: `${statusColor(job.status)}20`, color: statusColor(job.status) }}>
+                        {job.status}
+                      </span>
+                    </div>
+
+                    <div className="flex gap-2">
+                      {job.status === 'pending' && (
+                        <>
+                          <button className="btn-primary py-1.5 px-3 text-[11px] min-h-[36px]" onClick={() => toast.success('Accepted!')}>Accept</button>
+                          <button className="btn-outline py-1.5 px-3 text-[11px] border-[#e74c3c] text-[#e74c3c] min-h-[36px]" onClick={() => toast('Rejected.')}>Reject</button>
+                        </>
+                      )}
+                      <button className="btn-outline py-1.5 px-3 text-[11px] min-h-[36px]" onClick={() => toast.success('Chat opened!')}>
+                        <Phone size={12} /> Chat
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -200,8 +197,8 @@ export default function WorkerDashboard() {
         {/* Payments Tab */}
         {activeTab === 'payments' && (
           <div>
-            <div style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: 16, overflow: 'hidden' }}>
-              <table className="data-table">
+            <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl overflow-x-auto mb-5">
+              <table className="data-table min-w-[500px]">
                 <thead>
                   <tr>
                     <th>Date</th>
@@ -214,25 +211,26 @@ export default function WorkerDashboard() {
                 <tbody>
                   {PAYMENT_HISTORY.map((p, i) => (
                     <tr key={i}>
-                      <td style={{ fontSize: 13 }}>{p.date}</td>
-                      <td style={{ fontWeight: 600 }}>{p.employer}</td>
-                      <td>{p.days}</td>
-                      <td style={{ fontWeight: 800, color: '#27ae60' }}>₹{p.amount.toLocaleString('en-IN')}</td>
-                      <td><span className="badge badge-success">✅ {p.status}</span></td>
+                      <td className="text-xs md:text-[13px]">{p.date}</td>
+                      <td className="font-semibold text-xs md:text-[14px]">{p.employer}</td>
+                      <td className="text-xs md:text-[14px]">{p.days}</td>
+                      <td className="font-extrabold text-[#27ae60] text-xs md:text-[14px]">₹{p.amount.toLocaleString('en-IN')}</td>
+                      <td><span className="badge badge-success text-[10px] md:text-xs">✅ {p.status}</span></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginTop: 20 }}>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
               {[
                 { label: 'Total Received', value: `₹${totalEarnings.toLocaleString('en-IN')}`, color: '#27ae60' },
                 { label: 'Pending', value: '₹0', color: '#f39c12' },
                 { label: 'This Month', value: '₹19,500', color: '#1b4f72' },
               ].map(s => (
-                <div key={s.label} style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: 12, padding: '16px 20px', textAlign: 'center' }}>
-                  <div style={{ fontSize: 22, fontWeight: 900, color: s.color }}>{s.value}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{s.label}</div>
+                <div key={s.label} className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-3 md:p-4 text-center col-span-1 md:col-span-1 last:col-span-2 md:last:col-span-1">
+                  <div className="text-[18px] md:text-[22px] font-extrabold" style={{ color: s.color }}>{s.value}</div>
+                  <div className="text-[11px] md:text-[12px] text-[var(--text-muted)] mt-1">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -242,20 +240,20 @@ export default function WorkerDashboard() {
         {/* Reviews Tab */}
         {activeTab === 'reviews' && (
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 24, padding: '20px', borderRadius: 16, background: 'var(--card)', border: '1px solid var(--card-border)' }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 48, fontWeight: 900, color: '#f39c12' }}>4.8</div>
-                <div className="stars" style={{ fontSize: 20 }}>★★★★★</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>23 reviews</div>
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 mb-6 p-5 rounded-xl bg-[var(--card)] border border-[var(--card-border)]">
+              <div className="text-center md:text-left min-w-[120px]">
+                <div className="text-4xl md:text-5xl font-black text-[#f39c12]">4.8</div>
+                <div className="stars text-lg md:text-xl">★★★★★</div>
+                <div className="text-[11px] md:text-xs text-[var(--text-muted)]">23 reviews</div>
               </div>
-              <div style={{ flex: 1 }}>
+              <div className="w-full max-w-sm mx-auto md:mx-0 flex-1">
                 {[5, 4, 3, 2, 1].map(star => (
-                  <div key={star} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                    <span style={{ fontSize: 12, width: 20 }}>{star}★</span>
-                    <div style={{ flex: 1, height: 6, borderRadius: 3, background: 'var(--bg2)' }}>
-                      <div style={{ height: '100%', width: star === 5 ? '75%' : star === 4 ? '17%' : '8%', background: '#f39c12', borderRadius: 3 }} />
+                  <div key={star} className="flex items-center gap-2 mb-1.5">
+                    <span className="text-[11px] md:text-xs w-5 shrink-0">{star}★</span>
+                    <div className="flex-1 h-1.5 rounded-full bg-[var(--bg2)] overflow-hidden">
+                      <div className="h-full bg-[#f39c12] rounded-full" style={{ width: star === 5 ? '75%' : star === 4 ? '17%' : '8%' }} />
                     </div>
-                    <span style={{ fontSize: 11, color: 'var(--text-muted)', width: 24 }}>
+                    <span className="text-[10px] md:text-[11px] text-[var(--text-muted)] w-6 shrink-0 text-right">
                       {star === 5 ? 17 : star === 4 ? 4 : 2}
                     </span>
                   </div>
@@ -263,18 +261,20 @@ export default function WorkerDashboard() {
               </div>
             </div>
 
-            {REVIEWS.map((r, i) => (
-              <div key={i} style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: 12, padding: '16px 20px', marginBottom: 12 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontWeight: 700 }}>{r.employer}</span>
-                  <div>
-                    <span className="stars">{'★'.repeat(r.rating)}</span>
-                    <span style={{ fontSize: 12, color: 'var(--text-muted)', marginLeft: 8 }}>{r.date}</span>
+            <div className="flex flex-col gap-3">
+              {REVIEWS.map((r, i) => (
+                <div key={i} className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-4">
+                  <div className="flex flex-col sm:flex-row sm:justify-between mb-2 gap-1 sm:gap-0">
+                    <span className="font-bold text-[13px] md:text-[14px]">{r.employer}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="stars text-xs">{'★'.repeat(r.rating)}</span>
+                      <span className="text-[11px] md:text-xs text-[var(--text-muted)]">{r.date}</span>
+                    </div>
                   </div>
+                  <p className="text-[12px] md:text-[13px] text-[var(--text-muted)] italic leading-relaxed">"{r.comment}"</p>
                 </div>
-                <p style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic' }}>"{r.comment}"</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
       </div>

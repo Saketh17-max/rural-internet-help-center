@@ -35,7 +35,7 @@ export default function CitizenDashboard() {
 
   useEffect(() => {
     if (!isAuthenticated) router.push('/login');
-  }, [isAuthenticated]);
+  }, [isAuthenticated, router]);
 
   if (!isAuthenticated || !user) return null;
 
@@ -43,34 +43,34 @@ export default function CitizenDashboard() {
   const statusIcon = (s: string) => s === 'approved' ? <CheckCircle size={13} /> : s === 'pending' ? <Clock size={13} /> : <AlertCircle size={13} />;
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '90vh', padding: '32px 20px' }}>
+    <div className="bg-[var(--bg)] min-h-[90vh] py-6 md:py-10 px-4 md:px-6">
       <div className="page-container">
         {/* Welcome Banner */}
-        <div className="id-card" style={{ marginBottom: 28 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
+        <div className="id-card mb-6 md:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 md:gap-5 relative z-10">
             <div>
-              <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 4 }}>CITIZEN DASHBOARD</div>
-              <h1 style={{ fontSize: 24, fontWeight: 900, marginBottom: 4 }}>Welcome, {user.name}! 🙏</h1>
-              <div style={{ fontSize: 13, opacity: 0.8 }}>ID: {user.userId}</div>
-              {user.verified && <div style={{ marginTop: 8 }}><span className="badge badge-verified" style={{ fontSize: 12 }}>✓ Verified Citizen</span></div>}
+              <div className="text-[11px] md:text-[12px] opacity-80 mb-1 font-bold tracking-wider">CITIZEN DASHBOARD</div>
+              <h1 className="text-[20px] md:text-[24px] font-black mb-1">Welcome, {user.name}! 🙏</h1>
+              <div className="text-[12px] md:text-[13px] opacity-90 font-medium">ID: {user.userId}</div>
+              {user.verified && <div className="mt-2 md:mt-3"><span className="badge badge-verified text-[11px] md:text-[12px] px-2.5 py-1">✓ Verified Citizen</span></div>}
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 38 }}>👤</div>
-              <div style={{ fontSize: 11, opacity: 0.7, marginTop: 4 }}>{user.mobile}</div>
+            <div className="hidden sm:block text-right">
+              <div className="text-[32px] md:text-[38px] mb-1">👤</div>
+              <div className="text-[11px] opacity-80 font-medium">{user.mobile}</div>
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24, marginBottom: 28 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8">
           {/* Quick Services */}
-          <div style={{ gridColumn: '1 / 3' }}>
-            <h2 style={{ fontWeight: 800, marginBottom: 16, fontSize: 17 }}>Quick Access</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+          <div className="lg:col-span-2">
+            <h2 className="font-extrabold mb-4 text-[16px] md:text-[17px]">Quick Access</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
               {QUICK_SERVICES.map(svc => (
-                <Link key={svc.href} href={svc.href} style={{ textDecoration: 'none' }}>
-                  <div className="service-card" style={{ padding: '16px 12px', gap: 8 }}>
-                    <div style={{ width: 44, height: 44, borderRadius: 10, background: `${svc.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>{svc.icon}</div>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text)', textAlign: 'center' }}>{svc.label}</div>
+                <Link key={svc.href} href={svc.href} className="no-underline block h-full">
+                  <div className="service-card flex flex-col items-center justify-center p-3.5 md:p-4 h-full transition-transform active:scale-95 shadow-sm">
+                    <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl flex items-center justify-center text-[20px] md:text-[22px] mb-2.5" style={{ background: `${svc.color}15` }}>{svc.icon}</div>
+                    <div className="text-[11px] md:text-[12px] font-bold text-center text-[var(--text)]">{svc.label}</div>
                   </div>
                 </Link>
               ))}
@@ -79,17 +79,17 @@ export default function CitizenDashboard() {
 
           {/* Notifications */}
           <div>
-            <h2 style={{ fontWeight: 800, marginBottom: 16, fontSize: 17, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <h2 className="font-extrabold mb-4 text-[16px] md:text-[17px] flex items-center gap-2">
               <Bell size={17} /> Notifications
             </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div className="flex flex-col gap-2.5 md:gap-3">
               {NOTIFICATIONS.map((n, i) => (
-                <div key={i} className="notification-item">
-                  <div className="notification-dot" style={{ background: n.color }} />
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: 13 }}>{n.icon} {n.title}</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.4 }}>{n.desc}</div>
-                    <div style={{ fontSize: 10, color: 'var(--text-light)', marginTop: 2 }}>{n.time}</div>
+                <div key={i} className="notification-item bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-3.5 md:p-4 flex gap-3 relative overflow-hidden shadow-sm">
+                  <div className="absolute left-0 top-0 bottom-0 w-1 md:w-1.5" style={{ background: n.color }} />
+                  <div className="flex-1 min-w-0 pl-1 md:pl-2">
+                    <div className="font-bold text-[12px] md:text-[13px] mb-0.5 leading-tight">{n.icon} {n.title}</div>
+                    <div className="text-[11px] text-[var(--text-muted)] leading-snug">{n.desc}</div>
+                    <div className="text-[10px] text-[var(--text-light)] mt-1 font-medium">{n.time}</div>
                   </div>
                 </div>
               ))}
@@ -98,85 +98,89 @@ export default function CitizenDashboard() {
         </div>
 
         {/* Applications Table */}
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h2 style={{ fontWeight: 800, fontSize: 17, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div className="mb-6 md:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <h2 className="font-extrabold text-[16px] md:text-[17px] flex items-center gap-2">
               <FileText size={17} /> My Applications
             </h2>
-            <Link href="/government">
-              <button className="btn-outline" style={{ padding: '6px 16px', fontSize: 13 }}>+ New Application</button>
+            <Link href="/government" className="no-underline w-full sm:w-auto">
+              <button className="btn-outline w-full sm:w-auto justify-center py-2 px-4 text-[12px] md:text-[13px] min-h-[40px]">
+                + New Application
+              </button>
             </Link>
           </div>
 
-          <div style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: 16, overflow: 'hidden' }}>
-            <table className="data-table">
-              <thead>
-                <tr>
-                  <th>App ID</th>
-                  <th>Service</th>
-                  <th>Date</th>
-                  <th>Reference No.</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {APPLICATIONS.map(app => (
-                  <tr key={app.id}>
-                    <td style={{ fontWeight: 600, fontSize: 13 }}>{app.id}</td>
-                    <td>{app.service}</td>
-                    <td style={{ color: 'var(--text-muted)', fontSize: 13 }}>{app.date}</td>
-                    <td style={{ fontFamily: 'monospace', fontSize: 12 }}>{app.refNo}</td>
-                    <td>
-                      <span className="badge" style={{ background: `${statusColor(app.status)}20`, color: statusColor(app.status), display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                        {statusIcon(app.status)} {app.status}
-                      </span>
-                    </td>
-                    <td>
-                      <button onClick={() => toast.success(`Tracking ${app.refNo}`)}
-                        style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
-                        Track
-                      </button>
-                    </td>
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl md:rounded-2xl overflow-hidden shadow-sm">
+            <div className="overflow-x-auto">
+              <table className="data-table w-full text-left border-collapse min-w-[600px]">
+                <thead>
+                  <tr>
+                    <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">App ID</th>
+                    <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">Service</th>
+                    <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">Date</th>
+                    <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">Reference No.</th>
+                    <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">Status</th>
+                    <th className="text-[11px] md:text-[12px] text-[var(--text-muted)] font-bold p-3 md:p-4 bg-[var(--bg2)] border-b border-[var(--card-border)]">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {APPLICATIONS.map((app, i) => (
+                    <tr key={app.id} className={i !== APPLICATIONS.length - 1 ? 'border-b border-[var(--card-border)]' : ''}>
+                      <td className="font-bold text-[12px] md:text-[13px] p-3 md:p-4">{app.id}</td>
+                      <td className="text-[12px] md:text-[13px] p-3 md:p-4 font-medium">{app.service}</td>
+                      <td className="text-[12px] md:text-[13px] text-[var(--text-muted)] p-3 md:p-4">{app.date}</td>
+                      <td className="font-mono text-[11px] md:text-[12px] p-3 md:p-4">{app.refNo}</td>
+                      <td className="p-3 md:p-4">
+                        <span className="badge font-bold text-[10px] md:text-[11px] px-2 py-1 inline-flex items-center gap-1" style={{ background: `${statusColor(app.status)}15`, color: statusColor(app.status) }}>
+                          {statusIcon(app.status)} <span className="capitalize">{app.status}</span>
+                        </span>
+                      </td>
+                      <td className="p-3 md:p-4">
+                        <button onClick={() => toast.success(`Tracking ${app.refNo}`)}
+                          className="bg-transparent border-none text-[var(--primary)] cursor-pointer text-[12px] md:text-[13px] font-bold active:scale-95 transition-transform">
+                          Track
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         {/* Bottom Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginTop: 24 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6 mt-6 md:mt-8">
           {/* Digital Locker Preview */}
-          <div style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: 16, padding: 24 }}>
-            <h3 style={{ fontWeight: 800, marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8, fontSize: 15 }}>
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl md:rounded-2xl p-5 md:p-6 shadow-sm flex flex-col">
+            <h3 className="font-extrabold mb-4 flex items-center gap-2 text-[14px] md:text-[15px]">
               <Lock size={16} /> Digital Locker
             </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 14 }}>
+            <div className="grid grid-cols-3 gap-2.5 md:gap-3 mb-4 md:mb-5">
               {[{ icon: '🔵', name: 'Aadhaar' }, { icon: '💳', name: 'PAN' }, { icon: '🏠', name: 'Residence' }].map(doc => (
-                <div key={doc.name} style={{ textAlign: 'center', padding: '12px 8px', borderRadius: 10, background: 'var(--bg2)', fontSize: 11 }}>
-                  <div style={{ fontSize: 24, marginBottom: 4 }}>{doc.icon}</div>
-                  {doc.name}
+                <div key={doc.name} className="text-center p-3 rounded-xl bg-[var(--bg2)] border border-[var(--card-border)]">
+                  <div className="text-[20px] md:text-[24px] mb-1">{doc.icon}</div>
+                  <div className="text-[10px] md:text-[11px] font-bold">{doc.name}</div>
                 </div>
               ))}
             </div>
-            <Link href="/digital-locker">
-              <button className="btn-outline" style={{ width: '100%', justifyContent: 'center', fontSize: 13 }}>Manage Documents <ChevronRight size={14} /></button>
+            <Link href="/digital-locker" className="no-underline mt-auto">
+              <button className="btn-outline w-full justify-center text-[12px] md:text-[13px] min-h-[44px]">Manage Documents <ChevronRight size={14} className="ml-1" /></button>
             </Link>
           </div>
 
           {/* AI Chatbot */}
-          <div style={{ background: 'linear-gradient(135deg, #1a6b3a, #1b4f72)', borderRadius: 16, padding: 24, color: 'white' }}>
-            <h3 style={{ fontWeight: 800, marginBottom: 8, fontSize: 15 }}>🤖 AI Assistant</h3>
-            <p style={{ fontSize: 13, opacity: 0.8, marginBottom: 16, lineHeight: 1.6 }}>Get instant answers about government services, schemes, and applications in your language.</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
+          <div className="bg-gradient-to-br from-[#1a6b3a] to-[#1b4f72] rounded-xl md:rounded-2xl p-5 md:p-6 text-white shadow-md flex flex-col">
+            <h3 className="font-extrabold mb-2 text-[14px] md:text-[15px]">🤖 AI Assistant</h3>
+            <p className="text-[12px] md:text-[13px] opacity-90 mb-4 leading-relaxed">Get instant answers about government services, schemes, and applications in your language.</p>
+            <div className="flex flex-col gap-2 mb-4 md:mb-5">
               {['How to apply for income certificate?', 'PM Kisan registration steps', 'Scholarship eligibility'].map(q => (
-                <div key={q} style={{ padding: '6px 12px', borderRadius: 20, background: 'rgba(255,255,255,0.12)', fontSize: 12, cursor: 'pointer' }}>💬 {q}</div>
+                <div key={q} className="p-2 md:p-2.5 rounded-lg bg-[rgba(255,255,255,0.15)] text-[11px] md:text-[12px] font-medium cursor-pointer hover:bg-[rgba(255,255,255,0.2)] transition-colors">💬 {q}</div>
               ))}
             </div>
             <button onClick={() => toast.success('Chatbot opened! Click the green button at bottom right.')}
-              style={{ width: '100%', padding: '10px', borderRadius: 10, background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', color: 'white', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
-              <MessageCircle size={14} style={{ display: 'inline', marginRight: 6 }} /> Open AI Chatbot
+              className="w-full py-2.5 px-4 rounded-xl bg-[rgba(255,255,255,0.2)] border border-[rgba(255,255,255,0.4)] text-white cursor-pointer text-[12px] md:text-[13px] font-bold hover:bg-[rgba(255,255,255,0.3)] transition-colors min-h-[44px] flex items-center justify-center gap-1.5 mt-auto shadow-none">
+              <MessageCircle size={15} /> Open AI Chatbot
             </button>
           </div>
         </div>

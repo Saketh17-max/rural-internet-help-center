@@ -31,54 +31,56 @@ export default function StudentsPage() {
   const { t } = useLanguage();
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '90vh' }}>
+    <div className="bg-[var(--bg)] min-h-[90vh] pb-12">
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(135deg, #4a0e8f, #1b4f72)', padding: '50px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>🎓</div>
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.4rem)', fontWeight: 900, marginBottom: 10 }}>{t('studentsTitle')}</h1>
-        <p style={{ opacity: 0.8, maxWidth: 520, margin: '0 auto' }}>Scholarships, exam registrations, career guidance and more for rural students</p>
+      <div className="bg-gradient-to-br from-[#4a0e8f] to-[#1b4f72] pt-24 pb-12 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">🎓</div>
+        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.4rem)] font-black mb-2.5">{t('studentsTitle')}</h1>
+        <p className="opacity-80 max-w-[520px] mx-auto text-sm md:text-base leading-relaxed">Scholarships, exam registrations, career guidance and more for rural students</p>
       </div>
 
-      <div className="page-container" style={{ padding: '40px 20px' }}>
+      <div className="page-container px-4 md:px-6 py-6 md:py-10">
         {/* Quick Links */}
-        <div className="grid-4" style={{ marginBottom: 40 }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
           {[
             { icon: '🏆', label: t('scholarships'), href: '#scholarships', color: '#8e44ad' },
             { icon: '📝', label: t('examRegTitle'), href: '#exams', color: '#1b4f72' },
             { icon: '📈', label: t('careerGuide'), href: '#career', color: '#27ae60' },
             { icon: '📄', label: t('resumeBuilder'), href: '#resume', color: '#e67e22' },
           ].map(item => (
-            <a key={item.label} href={item.href} style={{ textDecoration: 'none' }}>
-              <div className="service-card">
-                <div style={{ width: 52, height: 52, borderRadius: 12, background: `${item.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26 }}>{item.icon}</div>
-                <div style={{ fontWeight: 700, fontSize: 14 }}>{item.label}</div>
+            <a key={item.label} href={item.href} className="no-underline block h-full">
+              <div className="service-card flex flex-col items-center justify-center p-4 md:p-5 h-full transition-transform active:scale-95">
+                <div className="w-12 h-12 md:w-[52px] md:h-[52px] rounded-xl flex items-center justify-center text-2xl md:text-[26px] mb-3" style={{ background: `${item.color}15` }}>{item.icon}</div>
+                <div className="font-bold text-[13px] md:text-[14px] text-center text-[var(--text)]">{item.label}</div>
               </div>
             </a>
           ))}
         </div>
 
         {/* Scholarships */}
-        <section id="scholarships" style={{ marginBottom: 48 }}>
-          <div className="section-header" style={{ textAlign: 'left', marginBottom: 24 }}>
-            <h2 style={{ fontSize: 22, fontWeight: 800 }}>🏆 {t('scholarships')}</h2>
-            <div className="section-divider" style={{ margin: '10px 0' }} />
+        <section id="scholarships" className="mb-10 md:mb-12">
+          <div className="text-left mb-6 md:mb-8">
+            <h2 className="text-xl md:text-[22px] font-extrabold flex items-center gap-2">🏆 {t('scholarships')}</h2>
+            <div className="w-12 h-1 bg-[var(--primary)] mt-3 rounded-full" />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div className="flex flex-col gap-3.5 md:gap-4">
             {SCHOLARSHIPS.map(s => (
-              <div key={s.name} style={{ background: 'var(--card)', border: '1.5px solid var(--card-border)', borderRadius: 14, padding: '20px 24px', display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
-                <div style={{ width: 48, height: 48, borderRadius: 10, background: '#8e44ad15', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, flexShrink: 0 }}>🏆</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>{s.name}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>{s.provider} • {s.eligibility}</div>
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <span className="badge badge-success" style={{ fontSize: 11 }}>{s.amount}</span>
-                    <span className="badge badge-info" style={{ fontSize: 11 }}>Deadline: {s.deadline}</span>
-                    <span className="badge badge-warning" style={{ fontSize: 11 }}>{s.category}</span>
+              <div key={s.name} className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-2xl p-4 md:p-5 flex flex-col md:flex-row md:items-center gap-4 md:gap-5 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex gap-4 md:flex-1">
+                  <div className="w-12 h-12 md:w-12 md:h-12 rounded-xl bg-[#8e44ad15] flex items-center justify-center text-2xl shrink-0">🏆</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-extrabold text-[14px] md:text-[15px] mb-1 md:mb-1.5 leading-tight">{s.name}</div>
+                    <div className="text-[12px] md:text-[13px] text-[var(--text-muted)] mb-2 md:mb-1.5">{s.provider} • {s.eligibility}</div>
+                    <div className="flex gap-1.5 md:gap-2 flex-wrap">
+                      <span className="badge badge-success text-[10px] md:text-[11px] px-2 py-0.5">{s.amount}</span>
+                      <span className="badge badge-info text-[10px] md:text-[11px] px-2 py-0.5">Deadline: {s.deadline}</span>
+                      <span className="badge badge-warning text-[10px] md:text-[11px] px-2 py-0.5">{s.category}</span>
+                    </div>
                   </div>
                 </div>
-                <a href={s.link} target="_blank" rel="noopener noreferrer">
-                  <button className="btn-primary" style={{ padding: '8px 16px', fontSize: 13 }}>
-                    <ExternalLink size={13} /> Apply
+                <a href={s.link} target="_blank" rel="noopener noreferrer" className="no-underline w-full md:w-auto">
+                  <button className="btn-primary w-full md:w-auto justify-center py-2.5 px-4 text-[13px] md:text-[14px] min-h-[44px]">
+                    <ExternalLink size={14} className="mr-1" /> Apply
                   </button>
                 </a>
               </div>
@@ -87,25 +89,27 @@ export default function StudentsPage() {
         </section>
 
         {/* Exam Registration */}
-        <section id="exams" style={{ marginBottom: 48 }}>
-          <div className="section-header" style={{ textAlign: 'left', marginBottom: 24 }}>
-            <h2 style={{ fontSize: 22, fontWeight: 800 }}>📝 {t('examRegTitle')}</h2>
-            <div className="section-divider" style={{ margin: '10px 0' }} />
+        <section id="exams" className="mb-10 md:mb-12">
+          <div className="text-left mb-6 md:mb-8">
+            <h2 className="text-xl md:text-[22px] font-extrabold flex items-center gap-2">📝 {t('examRegTitle')}</h2>
+            <div className="w-12 h-1 bg-[var(--primary)] mt-3 rounded-full" />
           </div>
-          <div className="grid-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-4">
             {EXAMS.map(e => (
-              <div key={e.name} style={{ background: 'var(--card)', border: '1.5px solid var(--card-border)', borderRadius: 14, padding: '20px', display: 'flex', gap: 16, alignItems: 'center' }}>
-                <div style={{ width: 44, height: 44, borderRadius: 10, background: '#1b4f7215', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 }}>📝</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: 14 }}>{e.name}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{e.type}</div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
-                    <Calendar size={11} style={{ color: 'var(--text-muted)' }} />
-                    <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{e.date}</span>
+              <div key={e.name} className="bg-[var(--card)] border-[1.5px] border-[var(--card-border)] rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row gap-4 items-start sm:items-center shadow-sm">
+                <div className="flex gap-3 items-center flex-1 min-w-0 w-full">
+                  <div className="w-11 h-11 rounded-xl bg-[#1b4f7215] flex items-center justify-center text-[22px] shrink-0">📝</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-bold text-[14px] md:text-[15px] leading-tight truncate">{e.name}</div>
+                    <div className="text-[11px] md:text-[12px] text-[var(--text-muted)] mt-0.5">{e.type}</div>
+                    <div className="flex items-center gap-1.5 mt-1">
+                      <Calendar size={12} className="text-[var(--text-muted)]" />
+                      <span className="text-[11px] text-[var(--text-muted)] font-medium">{e.date}</span>
+                    </div>
                   </div>
                 </div>
-                <a href={e.link} target="_blank" rel="noopener noreferrer">
-                  <button className="btn-outline" style={{ padding: '6px 14px', fontSize: 12 }}>Register</button>
+                <a href={e.link} target="_blank" rel="noopener noreferrer" className="no-underline w-full sm:w-auto">
+                  <button className="btn-outline w-full sm:w-auto justify-center py-2 px-4 text-[12px] md:text-[13px] min-h-[44px]">Register</button>
                 </a>
               </div>
             ))}
@@ -113,17 +117,17 @@ export default function StudentsPage() {
         </section>
 
         {/* Career Guidance */}
-        <section id="career" style={{ marginBottom: 48 }}>
-          <div className="section-header" style={{ textAlign: 'left', marginBottom: 24 }}>
-            <h2 style={{ fontSize: 22, fontWeight: 800 }}>📈 {t('careerGuide')}</h2>
-            <div className="section-divider" style={{ margin: '10px 0' }} />
+        <section id="career" className="mb-10 md:mb-12">
+          <div className="text-left mb-6 md:mb-8">
+            <h2 className="text-xl md:text-[22px] font-extrabold flex items-center gap-2">📈 {t('careerGuide')}</h2>
+            <div className="w-12 h-1 bg-[var(--primary)] mt-3 rounded-full" />
           </div>
-          <div className="grid-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 md:gap-4">
             {CAREER_PATHS.map(c => (
-              <div key={c.title} className="glass-card" style={{ padding: 20 }}>
-                <div style={{ fontSize: 36, marginBottom: 12 }}>{c.icon}</div>
-                <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6 }}>{c.title}</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>{c.desc}</div>
+              <div key={c.title} className="glass-card p-4 md:p-5 hover:-translate-y-1 transition-transform">
+                <div className="text-[32px] md:text-[36px] mb-3">{c.icon}</div>
+                <div className="font-bold text-[14px] md:text-[15px] mb-1.5">{c.title}</div>
+                <div className="text-[11px] md:text-[13px] text-[var(--text-muted)] leading-relaxed">{c.desc}</div>
               </div>
             ))}
           </div>
@@ -131,19 +135,19 @@ export default function StudentsPage() {
 
         {/* Resume Builder */}
         <section id="resume">
-          <div style={{ background: 'linear-gradient(135deg, #1a6b3a, #2980b9)', borderRadius: 20, padding: '32px', color: 'white', textAlign: 'center' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>📄</div>
-            <h2 style={{ fontSize: 24, fontWeight: 800, marginBottom: 10 }}>{t('resumeBuilder')}</h2>
-            <p style={{ opacity: 0.8, marginBottom: 20, maxWidth: 480, margin: '0 auto 20px' }}>
+          <div className="bg-gradient-to-br from-[#1a6b3a] to-[#2980b9] rounded-2xl md:rounded-[20px] p-6 md:p-8 text-white text-center shadow-lg">
+            <div className="text-4xl md:text-5xl mb-3 md:mb-4">📄</div>
+            <h2 className="text-[20px] md:text-[24px] font-extrabold mb-2 md:mb-3">{t('resumeBuilder')}</h2>
+            <p className="opacity-90 mb-5 md:mb-6 max-w-[480px] mx-auto text-[13px] md:text-[15px] leading-relaxed">
               Create a professional resume in minutes. Available in English and Telugu.
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, maxWidth: 480, margin: '0 auto 24px' }}>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 md:gap-3 max-w-[480px] mx-auto mb-6 md:mb-8">
               {['📝 Fill Details', '🎨 Choose Template', '⬇️ Download PDF'].map(step => (
-                <div key={step} style={{ padding: '12px', borderRadius: 10, background: 'rgba(255,255,255,0.12)', fontSize: 12 }}>{step}</div>
+                <div key={step} className="p-2.5 md:p-3 rounded-xl bg-[rgba(255,255,255,0.15)] text-[12px] md:text-[13px] font-semibold">{step}</div>
               ))}
             </div>
-            <button className="btn-primary" style={{ background: 'rgba(255,255,255,0.2)', boxShadow: 'none', border: '2px solid rgba(255,255,255,0.4)', justifyContent: 'center' }}>
-              <Briefcase size={16} /> Build My Resume (Coming Soon)
+            <button className="btn-primary bg-[rgba(255,255,255,0.2)] border-2 border-[rgba(255,255,255,0.4)] justify-center w-full sm:w-auto min-h-[48px] px-6 text-[14px] md:text-[15px] hover:bg-[rgba(255,255,255,0.3)] shadow-none">
+              <Briefcase size={18} className="mr-2" /> Build My Resume (Coming Soon)
             </button>
           </div>
         </section>

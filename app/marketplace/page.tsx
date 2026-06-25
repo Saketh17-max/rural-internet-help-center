@@ -11,7 +11,6 @@ const RECOMMENDED_WAGES: Record<string, number> = {
   'Tailor': 600, 'House Maid': 450, 'Tutor': 500, 'Cook': 600,
 };
 
-
 const SKILLS = ['All', 'Carpenter', 'Electrician', 'Painter', 'Plumber', 'Farm Labour', 'Construction Worker', 'Driver', 'Mechanic', 'Tailor', 'House Maid', 'Tutor', 'Cook'];
 
 export default function MarketplacePage() {
@@ -44,17 +43,17 @@ export default function MarketplacePage() {
   };
 
   return (
-    <div style={{ minHeight: '90vh', background: 'var(--bg)' }}>
+    <div className="min-h-[90vh] bg-[var(--bg)] pb-12">
       {/* Hero */}
-      <div style={{ background: 'linear-gradient(135deg, #1b4f72, #0a2744)', padding: '50px 24px', color: 'white', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>💼</div>
-        <h1 style={{ fontSize: 'clamp(1.8rem,4vw,2.4rem)', fontWeight: 900, marginBottom: 10 }}>{t('marketplaceTitle')}</h1>
-        <p style={{ opacity: 0.8, marginBottom: 28, maxWidth: 520, margin: '0 auto 28px' }}>{t('marketplaceDesc')}</p>
+      <div className="bg-gradient-to-br from-[#1b4f72] to-[#0a2744] pt-24 pb-12 px-4 md:px-6 text-white text-center">
+        <div className="text-4xl md:text-5xl mb-3 md:mb-4">💼</div>
+        <h1 className="text-2xl md:text-[clamp(1.8rem,4vw,2.4rem)] font-black mb-3">{t('marketplaceTitle')}</h1>
+        <p className="opacity-80 mb-6 md:mb-8 max-w-[520px] mx-auto text-sm md:text-base leading-relaxed">{t('marketplaceDesc')}</p>
 
-        <div style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
-          <Search size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+        <div className="max-w-[480px] mx-auto relative">
+          <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
-            style={{ width: '100%', padding: '14px 16px 14px 44px', borderRadius: '50px', border: 'none', background: 'rgba(255,255,255,0.95)', fontSize: 15, fontFamily: 'inherit', outline: 'none' }}
+            className="w-full py-3.5 md:py-4 pl-12 pr-4 rounded-full border-none bg-[rgba(255,255,255,0.95)] text-gray-800 text-sm md:text-[15px] font-[inherit] outline-none shadow-lg focus:shadow-xl transition-shadow"
             placeholder="Search by name, skill, or location..."
             value={search}
             onChange={e => setSearch(e.target.value)}
@@ -62,30 +61,24 @@ export default function MarketplacePage() {
         </div>
       </div>
 
-      <div className="page-container" style={{ padding: '28px 20px' }}>
+      <div className="page-container px-4 md:px-6 py-6 md:py-8">
         {/* Filters */}
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', marginBottom: 24 }}>
-          <div style={{ display: 'flex', gap: 8, overflowX: 'auto', flex: 1 }}>
+        <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center mb-6">
+          <div className="flex gap-2 overflow-x-auto w-full md:flex-1 hide-scrollbar pb-2 md:pb-0">
             {SKILLS.map(s => (
               <button key={s} onClick={() => setSkill(s)}
-                style={{
-                  padding: '6px 14px', borderRadius: '50px', fontSize: 12, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
-                  border: skill === s ? 'none' : '1.5px solid var(--card-border)',
-                  background: skill === s ? 'var(--secondary)' : 'transparent',
-                  color: skill === s ? 'white' : 'var(--text)',
-                  transition: 'all 0.2s',
-                }}
+                className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[11px] md:text-xs font-bold cursor-pointer whitespace-nowrap transition-all border ${skill === s ? 'border-transparent bg-[var(--secondary)] text-white shadow-md' : 'border-[var(--card-border)] bg-transparent text-[var(--text)] hover:bg-[var(--bg2)]'}`}
               >{s}</button>
             ))}
           </div>
-          <div style={{ display: 'flex', gap: 12, flexShrink: 0 }}>
+          <div className="flex gap-4 shrink-0 px-1 md:px-0">
             {[
               { key: 'available', label: '✅ Available', state: onlyAvailable, set: setOnlyAvailable },
               { key: 'verified', label: '🔒 Verified', state: onlyVerified, set: setOnlyVerified },
             ].map(f => (
-              <label key={f.key} style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', fontSize: 13 }}>
+              <label key={f.key} className="flex items-center gap-2 cursor-pointer text-xs md:text-[13px] font-semibold">
                 <input type="checkbox" checked={f.state} onChange={e => f.set(e.target.checked)}
-                  style={{ accentColor: 'var(--primary)' }} />
+                  className="accent-[var(--primary)] w-4 h-4 cursor-pointer" />
                 {f.label}
               </label>
             ))}
@@ -93,98 +86,90 @@ export default function MarketplacePage() {
         </div>
 
         {/* Stats Row */}
-        <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
+        <div className="grid grid-cols-2 md:flex md:flex-row gap-3 md:gap-4 mb-6">
           {[
             { label: 'Total Workers', value: workers.length, color: '#1b4f72' },
             { label: 'Available Now', value: workers.filter(w => w.available).length, color: '#27ae60' },
             { label: 'Verified', value: workers.filter(w => w.verified).length, color: '#e67e22' },
             { label: 'Showing', value: filtered.length, color: 'var(--primary)' },
           ].map(stat => (
-            <div key={stat.label} style={{ padding: '10px 16px', borderRadius: 10, background: 'var(--card)', border: '1px solid var(--card-border)', display: 'flex', gap: 8, alignItems: 'center' }}>
-              <span style={{ fontWeight: 800, fontSize: 18, color: stat.color }}>{stat.value}</span>
-              <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{stat.label}</span>
+            <div key={stat.label} className="py-2.5 px-3 md:px-4 rounded-xl bg-[var(--card)] border border-[var(--card-border)] flex items-center gap-2.5 text-center justify-center md:justify-start flex-col sm:flex-row">
+              <span className="font-black text-xl md:text-2xl leading-none" style={{ color: stat.color }}>{stat.value}</span>
+              <span className="text-[10px] md:text-xs font-semibold text-[var(--text-muted)] leading-tight">{stat.label}</span>
             </div>
           ))}
         </div>
 
         {/* Workers Grid */}
-        <div className="grid-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {filtered.map(worker => (
             <div key={worker.id}
               onClick={() => setSelected(worker)}
-              style={{
-                background: 'var(--card)', border: selected?.id === worker.id ? '2px solid var(--primary)' : '1.5px solid var(--card-border)',
-                borderRadius: 16, padding: '20px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: 'var(--shadow)',
-              }}
-              onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.transform = 'translateY(-3px)')}
-              onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.transform = 'none')}
+              className={`bg-[var(--card)] rounded-2xl p-4 md:p-5 cursor-pointer transition-all shadow-[var(--shadow)] hover:-translate-y-1 active:scale-[0.98] border-2 ${selected?.id === worker.id ? 'border-[var(--primary)]' : 'border-[var(--card-border)] hover:border-[rgba(0,0,0,0.1)] dark:hover:border-[rgba(255,255,255,0.1)]'}`}
             >
               {/* Header */}
-              <div style={{ display: 'flex', gap: 12, marginBottom: 14 }}>
-                <div style={{ width: 52, height: 52, borderRadius: '50%', background: `${worker.avatar_color || '#1a6b3a'}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, flexShrink: 0, border: `2px solid ${worker.avatar_color || '#1a6b3a'}40` }}>
+              <div className="flex gap-3 md:gap-4 mb-3.5 md:mb-4">
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-2xl md:text-3xl shrink-0" style={{ background: `${worker.avatar_color || '#1a6b3a'}20`, border: `2px solid ${worker.avatar_color || '#1a6b3a'}40` }}>
                   {worker.photo || <User size={24} style={{ color: worker.avatar_color || '#1a6b3a' }} />}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <span style={{ fontWeight: 700, fontSize: 15 }}>{worker.name}</span>
-                    {worker.verified && <span title="Verified" style={{ color: '#27ae60', fontSize: 14 }}>✓</span>}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="font-bold text-sm md:text-[15px] truncate">{worker.name}</span>
+                    {worker.verified && <span title="Verified" className="text-[#27ae60] text-sm shrink-0">✓</span>}
                   </div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{worker.skill || 'Worker'}</div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: 'var(--text-muted)' }}>
-                    <MapPin size={10} /> {worker.location || 'Not Specified'}
+                  <div className="text-[11px] md:text-xs text-[var(--text-muted)] mt-0.5 truncate">{worker.skill || 'Worker'}</div>
+                  <div className="flex items-center gap-1 text-[11px] md:text-xs text-[var(--text-muted)] mt-1 truncate">
+                    <MapPin size={10} className="shrink-0" /> <span className="truncate">{worker.location || 'Not Specified'}</span>
                   </div>
                 </div>
-                <div style={{
-                  padding: '4px 8px', borderRadius: 20, fontSize: 10, fontWeight: 700, height: 'fit-content',
-                  background: worker.available ? 'rgba(39,174,96,0.15)' : 'rgba(231,76,60,0.15)',
-                  color: worker.available ? '#27ae60' : '#e74c3c',
-                }}>
+                <div className="px-2 py-1 rounded-full text-[9px] md:text-[10px] font-bold h-fit shrink-0 whitespace-nowrap" style={{ background: worker.available ? 'rgba(39,174,96,0.15)' : 'rgba(231,76,60,0.15)', color: worker.available ? '#27ae60' : '#e74c3c' }}>
                   {worker.available ? '● Available' : '○ Busy'}
                 </div>
               </div>
 
               {/* Rating & Wage */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+              <div className="flex justify-between items-end mb-3 md:mb-4 pt-3 border-t border-[var(--card-border)]">
                 <div>
                   {worker.reviews > 0 ? (
-                    <>
-                      <span className="stars">{'★'.repeat(Math.floor(worker.rating))}</span>
-                      <span style={{ fontSize: 12, fontWeight: 700, marginLeft: 4 }}>{worker.rating}</span>
-                      <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>({worker.reviews})</span>
-                    </>
+                    <div className="flex items-center gap-1 flex-wrap">
+                      <span className="stars text-xs md:text-sm">{'★'.repeat(Math.floor(worker.rating))}</span>
+                      <span className="text-[11px] md:text-xs font-bold">{worker.rating}</span>
+                      <span className="text-[10px] md:text-[11px] text-[var(--text-muted)]">({worker.reviews})</span>
+                    </div>
                   ) : (
-                    <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>No ratings yet</span>
+                    <span className="text-[11px] md:text-xs text-[var(--text-muted)]">No ratings yet</span>
                   )}
                 </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--primary)' }}>{worker.wage ? `₹${worker.wage}/day` : 'Rate Negotiable'}</div>
-                  <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>{worker.experience || 'New Profile'}</div>
+                <div className="text-right shrink-0">
+                  <div className="text-[14px] md:text-[16px] font-black text-[var(--primary)]">{worker.wage ? `₹${worker.wage}/day` : 'Negotiable'}</div>
+                  <div className="text-[9px] md:text-[10px] font-semibold text-[var(--text-muted)] mt-0.5">{worker.experience || 'New Profile'}</div>
                 </div>
               </div>
 
               {/* Skills */}
-              <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                {(worker.skills || []).map((s: string) => (
-                  <span key={s} className="badge badge-info" style={{ fontSize: 10 }}>{s}</span>
+              <div className="flex gap-1.5 flex-wrap">
+                {(worker.skills || []).slice(0, 3).map((s: string) => (
+                  <span key={s} className="badge badge-info text-[9px] md:text-[10px] px-2 py-0.5">{s}</span>
                 ))}
+                {(worker.skills?.length > 3) && <span className="badge badge-info text-[9px] md:text-[10px] px-2 py-0.5 opacity-70">+{worker.skills.length - 3}</span>}
               </div>
             </div>
           ))}
         </div>
 
         {workers.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--card)', borderRadius: 16, border: '1px solid var(--card-border)', marginTop: 40 }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>👷‍♀️</div>
-            <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 8 }}>No workers have registered yet</h3>
-            <p style={{ color: 'var(--text-muted)', marginBottom: 24 }}>Register the first worker to begin using the marketplace.</p>
-            <a href="/register?role=worker" style={{ textDecoration: 'none' }}>
-              <button className="btn-primary" style={{ margin: '0 auto' }}>
-                <User size={16} /> Register Worker
+          <div className="text-center p-8 md:p-16 bg-[var(--card)] rounded-2xl border border-[var(--card-border)] mt-10">
+            <div className="text-4xl md:text-5xl mb-4">👷‍♀️</div>
+            <h3 className="text-lg md:text-xl font-extrabold mb-2">No workers have registered yet</h3>
+            <p className="text-sm text-[var(--text-muted)] mb-6">Register the first worker to begin using the marketplace.</p>
+            <a href="/register?role=worker" className="no-underline">
+              <button className="btn-primary mx-auto justify-center min-w-[200px] min-h-[48px]">
+                <User size={18} /> Register Worker
               </button>
             </a>
           </div>
         ) : filtered.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: 60, color: 'var(--text-muted)' }}>
+          <div className="text-center p-16 text-[var(--text-muted)] font-medium">
             No workers found. Try different filters.
           </div>
         ) : null}
@@ -192,131 +177,131 @@ export default function MarketplacePage() {
 
       {/* Worker Detail Side Panel */}
       {selected && (
-        <div style={{
-          position: 'fixed', right: 0, top: 0, bottom: 0, width: 380, maxWidth: '100vw',
-          background: 'var(--card)', borderLeft: '1px solid var(--card-border)',
-          overflowY: 'auto', padding: '24px', zIndex: 800, boxShadow: '-8px 0 32px rgba(0,0,0,0.12)',
-        }}>
-          <button onClick={() => setSelected(null)} style={{ position: 'absolute', top: 16, right: 16, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: 20 }}>✕</button>
+        <>
+          {/* Backdrop for mobile */}
+          <div className="fixed inset-0 bg-black/40 z-[799] lg:hidden backdrop-blur-sm" onClick={() => setSelected(null)} />
+          
+          <div className="fixed right-0 top-0 bottom-0 w-full md:w-[420px] max-w-[100vw] bg-[var(--card)] border-l border-[var(--card-border)] overflow-y-auto p-5 md:p-8 z-[800] shadow-[-8px_0_32px_rgba(0,0,0,0.12)] transform transition-transform duration-300">
+            <button onClick={() => setSelected(null)} className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 rounded-full bg-[var(--bg2)] flex items-center justify-center border-none cursor-pointer text-[var(--text-muted)] text-xl hover:bg-[rgba(0,0,0,0.05)] dark:hover:bg-[rgba(255,255,255,0.05)] transition-colors active:scale-95 z-10">✕</button>
 
-          {/* Profile */}
-          <div style={{ textAlign: 'center', marginBottom: 24, paddingTop: 20 }}>
-            <div style={{ width: 80, height: 80, borderRadius: '50%', background: `${selected.avatar_color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 40, margin: '0 auto 12px', border: `3px solid ${selected.avatar_color}50` }}>
-              {selected.photo}
-            </div>
-            <div style={{ fontWeight: 800, fontSize: 20 }}>{selected.name}</div>
-            <div style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 8 }}>{selected.skill} • {selected.location}</div>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 8 }}>
-              {selected.verified && <span className="badge badge-verified">✓ Verified</span>}
-              <span className={`badge ${selected.available ? 'badge-success' : 'badge-danger'}`}>
-                {selected.available ? '● Available' : '○ Busy'}
-              </span>
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 20 }}>
-            {[
-              { label: 'Rating', value: selected.reviews > 0 ? selected.rating : '—' },
-              { label: 'Reviews', value: selected.reviews || 0 },
-              { label: 'Experience', value: selected.experience ? selected.experience.split(' ')[0] + 'y' : '0y' },
-            ].map(s => (
-              <div key={s.label} style={{ textAlign: 'center', padding: '12px', borderRadius: 10, background: 'var(--bg2)' }}>
-                <div style={{ fontWeight: 800, fontSize: 18, color: 'var(--primary)' }}>{s.value}</div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{s.label}</div>
+            {/* Profile */}
+            <div className="text-center mb-6 pt-4 md:pt-6">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center text-4xl md:text-5xl mx-auto mb-3 md:mb-4" style={{ background: `${selected.avatar_color}20`, border: `3px solid ${selected.avatar_color}50` }}>
+                {selected.photo || <User size={40} style={{ color: selected.avatar_color || '#1a6b3a' }} />}
               </div>
-            ))}
-          </div>
-
-          {/* Skills */}
-          <div style={{ marginBottom: 20 }}>
-            <div style={{ fontWeight: 700, marginBottom: 10, fontSize: 14 }}>Skills</div>
-            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-              {(selected.skills || []).map((s: string) => <span key={s} className="badge badge-info">{s}</span>)}
-            </div>
-          </div>
-
-          {/* Languages */}
-          <div style={{ marginBottom: 20 }}>
-            <div style={{ fontWeight: 700, marginBottom: 10, fontSize: 14 }}>Languages</div>
-            <div style={{ display: 'flex', gap: 6 }}>
-              {(selected.languages || []).map((l: string) => <span key={l} className="badge badge-success">{l}</span>)}
-            </div>
-          </div>
-
-          {/* Wage */}
-          <div style={{ background: 'var(--bg2)', borderRadius: 12, padding: '16px', marginBottom: 20 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-              <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>Expected Daily Wage</span>
-              <span style={{ fontWeight: 800, fontSize: 18, color: 'var(--primary)' }}>₹{selected.wage}</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>Recommended Rate</span>
-              <span style={{ fontWeight: 700, fontSize: 16, color: '#27ae60' }}>₹{RECOMMENDED_WAGES[selected.skill] || '—'}</span>
-            </div>
-            {selected.wage < (RECOMMENDED_WAGES[selected.skill] || 9999) && (
-              <div style={{ marginTop: 10, padding: '8px 12px', borderRadius: 8, background: 'rgba(39,174,96,0.1)', border: '1px solid rgba(39,174,96,0.3)', fontSize: 12, color: '#27ae60' }}>
-                ✅ Worker is offering below recommended rate — room to negotiate fairly!
+              <div className="font-black text-xl md:text-2xl mb-1">{selected.name}</div>
+              <div className="text-xs md:text-sm text-[var(--text-muted)] mb-3 font-medium">{selected.skill} • {selected.location}</div>
+              <div className="flex justify-center gap-2">
+                {selected.verified && <span className="badge badge-verified text-[10px] md:text-xs">✓ Verified</span>}
+                <span className={`badge text-[10px] md:text-xs ${selected.available ? 'badge-success' : 'badge-danger'}`}>
+                  {selected.available ? '● Available' : '○ Busy'}
+                </span>
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* Action Buttons */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <button className="btn-primary" style={{ justifyContent: 'center' }}
-              onClick={() => setShowHireModal(true)} disabled={!selected.available}>
-              <Briefcase size={16} /> {selected.available ? t('hireWorker') : 'Worker is Busy'}
-            </button>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-              <button className="btn-outline" style={{ justifyContent: 'center', fontSize: 13 }}
-                onClick={() => toast.success(`Chat opened with ${selected.name}`)}>
-                <MessageCircle size={14} /> Chat
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-2 md:gap-3 mb-6">
+              {[
+                { label: 'Rating', value: selected.reviews > 0 ? selected.rating : '—' },
+                { label: 'Reviews', value: selected.reviews || 0 },
+                { label: 'Experience', value: selected.experience ? selected.experience.split(' ')[0] + 'y' : '0y' },
+              ].map(s => (
+                <div key={s.label} className="text-center p-2.5 md:p-3 rounded-xl bg-[var(--bg2)] border border-[var(--card-border)]">
+                  <div className="font-black text-[16px] md:text-[18px] text-[var(--primary)]">{s.value}</div>
+                  <div className="text-[10px] md:text-[11px] text-[var(--text-muted)] font-semibold mt-0.5">{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Skills */}
+            <div className="mb-5 md:mb-6">
+              <div className="font-bold mb-2.5 text-[13px] md:text-[14px]">Skills</div>
+              <div className="flex gap-2 flex-wrap">
+                {(selected.skills || []).map((s: string) => <span key={s} className="badge badge-info text-[11px] md:text-xs">{s}</span>)}
+              </div>
+            </div>
+
+            {/* Languages */}
+            <div className="mb-5 md:mb-6">
+              <div className="font-bold mb-2.5 text-[13px] md:text-[14px]">Languages</div>
+              <div className="flex gap-2 flex-wrap">
+                {(selected.languages || []).map((l: string) => <span key={l} className="badge badge-success text-[11px] md:text-xs">{l}</span>)}
+              </div>
+            </div>
+
+            {/* Wage */}
+            <div className="bg-[var(--bg2)] border border-[var(--card-border)] rounded-xl p-4 md:p-5 mb-6">
+              <div className="flex justify-between items-center mb-2.5">
+                <span className="text-[12px] md:text-[13px] text-[var(--text-muted)] font-semibold">Expected Daily Wage</span>
+                <span className="font-black text-[16px] md:text-[18px] text-[var(--primary)]">₹{selected.wage}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-[12px] md:text-[13px] text-[var(--text-muted)] font-semibold">Recommended Rate</span>
+                <span className="font-bold text-[14px] md:text-[16px] text-[#27ae60]">₹{RECOMMENDED_WAGES[selected.skill] || '—'}</span>
+              </div>
+              {selected.wage < (RECOMMENDED_WAGES[selected.skill] || 9999) && (
+                <div className="mt-3.5 p-2.5 rounded-lg bg-[rgba(39,174,96,0.1)] border border-[rgba(39,174,96,0.3)] text-[11px] md:text-[12px] text-[#27ae60] font-medium leading-tight">
+                  ✅ Worker is offering below recommended rate — room to negotiate fairly!
+                </div>
+              )}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-2.5 md:gap-3 pb-8">
+              <button className="btn-primary justify-center min-h-[48px] md:min-h-[52px] text-[14px] md:text-[15px]"
+                onClick={() => setShowHireModal(true)} disabled={!selected.available}>
+                <Briefcase size={18} /> {selected.available ? t('hireWorker') : 'Worker is Busy'}
               </button>
-              <button className="btn-outline" style={{ justifyContent: 'center', fontSize: 13 }}
-                onClick={() => toast.success(`Calling ${selected.phone}`)}>
-                <Phone size={14} /> Call
+              <div className="grid grid-cols-2 gap-2.5 md:gap-3">
+                <button className="btn-outline justify-center text-[13px] md:text-[14px] min-h-[44px] md:min-h-[48px]"
+                  onClick={() => toast.success(`Chat opened with ${selected.name}`)}>
+                  <MessageCircle size={16} /> Chat
+                </button>
+                <button className="btn-outline justify-center text-[13px] md:text-[14px] min-h-[44px] md:min-h-[48px]"
+                  onClick={() => toast.success(`Calling ${selected.phone}`)}>
+                  <Phone size={16} /> Call
+                </button>
+              </div>
+              <button onClick={() => toast.success('Worker reported. We will review.')}
+                className="bg-transparent border-none text-[#e74c3c] text-[11px] md:text-[12px] font-semibold cursor-pointer p-2 md:p-3 mt-1 hover:underline text-center active:scale-95 transition-transform">
+                🚨 Report this profile
               </button>
             </div>
-            <button onClick={() => toast.success('Worker reported. We will review.')}
-              style={{ background: 'none', border: 'none', color: '#e74c3c', fontSize: 12, cursor: 'pointer', padding: 8 }}>
-              🚨 Report this profile
-            </button>
           </div>
-        </div>
+        </>
       )}
 
       {/* Hire Modal */}
       {showHireModal && selected && (
-        <div className="modal-overlay" onClick={() => setShowHireModal(false)}>
-          <div className="modal-box" onClick={e => e.stopPropagation()}>
-            <h2 style={{ fontWeight: 800, marginBottom: 6 }}>Hire {selected.name}</h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20 }}>Send a job invitation with details</p>
+        <div className="modal-overlay px-4" onClick={() => setShowHireModal(false)}>
+          <div className="modal-box w-full max-w-[400px] p-5 md:p-6" onClick={e => e.stopPropagation()}>
+            <h2 className="font-black mb-1 md:mb-2 text-lg md:text-xl">Hire {selected.name}</h2>
+            <p className="text-[var(--text-muted)] text-[13px] md:text-[14px] mb-5 md:mb-6">Send a job invitation with details</p>
 
-            <div style={{ marginBottom: 16 }}>
-              <label style={{ fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 }}>Offered Daily Wage (₹)</label>
-              <input className="input-field" type="number" placeholder={`Recommended: ₹${RECOMMENDED_WAGES[selected.skill]}`}
+            <div className="mb-4 md:mb-5">
+              <label className="text-[12px] md:text-[13px] font-bold block mb-1.5 md:mb-2">Offered Daily Wage (₹)</label>
+              <input className="input-field py-2.5 md:py-3 text-sm" type="number" placeholder={`Recommended: ₹${RECOMMENDED_WAGES[selected.skill]}`}
                 value={offerWage} onChange={e => setOfferWage(e.target.value)} />
               {wageWarning && (
-                <div style={{ marginTop: 8, padding: '8px 12px', borderRadius: 8, background: 'rgba(243,156,18,0.15)', border: '1px solid rgba(243,156,18,0.4)', color: '#e67e22', fontSize: 12, display: 'flex', gap: 6 }}>
-                  <AlertTriangle size={14} style={{ flexShrink: 0, marginTop: 1 }} />
+                <div className="mt-2 p-2.5 rounded-lg bg-[rgba(243,156,18,0.15)] border border-[rgba(243,156,18,0.4)] text-[#e67e22] text-[11px] md:text-[12px] flex items-start gap-1.5 leading-tight">
+                  <AlertTriangle size={14} className="shrink-0 mt-0.5" />
                   {t('belowWage')}
                 </div>
               )}
               {offerWage && !wageWarning && (
-                <div style={{ marginTop: 8, fontSize: 12, color: '#27ae60' }}>{t('fairWage')}</div>
+                <div className="mt-2 text-[11px] md:text-[12px] font-semibold text-[#27ae60]">{t('fairWage')}</div>
               )}
             </div>
 
-            <div style={{ marginBottom: 20 }}>
-              <label style={{ fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 }}>Work Description</label>
-              <textarea className="input-field" rows={3} placeholder="Describe the work, duration, location..."
-                style={{ resize: 'vertical' }} />
+            <div className="mb-5 md:mb-6">
+              <label className="text-[12px] md:text-[13px] font-bold block mb-1.5 md:mb-2">Work Description</label>
+              <textarea className="input-field py-2.5 md:py-3 text-sm resize-y min-h-[80px]" rows={3} placeholder="Describe the work, duration, location..." />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              <button className="btn-outline" onClick={() => setShowHireModal(false)}>Cancel</button>
-              <button className="btn-primary" style={{ justifyContent: 'center' }} onClick={handleHire}>
-                Send Invitation
+            <div className="grid grid-cols-2 gap-3">
+              <button className="btn-outline justify-center min-h-[44px] md:min-h-[48px] text-[13px] md:text-[14px]" onClick={() => setShowHireModal(false)}>Cancel</button>
+              <button className="btn-primary justify-center min-h-[44px] md:min-h-[48px] text-[13px] md:text-[14px]" onClick={handleHire}>
+                Send Invite
               </button>
             </div>
           </div>
